@@ -19,4 +19,16 @@ public abstract class Person {
 	public void setEmail(String Email) {
 		email = Email;
 	}
+
+	public final String getName() {
+		return name;
+	}
+
+	public final String getAddress() {
+		return address;
+	}
+
+	public final String getEmail() {
+		return email;
+	}
 }
