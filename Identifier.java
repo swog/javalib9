@@ -1,4 +1,4 @@
-public class Identifier implements Comparable<Identifier>{
+public abstract class Identifier implements Comparable<Identifier>{
     private String id;
 
     public String getId(){
@@ -13,4 +13,5 @@ public class Identifier implements Comparable<Identifier>{
     public int compareTo(Identifier i){
         return this.getId().compareTo(i.getId());
     }
+
 }

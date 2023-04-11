@@ -1,12 +1,8 @@
-public class Book extends Content{
+public class Book extends ISBNContent{
 
     Book(String title, ISBN identifier){
         setTitle(title);
         setIdentifier(identifier);
-    }
-
-    public void setIdentifier(Identifier identifier){
-        this.identifier = identifier;
     }
 
 }
