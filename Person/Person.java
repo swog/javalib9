@@ -1,13 +1,29 @@
+import java.util.Date;
 
 public abstract class Person {
 	private String name;
 	private String address;
-	//private Date dateOfBirth;
+	private Date dateOfBirth;
 	private String email;
-	//private SSN ssn;
+	private SSN ssn;
 
+	Person(
+		String Name, 
+		String Address, 
+		Date Dob, 
+		String Email,
+		SSN Ssn
+	) {
+		name = Name;
+		address = Address;
+		dateOfBirth = Dob;
+		email = Email;
+		ssn = Ssn;
+	}
+	
 	public abstract String toString();
 
+	// Set
 	public void setName(String Name) {
 		name = Name;
 	}
@@ -20,6 +36,11 @@ public abstract class Person {
 		email = Email;
 	}
 
+	public void setSSN(SSN Ssn) {
+		ssn = Ssn;
+	}
+
+	// Get
 	public final String getName() {
 		return name;
 	}
@@ -30,5 +51,9 @@ public abstract class Person {
 
 	public final String getEmail() {
 		return email;
+	}
+
+	public final SSN getSSN() {
+		return ssn;
 	}
 }
