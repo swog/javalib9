@@ -1,9 +1,6 @@
 /*
  * HOW TO USE COLLECTION CLASS:
  *
- * get/set collection name
- * get/set contentArray ( NOT RECOMMENDED )
- *
  * "I need to add an item to my collection object! "
  * void addItem( Content item ) :: adds item of any content type (be careful) to current collection object
  *
@@ -18,6 +15,18 @@
  * sortCollectionByTitle()
  * sortCollectionByIdentifier()
  * sortCollectionByCheckoutStatus()
+ *
+ * "I need a Collection object featuring only Books, or only Lost items, etc. from a collection I already have"
+ * Collection getISBNContentCollectionSubset()
+ * Collection getISSNContentCollectionSubset()
+ * Collection getBookCollectionSubset()
+ * Collection getNewspaperCollectionSubset()
+ * Collection getJournalCollectionSubset()
+ * Collection getDVDCollectionSubset()
+ * Collection getLostCollectionSubset()
+ * Collection getCheckedOutCollectionSubset()
+ * Collection getNotCheckedOutCollectionSubset()
+ * >>>>>> NOTE: this does not change the original collection, it only returns a new collection object with what you need.
  * */
 package src.Collection;
 
@@ -25,10 +34,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 
-import src.Content.Content;
 import src.Identifier.Identifier;
+
+import src.Content.Content;
 import src.Content.ISBNContent;
 import src.Content.ISSNContent;
+import src.Content.Book;
+import src.Content.DVD;
+import src.Content.Journal;
+import src.Content.Newspaper;
 
 public class Collection {
 
@@ -41,8 +55,54 @@ public class Collection {
     Collection( String collectionName ){ //for creating a collection with no items
 
         this.setCollectionName(collectionName);
-        this.item = new Content[0];
+        this.setContentArray(new Content[0]);
+        this.setSortSetting("Identifier");
     }
+
+    Collection ( String collectionName, Content[] contentArray ){
+
+        this.setCollectionName(collectionName);
+        this.setContentArray(contentArray);
+        this.setSortSetting("Identifier");
+
+    }
+    Collection ( String collectionName, ArrayList<Content> contentArrayList ){
+        this.setCollectionName(collectionName);
+        this.setContentArray(contentArrayList);
+        this.setSortSetting("Identifier");
+    }
+
+    Collection (String collectionName, String sortSetting){
+        if ( isValidSortSetting(sortSetting) ){
+            this.setCollectionName(collectionName);
+            this.setContentArray(new Content[0]);
+            this.setSortSetting(sortSetting);
+        }
+        else {
+            throw new InvalidCollectionSortSettingException("Collection sort setting invalid");
+        }
+    }
+    Collection (String collectionName, Content[] contentArray, String sortSetting){
+        if ( isValidSortSetting(sortSetting) ){
+            this.setCollectionName(collectionName);
+            this.setContentArray(contentArray);
+            this.setSortSetting(sortSetting);
+        }
+        else {
+            throw new InvalidCollectionSortSettingException("Collection sort setting invalid");
+        }
+    }
+    Collection (String collectionName, ArrayList<Content> contentArrayList, String sortSetting){
+        if ( isValidSortSetting(sortSetting) ){
+            this.setCollectionName(collectionName);
+            this.setContentArray(contentArrayList);
+            this.setSortSetting(sortSetting);
+        }
+        else {
+            throw new InvalidCollectionSortSettingException("Collection sort setting invalid");
+        }
+    }
+
 
     /* getters and setters */
     public String getCollectionName(){
@@ -162,6 +222,167 @@ public class Collection {
         return contentToReturn;
     }
 
+    /* getting a subset of Collection */
+
+    public Collection getISBNContentCollectionSubset(String newCollectionName){
+        Content[] currentContentArray = this.getContentArray();
+
+        ArrayList<Content> contentArrayList = new ArrayList<>();
+
+        for ( int i = 0 ; i < currentContentArray.length ; i++ ){
+
+            if ( currentContentArray[i] instanceof ISBNContent ){
+
+                contentArrayList.add(currentContentArray[i]);
+            }
+        }
+
+        Collection newCollection = new Collection(newCollectionName, contentArrayList);
+
+        return newCollection;
+    }
+    public Collection getISSNContentCollectionSubset(String newCollectionName){
+        Content[] currentContentArray = this.getContentArray();
+
+        ArrayList<Content> contentArrayList = new ArrayList<>();
+
+        for ( int i = 0 ; i < currentContentArray.length ; i++ ){
+
+            if ( currentContentArray[i] instanceof ISSNContent ){
+
+                contentArrayList.add(currentContentArray[i]);
+            }
+        }
+
+        Collection newCollection = new Collection(newCollectionName, contentArrayList);
+
+        return newCollection;
+    }
+    public Collection getBookCollectionSubset(String newCollectionName){
+        Content[] currentContentArray = this.getContentArray();
+
+        ArrayList<Content> contentArrayList = new ArrayList<>();
+
+        for ( int i = 0 ; i < currentContentArray.length ; i++ ){
+
+            if ( currentContentArray[i] instanceof Book ){
+
+                contentArrayList.add(currentContentArray[i]);
+            }
+        }
+
+        Collection newCollection = new Collection(newCollectionName, contentArrayList);
+
+        return newCollection;
+    }
+    public Collection getDVDCollectionSubset(String newCollectionName){
+        Content[] currentContentArray = this.getContentArray();
+
+        ArrayList<Content> contentArrayList = new ArrayList<>();
+
+        for ( int i = 0 ; i < currentContentArray.length ; i++ ){
+
+            if ( currentContentArray[i] instanceof DVD ){
+
+                contentArrayList.add(currentContentArray[i]);
+            }
+        }
+
+        Collection newCollection = new Collection(newCollectionName, contentArrayList);
+
+        return newCollection;
+    }
+    public Collection getNewspaperCollectionSubset(String newCollectionName){
+        Content[] currentContentArray = this.getContentArray();
+
+        ArrayList<Content> contentArrayList = new ArrayList<>();
+
+        for ( int i = 0 ; i < currentContentArray.length ; i++ ){
+
+            if ( currentContentArray[i] instanceof Newspaper ){
+
+                contentArrayList.add(currentContentArray[i]);
+            }
+        }
+
+        Collection newCollection = new Collection(newCollectionName, contentArrayList);
+
+        return newCollection;
+    }
+    public Collection getJournalCollectionSubset(String newCollectionName){
+        Content[] currentContentArray = this.getContentArray();
+
+        ArrayList<Content> contentArrayList = new ArrayList<>();
+
+        for ( int i = 0 ; i < currentContentArray.length ; i++ ){
+
+            if ( currentContentArray[i] instanceof Journal ){
+
+                contentArrayList.add(currentContentArray[i]);
+            }
+        }
+
+        Collection newCollection = new Collection(newCollectionName, contentArrayList);
+
+        return newCollection;
+    }
+
+    public Collection getNotCheckedOutCollectionSubset(String newCollectionName){
+        Content[] currentContentArray = this.getContentArray();
+
+        ArrayList<Content> contentArrayList = new ArrayList<>();
+
+        for ( int i = 0 ; i < currentContentArray.length ; i++ ){
+
+            if ( currentContentArray[i].getCheckoutStatus().equals("Not Checked Out")){
+
+                contentArrayList.add(currentContentArray[i]);
+            }
+        }
+
+        Collection newCollection = new Collection(newCollectionName, contentArrayList);
+
+        return newCollection;
+
+    }
+    public Collection getCheckedOutCollectionSubset(String newCollectionName){
+        Content[] currentContentArray = this.getContentArray();
+
+        ArrayList<Content> contentArrayList = new ArrayList<>();
+
+        for ( int i = 0 ; i < currentContentArray.length ; i++ ){
+
+            if ( currentContentArray[i].getCheckoutStatus().equals("Checked Out")){
+
+                contentArrayList.add(currentContentArray[i]);
+            }
+        }
+
+        Collection newCollection = new Collection(newCollectionName, contentArrayList);
+
+        return newCollection;
+
+    }
+    public Collection getLostCollectionSubset(String newCollectionName){
+        Content[] currentContentArray = this.getContentArray();
+
+        ArrayList<Content> contentArrayList = new ArrayList<>();
+
+        for ( int i = 0 ; i < currentContentArray.length ; i++ ){
+
+            if ( currentContentArray[i].getCheckoutStatus().equals("Lost")){
+
+                contentArrayList.add(currentContentArray[i]);
+            }
+        }
+
+        Collection newCollection = new Collection(newCollectionName, contentArrayList);
+
+        return newCollection;
+
+    }
+
+
     /* sorting a collection object */
 
     public void sortCollectionByTitle(){
@@ -270,5 +491,13 @@ public class Collection {
         }
 
 
+    }
+
+    private boolean isValidSortSetting(String sortSetting){
+        if ( !sortSetting.equals("Title") && !sortSetting.equals("Identifier") && !sortSetting.equals("Checkout Status")){
+            return false;
+        }
+
+        return true;
     }
 }
