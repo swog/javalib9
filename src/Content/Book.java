@@ -4,7 +4,7 @@ import src.Identifier.ISBN;
 
 public class Book extends ISBNContent{
 
-    Book(String title, ISBN identifier, String checkoutStatus){
+    public Book(String title, ISBN identifier, String checkoutStatus){
         setTitle(title);
         setIdentifier(identifier);
         setCheckoutStatus(checkoutStatus);

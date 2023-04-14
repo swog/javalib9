@@ -79,14 +79,15 @@ public class LibraryFileReader {
             String identifierAsString = tokenizedLine[1];
             String checkoutStatus = tokenizedLine[2];
 
+            ISBN identifier = null;
             try {
-                ISBN identifier = new ISBN(identifierAsString);
+                identifier = new ISBN(identifierAsString);
             } catch (InvalidIdentifierException e) {
                 e.printStackTrace();
                 return null;
             }
 
-            Book nextBook = new Book()
+            Book nextBook = new Book(title, identifier, checkoutStatus);
         }
     }
 }
