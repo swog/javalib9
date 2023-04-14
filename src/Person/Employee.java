@@ -1,3 +1,5 @@
+package src.Person;
+
 public class Employee extends Person {
 	private int empID;
 	private String dept;

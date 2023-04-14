@@ -1,3 +1,4 @@
+package src.Person;
 
 public class Member extends Person {
 	private int id;
