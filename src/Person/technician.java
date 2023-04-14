@@ -1,3 +1,5 @@
+package src.Person;
+
 public class technician extends Employee {
 	public technician() {
 	}

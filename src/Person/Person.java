@@ -1,4 +1,7 @@
+package src.Person;
+
 import java.util.Date;
+import src.Identifier.SSN;
 
 public abstract class Person {
 	private String name;
@@ -6,20 +9,6 @@ public abstract class Person {
 	private Date dateOfBirth;
 	private String email;
 	private SSN ssn;
-
-	Person(
-		String Name, 
-		String Address, 
-		Date Dob, 
-		String Email,
-		SSN Ssn
-	) {
-		name = Name;
-		address = Address;
-		dateOfBirth = Dob;
-		email = Email;
-		ssn = Ssn;
-	}
 	
 	public abstract String toString();
 
