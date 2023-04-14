@@ -1,9 +1,18 @@
+package src.Content;
+
+import src.Identifier.Identifier;
+import src.Identifier.ISBN;
 
 public abstract class ISBNContent extends Content implements Comparable<ISBNContent>{
     ISBN id;
 
 
     public ISBN getISBN(){
+        return this.id;
+    }
+
+    @Override
+    public Identifier getIdentifier(){
         return this.id;
     }
 

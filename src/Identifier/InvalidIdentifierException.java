@@ -1,3 +1,5 @@
+package src.Identifier;
+
 public class InvalidIdentifierException extends RuntimeException{
     InvalidIdentifierException(String errorMessage){
         super(errorMessage);

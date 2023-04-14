@@ -1,3 +1,5 @@
+package src.Identifier;
+
 public class ISSN extends Identifier{
 
     ISSN(String id){
