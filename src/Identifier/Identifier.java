@@ -16,4 +16,9 @@ public abstract class Identifier implements Comparable<Identifier>{
         return this.getId().compareTo(i.getId());
     }
 
+    @Override
+    public String toString(){
+        return this.id;
+    }
+
 }

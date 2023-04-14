@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 
 import src.Collection.Collection;
 import src.Content.Content;
@@ -17,16 +18,34 @@ import src.Identifier.ISBN;
 import src.Identifier.ISSN;
 import src.Identifier.InvalidIdentifierException;
 /*
+ * -------------------------------------------
+ * A NOTE ON WHAT THE fileName PARAMETER SHOULD BE:
+ * >> this should always be "LibraryContentFiles/[fileName].csv"
+ * >> if someone wants I could change this behavior
+ *
+ * -------------------------------------------
  * STATIC METHODS
+ * -------------------------------------------
+ *
+ * "I want to read a file into a collection object!"
  * > Collection readFileIntoCollection(String fileName)
  * >> searches for an exact file and puts everything from that file into a collection
+ *
+ * -------------------------------------------
+ * "I want to write my collection to a file!"
+ * > If your collection has the same content type:
+ * >> void writeBookCollectionIntoFile(Collection collectionToWriteToFile, String fileName)
+ * >> void writeDVDCollectionIntoFile(Collection collectionToWriteToFile, String fileName)
+ * >> void writeNewspaperCollectionIntoFile(Collection collectionToWriteToFile, String fileName)
+ * >> void writeJournalCollectionIntoFile(Collection collectionToWriteToFile, String fileName)
+ *
+ * > If your collection has variable content type: <<< THIS IS UNDER CONSTRUCTION AS OF 4/14 at 4:25 >>>
+ * >> void writeCatchAllCollectionIntoFile(Collection collectionToWriteToFile, String fileName)
+ * -------------------------------------------
  * */
 
 public class LibraryFileReader {
 
-    public static Collection readAllFilesIntoCompleteCollection(){
-        return null;
-    }
 
     public static Collection readFileIntoCollection(String fileName, String newCollectionName){
 
@@ -61,9 +80,71 @@ public class LibraryFileReader {
             contentForNewCollection = parseNewspaperFile(fileLines);
         } else if ( tokenizedFirstLine[0].equals("Journal") ){
             contentForNewCollection = parseJournalFile(fileLines);
+        } else if ( tokenizedFirstLine[0].equals("Catch-all") ){
+            contentForNewCollection = parseCatchAllFile(fileLines);
         }
 
         return new Collection(newCollectionName, contentForNewCollection, "Identifier");
+    }
+
+    public static void writeCatchAllCollectionIntoFile(Collection collectionToWriteToFile, String fileLocation){
+        writeCollectionIntoFile(collectionToWriteToFile, fileLocation, "Catch-all", "Identifier");
+    }
+    public static void writeBookCollectionIntoFile(Collection collectionToWriteToFile, String fileLocation){
+        Content[] contentArray = collectionToWriteToFile.getContentArray();
+        for ( int i = 0 ; i < contentArray.length ; i++ ){
+            if ( !( contentArray[i] instanceof Book ) ){
+                throw new InvalidCollectionTypeFileWritingException("Not all items are books, call a different file writing function");
+            }
+        }
+        writeCollectionIntoFile(collectionToWriteToFile, fileLocation, "Book", "ISBN");
+    }
+    public static void writeDVDCollectionIntoFile(Collection collectionToWriteToFile, String fileLocation){
+        Content[] contentArray = collectionToWriteToFile.getContentArray();
+        for ( int i = 0 ; i < contentArray.length ; i++ ){
+            if ( !( contentArray[i] instanceof DVD) ){
+                throw new InvalidCollectionTypeFileWritingException("Not all items are DVDs, call a different file writing function");
+            }
+        }
+        writeCollectionIntoFile(collectionToWriteToFile, fileLocation, "DVD", "ISBN");
+    }
+    public static void writeJournalCollectionIntoFile(Collection collectionToWriteToFile, String fileLocation){
+        Content[] contentArray = collectionToWriteToFile.getContentArray();
+        for ( int i = 0 ; i < contentArray.length ; i++ ){
+            if ( !( contentArray[i] instanceof Journal) ){
+                throw new InvalidCollectionTypeFileWritingException("Not all items are journals, call a different file writing function");
+            }
+        }
+        writeCollectionIntoFile(collectionToWriteToFile, fileLocation, "Journal", "ISSN");
+    }
+    public static void writeNewspaperCollectionIntoFile(Collection collectionToWriteToFile, String fileLocation){
+        Content[] contentArray = collectionToWriteToFile.getContentArray();
+        for ( int i = 0 ; i < contentArray.length ; i++ ){
+            if ( !( contentArray[i] instanceof Newspaper) ){
+                throw new InvalidCollectionTypeFileWritingException("Not all items are newspapers, call a different file writing function");
+            }
+        }
+        writeCollectionIntoFile(collectionToWriteToFile, fileLocation, "Newspaper", "ISSN");
+    }
+
+    private static void writeCollectionIntoFile(Collection collectionToWriteToFile, String fileLocation, String listType, String identifierType){
+        try {
+            PrintWriter writer = new PrintWriter(fileLocation);
+
+            String line1 = listType.concat(",").concat(identifierType).concat(",Status");
+            writer.println(line1);
+
+            Content[] contentArray = collectionToWriteToFile.getContentArray();
+            for ( int i = 0 ; i < contentArray.length ; i++ ){
+
+                String newLine = contentArray[i].getTitle().concat(",").concat(contentArray[i].getIdentifier().toString()).concat(",").concat(contentArray[i].getCheckoutStatus()).concat(",");
+                writer.println(newLine);
+            }
+
+            writer.close();
+        } catch (Exception e){ // change this
+            e.printStackTrace();
+        }
     }
 
     private static ArrayList<Content> parseBookFile(ArrayList<String> fileLines){
@@ -165,6 +246,21 @@ public class LibraryFileReader {
         }
 
         return filledArrayList;
+    }
+
+    private static ArrayList<Content> parseCatchAllFile(ArrayList<String> fileLines){
+
+    }
+
+    public static void main ( String[] args ){
+        Collection myCollection = LibraryFileReader.readFileIntoCollection("LibraryContentFiles/BookList.csv", "Book Collection");
+
+        Content[] contentArray = myCollection.getContentArray();
+
+        myCollection.removeItemByIdentifier(contentArray[0].getIdentifier());
+
+        LibraryFileReader.writeCollectionIntoFile(myCollection, "LibraryContentFiles/BookList2.csv", "Book", "ISBN");
+
     }
 
 }

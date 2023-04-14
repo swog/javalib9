@@ -159,15 +159,16 @@ public class Collection {
         int minIndex = 0;
         int currentIndex = (maxIndex + minIndex)/2;
 
-
-        while ( minIndex != currentIndex && maxIndex != currentIndex){
+        int oldCurrentIndex = -1;
+        while ( oldCurrentIndex != currentIndex ){
             Identifier potentiallyCorrectIdentifier = contentArray[currentIndex].getIdentifier();
+            oldCurrentIndex = currentIndex;
             if ( potentiallyCorrectIdentifier.compareTo(identifier) == 0 ){
                 return currentIndex;
-            } else if ( potentiallyCorrectIdentifier.compareTo(identifier) < 0 ){ //if it's too low
+            } else if ( potentiallyCorrectIdentifier.compareTo(identifier) > 0 ){ //if it's too low
                 minIndex = currentIndex;
                 currentIndex = ( maxIndex+minIndex )/2;
-            } else if ( potentiallyCorrectIdentifier.compareTo(identifier) > 0 ){ //if it's too high
+            } else if ( potentiallyCorrectIdentifier.compareTo(identifier) < 0 ){ //if it's too high
                 maxIndex = currentIndex;
                 currentIndex = ( maxIndex+minIndex )/2;
             }
@@ -208,7 +209,6 @@ public class Collection {
 
     public Content removeItemByIdentifier(Identifier identifier){
         int indexOfContentToRemove = searchItemByIdentifierForIndex(identifier);
-
         if ( indexOfContentToRemove == -1 ) return null; //nothing with that identifier found, do nothing
 
         Content[] contentArray = this.getContentArray();
@@ -394,6 +394,7 @@ public class Collection {
         contentArrayList = sortArrayList(contentArrayList,"Title");
 
         this.setContentArray(contentArrayList);
+        this.setSortSetting("Title");
 
     }
     public void sortCollectionByIdentifier(){
@@ -405,6 +406,7 @@ public class Collection {
         contentArrayList = sortArrayList(contentArrayList,"Title");
 
         this.setContentArray(contentArrayList);
+        this.setSortSetting("Identifier");
     }
 
     public void sortCollectionByCheckoutStatus(){
@@ -416,6 +418,7 @@ public class Collection {
         contentArrayList = sortArrayList(contentArrayList,"Title");
 
         this.setContentArray(contentArrayList);
+        this.setSortSetting("Checkout Status");
     }
 
     private static ArrayList<Content> sortArrayList(ArrayList<Content> myArrayList, String sortSetting){ // DO NOT USE THE PASSED ARRAY LIST AS INCONSISTENT THINGS HAPPEN, USE THE RETURNED ARRAY LIST
