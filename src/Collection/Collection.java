@@ -1,11 +1,30 @@
-package Collection;
+/*
+ * HOW TO USE COLLECTION CLASS:
+ *
+ * get/set collection name
+ * get/set contentArray ( NOT RECOMMENDED )
+ *
+ * "I need to add an item to my collection object! "
+ * void addItem( Content item ) :: adds item of any content type (be careful) to current collection object
+ *
+ * "I need to find an item in this Collection with identifier IDENT"
+ * Content getItemByIdentifier(Identifier IDENT)
+ *
+ * "I need to remove an item from this Collection with identifier IDENT"
+ * Content removeItemByIdentifier(Identifier IDENT)
+ * >>>>> NOTE: this returns the object removed if you want it
+ *
+ * */
+package src.Collection;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 
-public class Collection {
+import src.Content.Content;
+import src.Identifier.Identifier;
 
+public class Collection {
 
     private String collectionName; // books, newspapers, DVDs, or journals
 

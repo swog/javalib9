@@ -1,6 +1,6 @@
-package javalib9.FileReader;
+package src.FileReader;
 
-import Collection;
+import src.Collection.Collection;
 
 /*
  * STATIC METHODS
@@ -11,7 +11,8 @@ import Collection;
 
 public class FileReader {
 
-    public static Collection readFileIntoCollection{
+    public static Collection readFileIntoCollection(String fileName){
+
         return null;
     }
 }
