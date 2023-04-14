@@ -52,27 +52,27 @@ public class Collection {
 
     private String sortedBy;
 
-    Collection( String collectionName ){ //for creating a collection with no items
+    public Collection( String collectionName ){ //for creating a collection with no items
 
         this.setCollectionName(collectionName);
         this.setContentArray(new Content[0]);
         this.setSortSetting("Identifier");
     }
 
-    Collection ( String collectionName, Content[] contentArray ){
+    public Collection ( String collectionName, Content[] contentArray ){
 
         this.setCollectionName(collectionName);
         this.setContentArray(contentArray);
         this.setSortSetting("Identifier");
 
     }
-    Collection ( String collectionName, ArrayList<Content> contentArrayList ){
+    public Collection ( String collectionName, ArrayList<Content> contentArrayList ){
         this.setCollectionName(collectionName);
         this.setContentArray(contentArrayList);
         this.setSortSetting("Identifier");
     }
 
-    Collection (String collectionName, String sortSetting){
+    public Collection (String collectionName, String sortSetting){
         if ( isValidSortSetting(sortSetting) ){
             this.setCollectionName(collectionName);
             this.setContentArray(new Content[0]);
@@ -82,7 +82,7 @@ public class Collection {
             throw new InvalidCollectionSortSettingException("Collection sort setting invalid");
         }
     }
-    Collection (String collectionName, Content[] contentArray, String sortSetting){
+    public Collection (String collectionName, Content[] contentArray, String sortSetting){
         if ( isValidSortSetting(sortSetting) ){
             this.setCollectionName(collectionName);
             this.setContentArray(contentArray);
@@ -92,7 +92,7 @@ public class Collection {
             throw new InvalidCollectionSortSettingException("Collection sort setting invalid");
         }
     }
-    Collection (String collectionName, ArrayList<Content> contentArrayList, String sortSetting){
+    public Collection (String collectionName, ArrayList<Content> contentArrayList, String sortSetting){
         if ( isValidSortSetting(sortSetting) ){
             this.setCollectionName(collectionName);
             this.setContentArray(contentArrayList);

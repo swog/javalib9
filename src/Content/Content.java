@@ -25,7 +25,7 @@ public abstract class Content {
     }
 
     public void setCheckoutStatus(String newStatus){
-        if ( newStatus != "Checked Out" && newStatus != "Not Checked Out" && newStatus != "Lost"){
+        if ( !newStatus.equals("Checked Out") && !newStatus.equals("Not Checked Out") && !newStatus.equals("Lost")){
             throw new InvalidCheckoutStatusException("Checkout status not changed -- must be 'Checked Out', 'Not Checked Out', or 'Lost'");
         }
         else{
