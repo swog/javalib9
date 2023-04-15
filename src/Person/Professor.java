@@ -1,5 +1,24 @@
 package src.Person;
 
-public class Professor extends Member {
+import java.util.ArrayList;
+import java.util.Date;
+import src.Identifier.SSN;
 
+public class Professor extends Member {
+	protected ArrayList<Student> students;
+
+	public Professor(
+		String Name,
+		String Address,
+		Date DoB,
+		String Email,
+		SSN Social,
+		int Id
+	) {
+		super(Name, Address, DoB, Email, Social, Id);
+	}
+	
+	public String toString() {
+		return "Professor";
+	}
 }

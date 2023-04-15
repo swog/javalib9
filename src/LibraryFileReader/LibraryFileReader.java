@@ -249,7 +249,7 @@ public class LibraryFileReader {
     }
 
     private static ArrayList<Content> parseCatchAllFile(ArrayList<String> fileLines){
-
+        return new ArrayList<>();
     }
 
     public static void main ( String[] args ){
