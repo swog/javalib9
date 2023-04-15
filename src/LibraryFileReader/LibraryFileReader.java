@@ -30,6 +30,8 @@ import src.Identifier.InvalidIdentifierException;
  * "I want to read a file into a collection object!"
  * > Collection readFileIntoCollection(String fileName)
  * >> searches for an exact file and puts everything from that file into a collection
+ * >> throws "InvalidContentFileException" if the file attempted to be read is formatted incorrectly
+ * >> returns null if file is not found, so check to make sure your Collection isn't null before using it
  *
  * -------------------------------------------
  * "I want to write my collection to a file!"
@@ -38,7 +40,6 @@ import src.Identifier.InvalidIdentifierException;
  * >> void writeDVDCollectionIntoFile(Collection collectionToWriteToFile, String fileName)
  * >> void writeNewspaperCollectionIntoFile(Collection collectionToWriteToFile, String fileName)
  * >> void writeJournalCollectionIntoFile(Collection collectionToWriteToFile, String fileName)
- *
  * > If your collection has variable content type: <<< THIS IS UNDER CONSTRUCTION AS OF 4/14 at 4:25 >>>
  * >> void writeCatchAllCollectionIntoFile(Collection collectionToWriteToFile, String fileName)
  * -------------------------------------------
@@ -72,16 +73,20 @@ public class LibraryFileReader {
 
         ArrayList<Content> contentForNewCollection = null;
 
-        if ( tokenizedFirstLine[0].equals("Book") ){
-            contentForNewCollection = parseBookFile(fileLines);
-        } else if ( tokenizedFirstLine[0].equals("DVD") ){
-            contentForNewCollection = parseDVDFile(fileLines);
-        } else if ( tokenizedFirstLine[0].equals("Newspaper") ){
-            contentForNewCollection = parseNewspaperFile(fileLines);
-        } else if ( tokenizedFirstLine[0].equals("Journal") ){
-            contentForNewCollection = parseJournalFile(fileLines);
-        } else if ( tokenizedFirstLine[0].equals("Catch-all") ){
-            contentForNewCollection = parseCatchAllFile(fileLines);
+        try {
+            if (tokenizedFirstLine[0].equals("Book")) {
+                contentForNewCollection = parseBookFile(fileLines);
+            } else if (tokenizedFirstLine[0].equals("DVD")) {
+                contentForNewCollection = parseDVDFile(fileLines);
+            } else if (tokenizedFirstLine[0].equals("Newspaper")) {
+                contentForNewCollection = parseNewspaperFile(fileLines);
+            } else if (tokenizedFirstLine[0].equals("Journal")) {
+                contentForNewCollection = parseJournalFile(fileLines);
+            } else if (tokenizedFirstLine[0].equals("Catch-all")) {
+                contentForNewCollection = parseCatchAllFile(fileLines);
+            }
+        } catch ( InvalidContentFileException e ){
+            throw e;
         }
 
         return new Collection(newCollectionName, contentForNewCollection, "Identifier");
@@ -162,6 +167,7 @@ public class LibraryFileReader {
                 identifier = new ISBN(identifierAsString);
             } catch (InvalidIdentifierException e) {
                 e.printStackTrace();
+                throw new InvalidContentFileException("Chosen file to parse improperly formatted", e);
                 return null;
             }
 
@@ -188,6 +194,7 @@ public class LibraryFileReader {
                 identifier = new ISBN(identifierAsString);
             } catch (InvalidIdentifierException e) {
                 e.printStackTrace();
+                throw new InvalidContentFileException("Chosen file to parse improperly formatted", e);
                 return null;
             }
 
@@ -212,6 +219,7 @@ public class LibraryFileReader {
                 identifier = new ISSN(identifierAsString);
             } catch (InvalidIdentifierException e) {
                 e.printStackTrace();
+                throw new InvalidContentFileException("Chosen file to parse improperly formatted", e);
                 return null;
             }
 
@@ -237,6 +245,7 @@ public class LibraryFileReader {
                 identifier = new ISSN(identifierAsString);
             } catch (InvalidIdentifierException e) {
                 e.printStackTrace();
+                throw new InvalidContentFileException("Chosen file to parse improperly formatted", e);
                 return null;
             }
 
@@ -249,7 +258,76 @@ public class LibraryFileReader {
     }
 
     private static ArrayList<Content> parseCatchAllFile(ArrayList<String> fileLines){
-        return new ArrayList<>();
+        ArrayList<Content> filledArrayList = new ArrayList<>();
+        for ( int i = 1 ; i < fileLines.size() ; i++ ){
+            String[] tokenizedLine = fileLines.get(i).split(",");
+
+            String title = tokenizedLine[0];
+            String contentType = tokenizedLine[1];
+            String identifierAsString = tokenizedLine[2];
+            String checkoutStatus = tokenizedLine[3];
+
+            if ( contentType.equals("Book") ){
+                ISBN identifier = null;
+                try {
+                    identifier = new ISBN(identifierAsString);
+                } catch (InvalidIdentifierException e) {
+                    e.printStackTrace();
+                    throw new InvalidContentFileException("Chosen file to parse improperly formatted", e);
+                }
+
+                Book nextBook = new Book(title, identifier, checkoutStatus);
+
+                filledArrayList.add(nextBook);
+
+            } else if (contentType.equals("DVD")) {
+                ISBN identifier = null;
+                try {
+                    identifier = new ISBN(identifierAsString);
+                } catch (InvalidIdentifierException e) {
+                    e.printStackTrace();
+                    throw new InvalidContentFileException("Chosen file to parse improperly formatted", e);
+                }
+
+                DVD nextDVD = new DVD(title, identifier, checkoutStatus);
+
+                filledArrayList.add(nextDVD);
+
+            } else if (contentType.equals("Newspaper")) {
+
+                ISSN identifier = null;
+
+                try {
+                    identifier = new ISSN(identifierAsString);
+                } catch (InvalidIdentifierException e) {
+                    e.printStackTrace();
+                    throw new InvalidContentFileException("Chosen file to parse improperly formatted", e);
+                }
+
+                Newspaper nextNewspaper = new Newspaper(title, identifier, checkoutStatus);
+                filledArrayList.add(nextNewspaper);
+
+            } else if (contentType.equals("Journal")) {
+
+                ISSN identifier = null;
+                try {
+                    identifier = new ISSN(identifierAsString);
+                } catch (InvalidIdentifierException e) {
+                    e.printStackTrace();
+                    throw new InvalidContentFileException("Chosen file to parse improperly formatted", e);
+                }
+
+                Journal nextJournal = new Journal(title, identifier, checkoutStatus);
+
+                filledArrayList.add(nextJournal);
+            } else { // THROW INVALID FILE EXCEPTION OR SOMETHING
+
+            }
+
+        }
+
+        return filledArrayList;
+
     }
 
     public static void main ( String[] args ){
