@@ -24,6 +24,10 @@ import src.Person.*;
 public class PersonFileReader {
 	public static SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
 
+	public static String dateToString(Date date) {
+		return dateFormatter.format(date);
+	}
+
 	public static ArrayList<Person> readStudentFile(String fileName) {
 		ArrayList<Person> people = new ArrayList<>();
 		try {
@@ -47,7 +51,7 @@ public class PersonFileReader {
 		return people;
 	}
 
-	public static Person readPersonFromLine(String line) {
+	private static Person readPersonFromLine(String line) {
 		try {
 			String values[] = line.split(",", 0);
 			String name = values[0];
@@ -82,5 +86,15 @@ public class PersonFileReader {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public static void main(String[] args) {
+		Person.setPeople(PersonFileReader.readStudentFile("LibraryContentFiles/People.csv"));
+
+		ArrayList<Person> people = Person.getPeople();
+
+		for (int i = 0; i < people.size(); i++) {
+			System.out.println(people.get(i).toString());
+		}
 	}
 }

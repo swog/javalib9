@@ -10,8 +10,8 @@ public abstract class Person {
 	protected Date dateOfBirth;
 	protected String email;
 	protected SSN ssn;
-	private static ArrayList<Person> people = new ArrayList<>();
-	
+	private static ArrayList<Person> people = null;
+
 	public Person() {
 	}
 
@@ -27,6 +27,10 @@ public abstract class Person {
 		dateOfBirth = DoB;
 		email = Email;
 		ssn = Social;
+	}
+
+	public static void setPeople(ArrayList<Person> People) {
+		people = People;
 	}
 
 	public static void addPerson(Person person) {
@@ -75,6 +79,10 @@ public abstract class Person {
 		ssn = Social;
 	}
 
+	public void setDateOfBirth(Date DoB) {
+		dateOfBirth = DoB;
+	}
+
 	// Get
 	public final String getName() {
 		return name;
@@ -90,5 +98,9 @@ public abstract class Person {
 
 	public final SSN getSSN() {
 		return ssn;
+	}
+
+	public final Date getDateOfBirth() {
+		return dateOfBirth;
 	}
 }

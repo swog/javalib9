@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.ArrayList;
 
 import src.Identifier.SSN;
+import src.LibraryFileReader.PersonFileReader;
 
 public class Student extends Member {
 	protected int professorId;
@@ -24,7 +25,16 @@ public class Student extends Member {
 	}
 
 	public String toString() {
-		return "Student";
+		return String.format(
+			"Student:\n\tName: %s\n\tAddress: %s\n\tDate of Birth: %s\n\tEmail: %s\n\tSSN: %s\n\tMember Id: %d\n\tProfessor Id: %d", 
+			getName(), 
+			getAddress(),
+			PersonFileReader.dateToString(getDateOfBirth()),
+			getEmail(),
+			getSSN().getId(),
+			getId(),
+			professorId
+		);
 	}
 
 	public Professor getProfessor() {
