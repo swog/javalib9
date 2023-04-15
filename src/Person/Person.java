@@ -54,6 +54,10 @@ public abstract class Person {
 		return false;
 	}
 
+	public boolean isProfessor() {
+		return false;
+	}
+
 	// Set
 	public void setName(String Name) {
 		name = Name;

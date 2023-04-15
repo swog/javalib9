@@ -221,7 +221,6 @@ public class LibraryFileReader {
             } catch (InvalidIdentifierException e) {
                 e.printStackTrace();
                 throw new InvalidContentFileException("Chosen file to parse improperly formatted", e);
-                return null;
             }
 
             Book nextBook = new Book(title, identifier, checkoutStatus);
@@ -248,7 +247,6 @@ public class LibraryFileReader {
             } catch (InvalidIdentifierException e) {
                 e.printStackTrace();
                 throw new InvalidContentFileException("Chosen file to parse improperly formatted", e);
-                return null;
             }
 
             DVD nextDVD = new DVD(title, identifier, checkoutStatus);
@@ -273,7 +271,6 @@ public class LibraryFileReader {
             } catch (InvalidIdentifierException e) {
                 e.printStackTrace();
                 throw new InvalidContentFileException("Chosen file to parse improperly formatted", e);
-                return null;
             }
 
             Journal nextJournal = new Journal(title, identifier, checkoutStatus);
@@ -299,7 +296,6 @@ public class LibraryFileReader {
             } catch (InvalidIdentifierException e) {
                 e.printStackTrace();
                 throw new InvalidContentFileException("Chosen file to parse improperly formatted", e);
-                return null;
             }
 
             Newspaper nextNewspaper = new Newspaper(title, identifier, checkoutStatus);
