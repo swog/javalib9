@@ -93,7 +93,7 @@ public class LibraryFileReader {
     }
 
     public static void writeCatchAllCollectionIntoFile(Collection collectionToWriteToFile, String fileLocation){
-        writeCollectionIntoFile(collectionToWriteToFile, fileLocation, "Catch-all", "Identifier");
+        writeCollectionIntoFile(collectionToWriteToFile, fileLocation, "Catch All", "Identifier");
     }
     public static void writeBookCollectionIntoFile(Collection collectionToWriteToFile, String fileLocation){
         Content[] contentArray = collectionToWriteToFile.getContentArray();
@@ -133,23 +133,76 @@ public class LibraryFileReader {
     }
 
     private static void writeCollectionIntoFile(Collection collectionToWriteToFile, String fileLocation, String listType, String identifierType){
-        try {
-            PrintWriter writer = new PrintWriter(fileLocation);
 
-            String line1 = listType.concat(",").concat(identifierType).concat(",Status");
-            writer.println(line1);
+        if ( listType.equals("Catch All") ){ // in the case the file needed to be written is a catch all file
 
-            Content[] contentArray = collectionToWriteToFile.getContentArray();
-            for ( int i = 0 ; i < contentArray.length ; i++ ){
+            try {
+                PrintWriter writer = new PrintWriter(fileLocation);
 
-                String newLine = contentArray[i].getTitle().concat(",").concat(contentArray[i].getIdentifier().toString()).concat(",").concat(contentArray[i].getCheckoutStatus()).concat(",");
-                writer.println(newLine);
+                String line1 = "Content Name,Content Type,Identifier,Status";
+                writer.println(line1);
+
+                Content[] contentArray = collectionToWriteToFile.getContentArray();
+
+                for (int i = 0; i < contentArray.length; i++) {
+
+                    String identifierString = null;
+
+                    if ( contentArray[i] instanceof Book ){
+                        identifierString = "Book";
+                    } else if ( contentArray[i] instanceof DVD ){
+                        identifierString = "DVD";
+                    } else if ( contentArray[i] instanceof Newspaper ){
+                        identifierString = "Newspaper";
+                    } else if ( contentArray[i] instanceof Journal ){
+                        identifierString = "Journal";
+                    } else {
+                        writer.close();
+
+                        throw new InvalidCollectionException("Item in Collection is invalid content. WARNING: unfinished file still written");
+                    }
+
+                    String newLine =
+                        contentArray[i].getTitle().concat(",")
+                        .concat(identifierString)
+                        .concat(contentArray[i].getIdentifier().toString()).concat(",")
+                        .concat(contentArray[i].getCheckoutStatus());
+
+                    writer.println(newLine);
+                }
+
+                writer.close();
+
+
+
+            } catch (Exception e){
+
             }
 
-            writer.close();
-        } catch (Exception e){ // change this
-            e.printStackTrace();
+        } else { // for all other collections
+            try {
+                PrintWriter writer = new PrintWriter(fileLocation);
+
+                String line1 = listType.concat(",").concat(identifierType).concat(",Status");
+                writer.println(line1);
+
+                Content[] contentArray = collectionToWriteToFile.getContentArray();
+                for (int i = 0; i < contentArray.length; i++) {
+
+                    String newLine = contentArray[i].getTitle().concat(",")
+                            .concat(contentArray[i].getIdentifier().toString()).concat(",")
+                            .concat(contentArray[i].getCheckoutStatus());
+
+                    writer.println(newLine);
+                }
+
+                writer.close();
+            } catch (Exception e) { // change this
+                e.printStackTrace();
+            }
+            
         }
+
     }
 
     private static ArrayList<Content> parseBookFile(ArrayList<String> fileLines){
