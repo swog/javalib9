@@ -1,6 +1,7 @@
 package src.Person;
 
 import java.util.Date;
+import java.util.ArrayList;
 
 import src.Identifier.SSN;
 
@@ -27,10 +28,15 @@ public class Student extends Member {
 	}
 
 	public Professor getProfessor() {
-		if (professor != null) {
+		// Professor is valid & the professorId matches the current professor object
+		if (professor != null && professor.getId() == professorId) {
 			return professor;
 		}
 
+		// Professor has changed or never set
+		professor = null;
+
+		// Find the professor object
 		ArrayList<Person> people = getPeople();
 		for (int i = 0; i < people.size(); i++) {
 			Person person = people.get(i);

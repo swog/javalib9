@@ -17,7 +17,9 @@ import src.Person.*;
 
 // Date of birth follows dd/MM/yyyy
 // Name,Address,DoB,Email,SSN,Type
-// Name,Address,DoB,Email,SSN,Student,Id,ProfessorId,
+// Name,Address,DoB,Email,SSN,Professor,Id
+// Name,Address,DoB,Email,SSN,Student,Id,ProfessorId
+// Name,Address,DoB,Email,SSN,External,Id
 
 public class PersonFileReader {
 	public static SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -55,10 +57,18 @@ public class PersonFileReader {
 			SSN ssn = new SSN(values[4]);
 			String type = values[5];
 			switch (type) {
+				case "Professor": {
+					int memberId = Integer.parseInt(values[6]);
+					return new Professor(name, address, dateOfBirth, email, ssn, memberId);
+				}
 				case "Student": {
 					int memberId = Integer.parseInt(values[6]);
 					int professorId = Integer.parseInt(values[7]);
 					return new Student(name, address, dateOfBirth, email, ssn, memberId, professorId);
+				}
+				case "External": {
+					int memberId = Integer.parseInt(values[6]);
+					return new External(name, address, dateOfBirth, email, ssn, memberId);
 				}
 				// Any other types
 			}
