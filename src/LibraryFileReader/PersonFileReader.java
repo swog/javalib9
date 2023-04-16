@@ -88,6 +88,10 @@ public class PersonFileReader {
 		return null;
 	}
 
+	public static Member findByMemberId(int memberId) {
+		return null;
+	}
+
 	public static void main(String[] args) {
 		Person.setPeople(PersonFileReader.readStudentFile("LibraryContentFiles/People.csv"));
 
