@@ -29,7 +29,7 @@ public abstract class Content {
         return this.checkoutStatus;
     }
 
-    private void setCheckoutStatus(String newStatus){
+    protected void setCheckoutStatus(String newStatus){
         if ( !newStatus.equals("Checked Out") && !newStatus.equals("Not Checked Out") && !newStatus.equals("Lost")){
             throw new InvalidCheckoutStatusException("Checkout status not changed -- must be 'Checked Out', 'Not Checked Out', or 'Lost'");
         }
@@ -41,24 +41,24 @@ public abstract class Content {
     public Date getCheckoutDate(){
         return this.checkoutDate;
     }
-    private void setCheckoutDate(Date newDate){
+    protected void setCheckoutDate(Date newDate){
         this.checkoutDate = newDate;
     }
-    private void clearCheckoutDate(){
+    protected void clearCheckoutDate(){
         this.checkoutDate = null;
     }
 
     public int getCheckoutMemberId(){
         return this.checkoutMemberId;
     }
-    private void setCheckoutMemberId(int newId){
+    protected void setCheckoutMemberId(int newId){
         if ( newId < 0 && newId != -1){
             throw new InvalidMemberIdException("checkoutMemberId must either be -1 or positive to be valid");
         } else {
             this.checkoutMemberId = newId;
         }
     }
-    private void clearCheckoutMemberId(){
+    protected void clearCheckoutMemberId(){
         this.checkoutMemberId = -1;
     }
 
