@@ -84,6 +84,8 @@ public class LibraryFileReader {
                 contentForNewCollection = parseJournalFile(fileLines);
             } else if (tokenizedFirstLine[0].equals("Catch-all")) {
                 contentForNewCollection = parseCatchAllFile(fileLines);
+            } else {
+                throw new InvalidContentFileException("The file you chose is either not a content file or isn't formatted correctly");
             }
         } catch ( InvalidContentFileException e ){
             throw e;
