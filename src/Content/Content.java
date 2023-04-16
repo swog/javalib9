@@ -41,24 +41,24 @@ public abstract class Content {
     public Date getCheckoutDate(){
         return this.checkoutDate;
     }
-    public void setCheckoutDate(Date newDate){
+    private void setCheckoutDate(Date newDate){
         this.checkoutDate = newDate;
     }
-    public void clearCheckoutDate(){
+    private void clearCheckoutDate(){
         this.checkoutDate = null;
     }
 
     public int getCheckoutMemberId(){
         return this.checkoutMemberId;
     }
-    public void setCheckoutMemberId(int newId){
+    private void setCheckoutMemberId(int newId){
         if ( newId < 0 && newId != -1){
             throw new InvalidMemberIdException("checkoutMemberId must either be -1 or positive to be valid");
         } else {
             this.checkoutMemberId = newId;
         }
     }
-    public void clearCheckoutMemberId(){
+    private void clearCheckoutMemberId(){
         this.checkoutMemberId = -1;
     }
 
