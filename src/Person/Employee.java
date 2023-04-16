@@ -7,7 +7,7 @@ public class Employee extends Person {
 	private String dept;
 	private String title;
 
-	public Employee() {
+	public Employee(){
 	}
 
 	public Employee(

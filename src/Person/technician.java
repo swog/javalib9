@@ -11,6 +11,9 @@ import java.util.Date;
 
 public class technician extends Employee {
 	
+	public technician(){
+	}
+
 	public technician(
 		int EmpID,
 		String Dept,

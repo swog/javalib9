@@ -4,9 +4,10 @@ import src.Identifier.*;
 
 
 public class Librarian extends Employee {
-	public Librarian() {
-	}
 
+	public Librarian(){
+	}
+	
 	public Librarian(
 		int EmpID,
 		String Dept,
