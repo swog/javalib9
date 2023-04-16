@@ -1,6 +1,6 @@
-Book,ISBN,Status
-Beloved,1580601200,Not Checked Out
-East of Eden,0140186390,Not Checked Out
-One Hundred Years of Solitude,0060883286,Not Checked Out
-Heart of Darkness,1936594146,Not Checked Out
-Portrait of the Artist as a Young Man,0142437344,Not Checked Out
+Book,ISBN,Status,Borrower Id,Date Borrowed
+Beloved,1580601200,Not Checked Out,NULL,NULL
+East of Eden,0140186390,Not Checked Out,NULL,NULL
+One Hundred Years of Solitude,0060883286,Not Checked Out,NULL,NULL
+Heart of Darkness,1936594146,Not Checked Out,NULL,NULL
+Portrait of the Artist as a Young Man,0142437344,Not Checked Out,NULL,NULL

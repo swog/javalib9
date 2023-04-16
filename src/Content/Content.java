@@ -6,12 +6,17 @@
  *  */
 
 package src.Content;
+
 import src.Identifier.Identifier;
+import java.util.Date;
 
 public abstract class Content {
     private String title;
 
     private String checkoutStatus;
+
+    private Date checkoutDate;
+    private int checkoutMemberId;
 
     public String getTitle(){
         return this.title;
@@ -31,6 +36,44 @@ public abstract class Content {
         else{
             this.checkoutStatus = newStatus;
         }
+    }
+
+    public Date getCheckoutDate(){
+        return this.checkoutDate;
+    }
+    public void setCheckoutDate(Date newDate){
+        this.checkoutDate = newDate;
+    }
+    public void clearCheckoutDate(){
+        this.checkoutDate = null;
+    }
+
+    public int getCheckoutMemberId(){
+        return this.checkoutMemberId;
+    }
+    public void setCheckoutMemberId(int newId){
+        if ( newId < 0 && newId != -1){
+            throw new InvalidMemberIdException("checkoutMemberId must either be -1 or positive to be valid");
+        } else {
+            this.checkoutMemberId = newId;
+        }
+    }
+    public void clearCheckoutMemberId(){
+        this.checkoutMemberId = -1;
+    }
+
+    public void markCheckedOut(int checkoutMemberId, Date checkoutDate){
+        setCheckoutStatus("Checked Out");
+        setCheckoutDate(checkoutDate);
+        setCheckoutMemberId(checkoutMemberId);
+    }
+    public void markNotCheckedOut(){
+        setCheckoutStatus("Not Checked Out");
+        clearCheckoutDate();
+        clearCheckoutMemberId();
+    }
+    public void markLost(){
+        setCheckoutStatus("Lost");
     }
 
     public abstract Identifier getIdentifier();
