@@ -10,11 +10,10 @@ import src.Identifier.*;
 
 public class technician extends Employee {
 
-	public technician() {
+	public technician(){
 	}
 
 	public technician(int EmpID, String Dept, String Title) {
-
 		super(EmpID, Dept, Title);
 	}
 
@@ -22,13 +21,13 @@ public class technician extends Employee {
 		return "";
 	}
 
-	public static void returnItem(Book book){
+	public static void returnBook(Content book){
 		String File = "LibraryContentFiles/BookList.csv";
 		String newStatus = "Not Checked Out";
 		Collection bookCollection = LibraryFileReader.readFileIntoCollection(File,"books");
 		int i = bookCollection.searchItemByIdentifierForIndex(book.getIdentifier());
 		Content[] bookArray = bookCollection.getContentArray();
-		if(bookArray[i].getCheckoutStatus() == "Checked Out"){
+		if(bookArray[i].getCheckoutStatus() == "Checked Out" || bookArray[i].getCheckoutStatus() == "Lost"){
 			bookArray[i].setCheckoutStatus(newStatus);
 			LibraryFileReader.writeBookCollectionIntoFile(bookCollection,File);
 			return;
@@ -36,45 +35,62 @@ public class technician extends Employee {
 		return;
 	}
 
-	public static void returnItem(DVD dvd){
+	public static void returnDVD(Content dvd){
 		String File = "LibraryContentFiles/DVDList.csv";
 		String newStatus = "Not Checked Out";
 		Collection dvdCollection = LibraryFileReader.readFileIntoCollection(File,"DVDs");
 		int i = dvdCollection.searchItemByIdentifierForIndex(dvd.getIdentifier());
 		Content[] dvdArray = dvdCollection.getContentArray();
-		if(dvdArray[i].getCheckoutStatus() == "Checked Out"){
+		if(dvdArray[i].getCheckoutStatus() == "Checked Out" || dvdArray[i].getCheckoutStatus() == "Lost"){
 			dvdArray[i].setCheckoutStatus(newStatus);
-			LibraryFileReader.writeBookCollectionIntoFile(dvdCollection,File);
+			LibraryFileReader.writeDVDCollectionIntoFile(dvdCollection,File);
 			return;
 		}
 		return;
 	}
 
-	public static void returnItem(Newspaper newspaper){
+	public static void returnNewspaper(Content newspaper){
 		String File = "LibraryContentFiles/NewsPaperList.csv";
 		String newStatus = "Not Checked Out";
 		Collection newspaperCollection = LibraryFileReader.readFileIntoCollection(File,"newspaper");
 		int i = newspaperCollection.searchItemByIdentifierForIndex(newspaper.getIdentifier());
 		Content[] newspaperArray = newspaperCollection.getContentArray();
-		if(newspaperArray[i].getCheckoutStatus() == "Checked Out"){
+		if(newspaperArray[i].getCheckoutStatus() == "Checked Out" || newspaperArray[i].getCheckoutStatus() == "Lost"){
 			newspaperArray[i].setCheckoutStatus(newStatus);
-			LibraryFileReader.writeBookCollectionIntoFile(newspaperCollection,File);
+			LibraryFileReader.writeNewspaperCollectionIntoFile(newspaperCollection,File);
 			return;
 		}
 		return;
 	}
 
-	public static void returnItem(Journal journal){
+	public static void returnJournal(Content journal){
 		String File = "LibraryContentFiles/JournalList.csv";
 		String newStatus = "Not Checked Out";
 		Collection journalCollection = LibraryFileReader.readFileIntoCollection(File,"journals");
 		int i = journalCollection.searchItemByIdentifierForIndex(journal.getIdentifier());
 		Content[] journalArray = journalCollection.getContentArray();
-		if(journalArray[i].getCheckoutStatus() == "Checked Out"){
+		if(journalArray[i].getCheckoutStatus() == "Checked Out" || journalArray[i].getCheckoutStatus() == "Lost"){
 			journalArray[i].setCheckoutStatus(newStatus);
-			LibraryFileReader.writeBookCollectionIntoFile(journalCollection,File);
+			LibraryFileReader.writeJournalCollectionIntoFile(journalCollection,File);
 			return;
 		}
 		return;
 	}
+
+	public static void returnAll(Collection returnItems){
+		Content[] items = returnItems.getContentArray();
+		for(int i = 0;i< items.length;i++){
+			if(items[i] instanceof Book){
+				returnBook(items[i]);
+			}else if(items[i] instanceof DVD){
+				returnDVD(items[i]);
+			}else if(items[i] instanceof Newspaper){
+				returnNewspaper(items[i]);
+			}else if(items[i] instanceof Journal){
+				returnJournal(items[i]);
+			}
+		}
+		return;
+	}
+	
 }
