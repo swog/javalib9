@@ -7,6 +7,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
+import java.util.Date;
+import java.text.SimpleDateFormat;
+
 import src.Collection.Collection;
 import src.Content.Content;
 import src.Content.Book;
@@ -82,7 +85,7 @@ public class LibraryFileReader {
                 contentForNewCollection = parseNewspaperFile(fileLines);
             } else if (tokenizedFirstLine[0].equals("Journal")) {
                 contentForNewCollection = parseJournalFile(fileLines);
-            } else if (tokenizedFirstLine[0].equals("Catch-all")) {
+            } else if (tokenizedFirstLine[0].equals("Content Name")) {
                 contentForNewCollection = parseCatchAllFile(fileLines);
             } else {
                 throw new InvalidContentFileException("The file you chose is either not a content file or isn't formatted correctly");
@@ -216,6 +219,8 @@ public class LibraryFileReader {
             String title = tokenizedLine[0];
             String identifierAsString = tokenizedLine[1];
             String checkoutStatus = tokenizedLine[2];
+            int checkoutMemberId = Integer.valueOf(tokenizedLine[3]);
+            String checkoutDateAsString = tokenizedLine[4];
 
             ISBN identifier = null;
             try {
@@ -225,7 +230,18 @@ public class LibraryFileReader {
                 throw new InvalidContentFileException("Chosen file to parse improperly formatted", e);
             }
 
-            Book nextBook = new Book(title, identifier, checkoutStatus);
+            SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
+            Date checkoutDate = null;
+
+            try {
+                checkoutDate = formatter.parse(checkoutDateAsString);
+            } catch (Exception e){
+                e.printStackTrace();
+                throw new InvalidContentFileException("This content file has a date in it stored incorrectly");
+            }
+
+
+            Book nextBook = new Book(title, identifier, checkoutStatus, checkoutMemberId, checkoutDate);
 
             filledArrayList.add(nextBook);
         }
@@ -242,6 +258,8 @@ public class LibraryFileReader {
             String title = tokenizedLine[0];
             String identifierAsString = tokenizedLine[1];
             String checkoutStatus = tokenizedLine[2];
+            int checkoutMemberId = Integer.valueOf(tokenizedLine[3]);
+            String checkoutDateAsString = tokenizedLine[4];
 
             ISBN identifier = null;
             try {
@@ -251,7 +269,17 @@ public class LibraryFileReader {
                 throw new InvalidContentFileException("Chosen file to parse improperly formatted", e);
             }
 
-            DVD nextDVD = new DVD(title, identifier, checkoutStatus);
+            SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
+            Date checkoutDate = null;
+
+            try {
+                checkoutDate = formatter.parse(checkoutDateAsString);
+            } catch (Exception e){
+                e.printStackTrace();
+                throw new InvalidContentFileException("This content file has a date in it stored incorrectly");
+            }
+
+            DVD nextDVD = new DVD(title, identifier, checkoutStatus, checkoutMemberId, checkoutDate);
 
             filledArrayList.add(nextDVD);
         }
@@ -266,6 +294,8 @@ public class LibraryFileReader {
             String title = tokenizedLine[0];
             String identifierAsString = tokenizedLine[1];
             String checkoutStatus = tokenizedLine[2];
+            int checkoutMemberId = Integer.valueOf(tokenizedLine[3]);
+            String checkoutDateAsString = tokenizedLine[4];
 
             ISSN identifier = null;
             try {
@@ -275,7 +305,17 @@ public class LibraryFileReader {
                 throw new InvalidContentFileException("Chosen file to parse improperly formatted", e);
             }
 
-            Journal nextJournal = new Journal(title, identifier, checkoutStatus);
+            SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
+            Date checkoutDate = null;
+
+            try {
+                checkoutDate = formatter.parse(checkoutDateAsString);
+            } catch (Exception e){
+                e.printStackTrace();
+                throw new InvalidContentFileException("This content file has a date in it stored incorrectly");
+            }
+
+            Journal nextJournal = new Journal(title, identifier, checkoutStatus, checkoutMemberId, checkoutDate);
 
             filledArrayList.add(nextJournal);
         }
@@ -291,6 +331,8 @@ public class LibraryFileReader {
             String title = tokenizedLine[0];
             String identifierAsString = tokenizedLine[1];
             String checkoutStatus = tokenizedLine[2];
+            int checkoutMemberId = Integer.valueOf(tokenizedLine[3]);
+            String checkoutDateAsString = tokenizedLine[4];
 
             ISSN identifier = null;
             try {
@@ -300,7 +342,17 @@ public class LibraryFileReader {
                 throw new InvalidContentFileException("Chosen file to parse improperly formatted", e);
             }
 
-            Newspaper nextNewspaper = new Newspaper(title, identifier, checkoutStatus);
+            SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
+            Date checkoutDate = null;
+
+            try {
+                checkoutDate = formatter.parse(checkoutDateAsString);
+            } catch (Exception e){
+                e.printStackTrace();
+                throw new InvalidContentFileException("This content file has a date in it stored incorrectly");
+            }
+
+            Newspaper nextNewspaper = new Newspaper(title, identifier, checkoutStatus, checkoutMemberId, checkoutDate);
 
             filledArrayList.add(nextNewspaper);
         }
@@ -317,7 +369,20 @@ public class LibraryFileReader {
             String contentType = tokenizedLine[1];
             String identifierAsString = tokenizedLine[2];
             String checkoutStatus = tokenizedLine[3];
+            int checkoutMemberId = Integer.valueOf(tokenizedLine[4]);
+            String checkoutDateAsString = tokenizedLine[5];
 
+            /* the process of getting the date */
+            SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
+            Date checkoutDate = null;
+            try {
+                checkoutDate = formatter.parse(checkoutDateAsString);
+            } catch (Exception e){
+                e.printStackTrace();
+                throw new InvalidContentFileException("This content file has a date in it stored incorrectly");
+            }
+
+            /* making the correct content type for each record*/
             if ( contentType.equals("Book") ){
                 ISBN identifier = null;
                 try {
@@ -327,7 +392,7 @@ public class LibraryFileReader {
                     throw new InvalidContentFileException("Chosen file to parse improperly formatted", e);
                 }
 
-                Book nextBook = new Book(title, identifier, checkoutStatus);
+                Book nextBook = new Book(title, identifier, checkoutStatus, checkoutMemberId, checkoutDate);
 
                 filledArrayList.add(nextBook);
 
@@ -340,7 +405,7 @@ public class LibraryFileReader {
                     throw new InvalidContentFileException("Chosen file to parse improperly formatted", e);
                 }
 
-                DVD nextDVD = new DVD(title, identifier, checkoutStatus);
+                DVD nextDVD = new DVD(title, identifier, checkoutStatus, checkoutMemberId, checkoutDate);
 
                 filledArrayList.add(nextDVD);
 
@@ -355,7 +420,7 @@ public class LibraryFileReader {
                     throw new InvalidContentFileException("Chosen file to parse improperly formatted", e);
                 }
 
-                Newspaper nextNewspaper = new Newspaper(title, identifier, checkoutStatus);
+                Newspaper nextNewspaper = new Newspaper(title, identifier, checkoutStatus, checkoutMemberId, checkoutDate);
                 filledArrayList.add(nextNewspaper);
 
             } else if (contentType.equals("Journal")) {
@@ -368,11 +433,11 @@ public class LibraryFileReader {
                     throw new InvalidContentFileException("Chosen file to parse improperly formatted", e);
                 }
 
-                Journal nextJournal = new Journal(title, identifier, checkoutStatus);
+                Journal nextJournal = new Journal(title, identifier, checkoutStatus, checkoutMemberId, checkoutDate);
 
                 filledArrayList.add(nextJournal);
-            } else { // THROW INVALID FILE EXCEPTION OR SOMETHING
-
+            } else {
+                throw new InvalidContentFileException("This file features a record with no valid content type");
             }
 
         }
