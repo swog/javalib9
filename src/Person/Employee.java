@@ -1,4 +1,6 @@
 package src.Person;
+import java.util.Date;
+import src.Identifier.*;
 
 public class Employee extends Person {
 	private int empID;
@@ -8,26 +10,36 @@ public class Employee extends Person {
 	public Employee() {
 	}
 
-	public Employee(int EmpID, String Dept, String Title) {
+	public Employee(
+		int EmpID, 
+		String Dept, 
+		String Title,
+		String Name,
+		String Address,
+		Date DoB,
+		String Email,
+		SSN Social
+		) {
+		super(Name, Address, DoB, Email, Social);
 		empID = EmpID;
 		dept = Dept;
 		title = Title;
 	}
 
-	public String toString() {
-		return "";
+	public String toString(){
+		return ("Name: " + getName() + "Dept: " + getDept() + "Title: " + getTitle());
 	}
 
 	public void setEmpID(int EmpID) {
-		empID = EmpID;
+		this.empID = EmpID;
 	}
 
 	public void setDept(String Dept) {
-		dept = Dept;
+		this.dept = Dept;
 	}
 
 	public void setTitle(String Title) {
-		title = Title;
+		this.title = Title;
 	}
 
 	public int getEmpID() {
