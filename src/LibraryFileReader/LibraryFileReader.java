@@ -144,7 +144,7 @@ public class LibraryFileReader {
             try {
                 PrintWriter writer = new PrintWriter(fileLocation);
 
-                String line1 = "Content Name,Content Type,Identifier,Status";
+                String line1 = "Content Name,Content Type,Identifier,Status,Borrower Id,Date Borrowed";
                 writer.println(line1);
 
                 Content[] contentArray = collectionToWriteToFile.getContentArray();
@@ -171,7 +171,24 @@ public class LibraryFileReader {
                         contentArray[i].getTitle().concat(",")
                         .concat(identifierString)
                         .concat(contentArray[i].getIdentifier().toString()).concat(",")
-                        .concat(contentArray[i].getCheckoutStatus());
+                        .concat(contentArray[i].getCheckoutStatus()).concat(",")
+                        .concat(String.valueOf(contentArray[i].getCheckoutMemberId())).concat(",");
+
+                    Date contentDateBorrowed = contentArray[i].getCheckoutDate();
+                    String dateLine = "";
+                    if ( contentDateBorrowed == null ){
+                        dateLine = "NULL";
+                    } else {
+                        String tempDateString = contentDateBorrowed.toString();
+                        String[] tokenizedTempDateString = tempDateString.split(" ");
+
+                        String dayOfMonth = tokenizedTempDateString[2];
+                        String month = tokenizedTempDateString[1];
+                        String year = tokenizedTempDateString[5];
+
+                        dateLine.concat(dayOfMonth).concat("-").concat(month).concat("-").concat(year);
+                    }
+                    newLine.concat(dateLine);
 
                     writer.println(newLine);
                 }
@@ -188,7 +205,7 @@ public class LibraryFileReader {
             try {
                 PrintWriter writer = new PrintWriter(fileLocation);
 
-                String line1 = listType.concat(",").concat(identifierType).concat(",Status");
+                String line1 = listType.concat(",").concat(identifierType).concat(",Status,Borrower Id,Date Borrowed");
                 writer.println(line1);
 
                 Content[] contentArray = collectionToWriteToFile.getContentArray();
@@ -196,7 +213,24 @@ public class LibraryFileReader {
 
                     String newLine = contentArray[i].getTitle().concat(",")
                             .concat(contentArray[i].getIdentifier().toString()).concat(",")
-                            .concat(contentArray[i].getCheckoutStatus());
+                            .concat(contentArray[i].getCheckoutStatus()).concat(",")
+                            .concat(String.valueOf(contentArray[i].getCheckoutMemberId())).concat(",");
+
+                    Date contentDateBorrowed = contentArray[i].getCheckoutDate();
+                    String dateLine = "";
+                    if ( contentDateBorrowed == null ){
+                        dateLine = "NULL";
+                    } else {
+                        String tempDateString = contentDateBorrowed.toString();
+                        String[] tokenizedTempDateString = tempDateString.split(" ");
+
+                        String dayOfMonth = tokenizedTempDateString[2];
+                        String month = tokenizedTempDateString[1];
+                        String year = tokenizedTempDateString[5];
+
+                        dateLine.concat(dayOfMonth).concat("-").concat(month).concat("-").concat(year);
+                    }
+                    newLine.concat(dateLine);
 
                     writer.println(newLine);
                 }
