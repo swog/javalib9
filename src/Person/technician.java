@@ -31,7 +31,6 @@ public class technician extends Employee {
 		if(bookArray[i].getCheckoutStatus() == "Checked Out"){
 			bookArray[i].setCheckoutStatus(newStatus);
 			LibraryFileReader.writeBookCollectionIntoFile(bookCollection,File);
-			System.out.println("in if");
 			return;
 		}
 		return;
@@ -46,7 +45,6 @@ public class technician extends Employee {
 		if(dvdArray[i].getCheckoutStatus() == "Checked Out"){
 			dvdArray[i].setCheckoutStatus(newStatus);
 			LibraryFileReader.writeBookCollectionIntoFile(dvdCollection,File);
-			System.out.println("in if");
 			return;
 		}
 		return;
@@ -61,7 +59,6 @@ public class technician extends Employee {
 		if(newspaperArray[i].getCheckoutStatus() == "Checked Out"){
 			newspaperArray[i].setCheckoutStatus(newStatus);
 			LibraryFileReader.writeBookCollectionIntoFile(newspaperCollection,File);
-			System.out.println("in if");
 			return;
 		}
 		return;
@@ -76,23 +73,8 @@ public class technician extends Employee {
 		if(journalArray[i].getCheckoutStatus() == "Checked Out"){
 			journalArray[i].setCheckoutStatus(newStatus);
 			LibraryFileReader.writeBookCollectionIntoFile(journalCollection,File);
-			System.out.println("in if");
 			return;
 		}
 		return;
-	}
-
-	public static void main(String arg[]){
-		String File = "LibraryContentFiles/BookList.csv";
-		Collection bookCollection = LibraryFileReader.readFileIntoCollection(File,"books");
-		Content[] test = bookCollection.getContentArray();
-		System.out.println(test[0].getCheckoutStatus());
-		ISBN isbn = new ISBN("1580601200");
-		Book book = new Book(test[0].getTitle(),isbn,test[0].getCheckoutStatus());
-		technician.returnItem(book);
-
-		Collection bookCollection2 = LibraryFileReader.readFileIntoCollection(File,"books");
-		Content[] test2 = bookCollection2.getContentArray();
-		System.out.println(test2[0].getCheckoutStatus());
 	}
 }
