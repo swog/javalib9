@@ -29,7 +29,7 @@ public abstract class Content {
         return this.checkoutStatus;
     }
 
-    public void setCheckoutStatus(String newStatus){
+    private void setCheckoutStatus(String newStatus){
         if ( !newStatus.equals("Checked Out") && !newStatus.equals("Not Checked Out") && !newStatus.equals("Lost")){
             throw new InvalidCheckoutStatusException("Checkout status not changed -- must be 'Checked Out', 'Not Checked Out', or 'Lost'");
         }
