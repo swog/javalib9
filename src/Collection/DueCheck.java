@@ -2,10 +2,10 @@ package src.Collection;
 
 import java.util.Date;
 
-import src.Collection.Collection;
+import src.Collection.*;
 import src.Content.*;
 import src.Person.*;
-import src.LibraryFileReader.LibraryFileReader;
+import src.LibraryFileReader.*;
 
 
 public class DueCheck {
@@ -68,4 +68,13 @@ public class DueCheck {
         String memberAddress = Member.getMember(memberID).getAddress();
         return memberAddress;
     }
+    /*public static void main(String[] args)
+    {
+        System.out.println("Enter Test");
+        String File = "LibraryContentFiles/BookList.csv";
+		Collection bookCollection = new Collection("TestCollection");
+        bookCollection = LibraryFileReader.readFileIntoCollection(File,"books");
+        DueCheck newCheck = new DueCheck();
+        newCheck.newCheckOverdues(bookCollection);
+    }*/
 }

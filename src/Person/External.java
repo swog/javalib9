@@ -11,9 +11,10 @@ public class External extends Member {
 		Date DoB,
 		String Email,
 		SSN Social,
+		int BalanceDue,
 		int Id
 	) {
-		super(Name, Address, DoB, Email, Social, Id);
+		super(Name, Address, DoB, Email, Social, Id,BalanceDue);
 	}
 
 	public String toString() {

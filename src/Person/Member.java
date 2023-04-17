@@ -6,6 +6,7 @@ import src.Identifier.SSN;
 
 public abstract class Member extends Person {
 	protected int id;
+	protected int balanceDue=0;
 
 	public static Member getMember(int Id) {
 		ArrayList<Person> people = getPeople();
@@ -27,12 +28,18 @@ public abstract class Member extends Person {
 		Date DoB,
 		String Email,
 		SSN Social,
+		int BalanceDue,
 		int Id
 	) {
 		super(Name, Address, DoB, Email, Social);
 		id = Id;
+		balanceDue=BalanceDue;
 	}
 
+	public void IncBalance()
+	{
+		balanceDue++;
+	}
 	public void setId(int Id) {
 		id = Id;
 	}
