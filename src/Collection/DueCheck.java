@@ -5,6 +5,7 @@ import java.util.Date;
 import src.Collection.Collection;
 import src.Content.*;
 import src.Person.*;
+import src.LibraryFileReader.LibraryFileReader;
 
 
 public class DueCheck {
@@ -15,9 +16,9 @@ public class DueCheck {
     {
 
     }
-    public void UpdateCheckedCollection()
+    public  void newCheckOverdues(Collection library)
     {
-        Collection library = new Collection("CheckoutCollection");
+        //Collection library = new Collection("CheckoutCollection");
         Collection CheckedOutCollection = library.getCheckedOutCollectionSubset("CheckedOutCollection");
         Content [] ContentArray = CheckedOutCollection.getContentArray();
         for ( int i = 0 ; i < ContentArray.length ; i++ ){
@@ -61,7 +62,7 @@ public class DueCheck {
         String memberEmail= Member.getMember(memberID).getEmail();
         return memberEmail;
     }
-    public String getAddressByContent(Content content)
+    public  String getAddressByContent(Content content)
     {
         int memberID = getIDByContent(content);
         String memberAddress = Member.getMember(memberID).getAddress();
