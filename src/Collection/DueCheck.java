@@ -2,10 +2,10 @@ package src.Collection;
 
 import java.util.Date;
 
-import src.Collection.Collection;
+import src.Collection.*;
 import src.Content.*;
 import src.Person.*;
-import src.LibraryFileReader.LibraryFileReader;
+import src.LibraryFileReader.*;
 
 
 public class DueCheck {
