@@ -1,8 +1,6 @@
 package src.Collection;
 
-import java.sql.Time;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 import src.Collection.Collection;
 import src.Content.*;
@@ -29,16 +27,44 @@ public class DueCheck {
             int diffInDays =  (int) (diffInMillies / (1000*60*60*24)); // Gets the number in days 
             if(diffInDays == 12)
             {
-                int memberID = ContentArray[i].getCheckoutMemberId();
-                String memberEmail= Member.getMember(memberID).getEmail();
+                String memberEmail= getEmailByContent(ContentArray[i]);
                 System.out.printf("12 day reminder sent to ",memberEmail); //Subject to change, give me any feedback
             }
             if(diffInDays == 14)
             {
-                int memberID = ContentArray[i].getCheckoutMemberId();
-                String memberEmail= Member.getMember(memberID).getEmail();
+                String memberEmail= getEmailByContent(ContentArray[i]);
                 System.out.printf("14 day reminder sent to ",memberEmail); //Subject to change, give me any feedback
             }
+            if(diffInDays <= 15 && diffInDays > 31)
+            {
+                String memberEmail= getEmailByContent(ContentArray[i]);
+                System.out.printf("Item is passed due! $1 has been fined to: ",memberEmail);
+            }
+            if(diffInDays == 31)
+            {
+                ContentArray[i].markLost();
+                String memberEmail= getEmailByContent(ContentArray[i]);
+                String memberAddress = getAddressByContent(ContentArray[i]);
+                System.out.printf("Item has been lost. Full price of content charged to ",memberEmail);
+                System.out.printf("Letter sent to:  ",memberAddress);
+            }
         }    
+    }
+    public int getIDByContent (Content content)
+    {
+        int memberID = content.getCheckoutMemberId();
+        return memberID;
+    }
+    public String getEmailByContent(Content content)
+    {
+        int memberID = getIDByContent(content);
+        String memberEmail= Member.getMember(memberID).getEmail();
+        return memberEmail;
+    }
+    public String getAddressByContent(Content content)
+    {
+        int memberID = getIDByContent(content);
+        String memberAddress = Member.getMember(memberID).getAddress();
+        return memberAddress;
     }
 }
