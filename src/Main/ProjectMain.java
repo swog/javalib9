@@ -40,7 +40,9 @@ import src.Content.Content;
 public class ProjectMain{
 
     public static void main (String[] args){
+        Collection testingCollection = LibraryFileReader.readFileIntoCollection("LibraryContentFiles/BookList.csv", "test collection");
 
+        Content myContent = testingCollection.getItemByIndex(testingCollection.length()-1);
     }
 
 }

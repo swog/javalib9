@@ -109,6 +109,14 @@ public class Collection {
 
 
     /* getters and setters */
+    public int getCollectionLength(){
+        Content[] col = getContentArray();
+        return col.length;
+    }
+    public int length(){
+        return getCollectionLength();
+    }
+
     public String getCollectionName(){
         return this.collectionName;
     }
@@ -517,4 +525,5 @@ public class Collection {
 
         return true;
     }
+
 }

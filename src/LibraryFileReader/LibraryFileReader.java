@@ -264,16 +264,12 @@ public class LibraryFileReader {
                 throw new InvalidContentFileException("Chosen file to parse improperly formatted", e);
             }
 
-            SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
             Date checkoutDate = null;
-
             try {
-                checkoutDate = formatter.parse(checkoutDateAsString);
-            } catch (Exception e){
-                e.printStackTrace();
-                throw new InvalidContentFileException("This content file has a date in it stored incorrectly");
+                checkoutDate = parseCheckoutDateString(checkoutDateAsString);
+            } catch ( InvalidContentFileException e ){
+                throw e;
             }
-
 
             Book nextBook = new Book(title, identifier, checkoutStatus, checkoutMemberId, checkoutDate);
 
@@ -303,14 +299,11 @@ public class LibraryFileReader {
                 throw new InvalidContentFileException("Chosen file to parse improperly formatted", e);
             }
 
-            SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
             Date checkoutDate = null;
-
             try {
-                checkoutDate = formatter.parse(checkoutDateAsString);
-            } catch (Exception e){
-                e.printStackTrace();
-                throw new InvalidContentFileException("This content file has a date in it stored incorrectly");
+                checkoutDate = parseCheckoutDateString(checkoutDateAsString);
+            } catch ( InvalidContentFileException e ){
+                throw e;
             }
 
             DVD nextDVD = new DVD(title, identifier, checkoutStatus, checkoutMemberId, checkoutDate);
@@ -339,14 +332,11 @@ public class LibraryFileReader {
                 throw new InvalidContentFileException("Chosen file to parse improperly formatted", e);
             }
 
-            SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
             Date checkoutDate = null;
-
             try {
-                checkoutDate = formatter.parse(checkoutDateAsString);
-            } catch (Exception e){
-                e.printStackTrace();
-                throw new InvalidContentFileException("This content file has a date in it stored incorrectly");
+                checkoutDate = parseCheckoutDateString(checkoutDateAsString);
+            } catch ( InvalidContentFileException e ){
+                throw e;
             }
 
             Journal nextJournal = new Journal(title, identifier, checkoutStatus, checkoutMemberId, checkoutDate);
@@ -376,14 +366,11 @@ public class LibraryFileReader {
                 throw new InvalidContentFileException("Chosen file to parse improperly formatted", e);
             }
 
-            SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
             Date checkoutDate = null;
-
             try {
-                checkoutDate = formatter.parse(checkoutDateAsString);
-            } catch (Exception e){
-                e.printStackTrace();
-                throw new InvalidContentFileException("This content file has a date in it stored incorrectly");
+                checkoutDate = parseCheckoutDateString(checkoutDateAsString);
+            } catch ( InvalidContentFileException e ){
+                throw e;
             }
 
             Newspaper nextNewspaper = new Newspaper(title, identifier, checkoutStatus, checkoutMemberId, checkoutDate);
@@ -406,14 +393,11 @@ public class LibraryFileReader {
             int checkoutMemberId = Integer.valueOf(tokenizedLine[4]);
             String checkoutDateAsString = tokenizedLine[5];
 
-            /* the process of getting the date */
-            SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
             Date checkoutDate = null;
             try {
-                checkoutDate = formatter.parse(checkoutDateAsString);
-            } catch (Exception e){
-                e.printStackTrace();
-                throw new InvalidContentFileException("This content file has a date in it stored incorrectly");
+                checkoutDate = parseCheckoutDateString(checkoutDateAsString);
+            } catch ( InvalidContentFileException e ){
+                throw e;
             }
 
             /* making the correct content type for each record*/
@@ -477,6 +461,22 @@ public class LibraryFileReader {
         }
 
         return filledArrayList;
+
+    }
+
+    private static Date parseCheckoutDateString(String checkoutDateAsString){
+        if ( checkoutDateAsString.equals("NULL") ) return null;
+
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
+        Date checkoutDate = null;
+        try {
+            checkoutDate = formatter.parse(checkoutDateAsString);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new InvalidContentFileException("This content file has a date in it stored incorrectly");
+        }
+
+        return checkoutDate;
 
     }
 
