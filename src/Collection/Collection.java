@@ -7,9 +7,13 @@
  * "I need to find an item in this Collection with identifier IDENT"
  * Content getItemByIdentifier(Identifier IDENT)
  *
+ * "I want the nth item in the collection!"
+ * Content getItemByIndex(int n)
+ *
  * "I need to remove an item from this Collection with identifier IDENT"
  * Content removeItemByIdentifier(Identifier IDENT)
  * >>>>> NOTE: this returns the object removed if you want it
+ *
  *
  * "I need to sort this collection by title, identifier, or checkout status!"
  * sortCollectionByTitle()
@@ -205,6 +209,16 @@ public class Collection {
     }
     public Content getItemByIdentifier(Identifier identifier){
         return searchItemByIdentifierForContent(identifier);
+    }
+
+    public Content getItemByIndex(int index){
+        Content[] contArray = getContentArray();
+
+        if ( index >= contArray.length ){
+            return null;
+        }
+
+        return contArray[index];
     }
 
     public Content removeItemByIdentifier(Identifier identifier){
