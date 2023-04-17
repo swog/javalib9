@@ -16,10 +16,11 @@ public class Student extends Member {
 		Date DoB,
 		String Email,
 		SSN Social,
+		int BalanceDue,
 		int Id,
 		int ProfessorId
 	) {
-		super(Name, Address, DoB, Email, Social, Id);
+		super(Name, Address, DoB, Email, Social, Id,BalanceDue);
 		professorId = ProfessorId;
 		professor = null;
 	}
