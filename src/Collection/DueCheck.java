@@ -38,6 +38,7 @@ public class DueCheck {
             }
             if(diffInDays <= 15 && diffInDays > 31)
             {
+                AddFine(ContentArray[i]);
                 String memberEmail= getEmailByContent(ContentArray[i]);
                 System.out.printf("Item is passed due! $1 has been fined to: ",memberEmail);
             }
@@ -68,4 +69,19 @@ public class DueCheck {
         String memberAddress = Member.getMember(memberID).getAddress();
         return memberAddress;
     }
+    public void AddFine(Content content)
+    {
+        int memberID = getIDByContent(content);
+        Member member = Member.getMember(memberID);
+        member.IncBalance();
+    }
+    /*public static void main(String[] args)
+    {
+        System.out.println("Enter Test");
+        String File = "LibraryContentFiles/BookList.csv";
+		Collection bookCollection = new Collection("TestCollection");
+        bookCollection = LibraryFileReader.readFileIntoCollection(File,"books");
+        DueCheck newCheck = new DueCheck();
+        newCheck.newCheckOverdues(bookCollection);
+    }*/
 }
