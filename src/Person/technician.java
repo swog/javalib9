@@ -54,7 +54,7 @@ public class technician extends Employee {
 	}
 
 	public static void returnNewspaper(Content newspaper){
-		String File = "LibraryContentFiles/NewsPaperList.csv";
+		String File = "LibraryContentFiles/NewspaperList.csv";
 		Collection newspaperCollection = LibraryFileReader.readFileIntoCollection(File,"newspaper");
 		int i = newspaperCollection.searchItemByIdentifierForIndex(newspaper.getIdentifier());
 		Content[] newspaperArray = newspaperCollection.getContentArray();
