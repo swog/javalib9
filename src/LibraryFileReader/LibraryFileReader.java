@@ -48,8 +48,11 @@ import src.Identifier.InvalidIdentifierException;
  * -------------------------------------------
  * */
 
-public class LibraryFileReader {
+public final class LibraryFileReader {
 
+    private LibraryFileReader(){
+        throw new UnsupportedOperationException();
+    }
 
     public static Collection readFileIntoCollection(String fileName, String newCollectionName){
 

@@ -1,9 +1,27 @@
 package src.Content;
 
 import src.Identifier.ISSN;
+import src.Identifier.InvalidIdentifierException;
 import java.util.Date;
 
 public class Newspaper extends ISSNContent{
+    public Newspaper(String title, String identifierAsString) {
+        setTitle(title);
+        ISSN identifier = null;
+        try {
+            identifier = new ISSN(identifierAsString);
+        } catch (InvalidIdentifierException e) {
+            throw (e);
+        }
+
+        setIdentifier(identifier);
+        markNotCheckedOut();
+    }
+    public Newspaper(String title, ISSN identifier) {//defaults to not checked out
+        setTitle(title);
+        setIdentifier(identifier);
+        markNotCheckedOut();
+    }
     public Newspaper(String title, ISSN identifier, String checkoutStatus){
         setTitle(title);
         setIdentifier(identifier);

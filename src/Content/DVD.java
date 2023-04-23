@@ -3,9 +3,27 @@ package src.Content;
 import java.util.Date;
 
 import src.Identifier.ISBN;
+import src.Identifier.InvalidIdentifierException;
 
 public class DVD extends ISBNContent{
 
+    public DVD(String title, String identifierAsString) {
+        setTitle(title);
+        ISBN identifier = null;
+        try {
+            identifier = new ISBN(identifierAsString);
+        } catch (InvalidIdentifierException e) {
+            throw (e);
+        }
+
+        setIdentifier(identifier);
+        markNotCheckedOut();
+    }
+    public DVD(String title, ISBN identifier) {//defaults to not checked out
+        setTitle(title);
+        setIdentifier(identifier);
+        markNotCheckedOut();
+    }
     public DVD(String title, ISBN identifier, String checkoutStatus){
         setTitle(title);
         setIdentifier(identifier);

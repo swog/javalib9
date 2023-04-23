@@ -1,8 +1,10 @@
 /*
- * A content object as of 4/14/2023 has 3 things:
+ * A content object as of 4/17/2023 has 5 things:
  * > A title
  * > A checkout status which may only be "Checked Out", "Not Checked Out", or "Lost"
  * > An identifier, specified by the subclasses of Content
+ * > A checkout date (null if item is not checked out)
+ * > A checkout member id (-1 if item is not checked out)
  *  */
 
 package src.Content;
@@ -77,4 +79,26 @@ public abstract class Content {
     }
 
     public abstract Identifier getIdentifier();
+
+
+    @Override
+    public String toString(){
+        Date checkoutDate = this.getCheckoutDate();
+
+        if ( checkoutDate == null ){
+        return this.title.concat(" | ")
+            .concat(this.getIdentifier().toString()).concat(" | ")
+            .concat(this.getCheckoutStatus()).concat(" | ")
+            .concat("N/A").concat(" | ")
+            .concat("N/A");
+
+        } else {
+        return this.title.concat(" | ")
+            .concat(this.getIdentifier().toString()).concat(" | ")
+            .concat(this.getCheckoutStatus()).concat(" | ")
+            .concat(this.getCheckoutDate().toString()).concat(" | ")
+            .concat(String.valueOf(this.getCheckoutMemberId()));
+
+        }
+    }
 }

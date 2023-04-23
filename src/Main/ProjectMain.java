@@ -1,13 +1,18 @@
 /*
  * LIST OF EVERYTHING THAT WORKS AND DATE OF WORK CONFIRMATION
+ * >> readFileIntoCollection 4/23
+ * >>> readable file
+ * >>> unreadable file
+ * >> writeBookCollectionIntoFile
+ * >>> readable file, replaced
  *
  * LIST OF EVERYTHING THAT NEEDS TO BE TESTED
  *
  * LIBRARYFILEREADER PACKAGE
  * > LIBRARYFILEREADER CLASS
- * >> readFileIntoCollection
  * >> writeCatchAllCollectionIntoFile
- * >> writeBookCollectionIntoFile
+ * >>> into new file
+ * >>> POTENTIAL FIX: enforce that must be written into a specific directory
  * >> writeDVDCollectionIntoFile
  * >> writeNewspaperCollectionIntoFile
  * >> writeJournalCollectionIntoFile
@@ -34,15 +39,19 @@ package src.Main;
 import src.Collection.Collection;
 import src.LibraryFileReader.LibraryFileReader;
 import src.Identifier.Identifier;
+import src.Identifier.ISBN;
+import src.Identifier.ISSN;
 import src.Content.Content;
+import src.Content.Book;
+import src.Content.Newspaper;
+import src.Content.Journal;
+import src.Content.DVD;
 
 
 public class ProjectMain{
 
     public static void main (String[] args){
-        Collection testingCollection = LibraryFileReader.readFileIntoCollection("LibraryContentFiles/BookList.csv", "test collection");
 
-        Content myContent = testingCollection.getItemByIndex(testingCollection.length()-1);
     }
 
 }

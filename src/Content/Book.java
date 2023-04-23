@@ -1,10 +1,28 @@
 package src.Content;
 
 import src.Identifier.ISBN;
+import src.Identifier.InvalidIdentifierException;
 import java.util.Date;
 
 public class Book extends ISBNContent{
 
+    public Book (String title, String identifierAsString) {
+        setTitle(title);
+        ISBN identifier = null;
+        try {
+            identifier = new ISBN(identifierAsString);
+        } catch (InvalidIdentifierException e) {
+            throw (e);
+        }
+
+        setIdentifier(identifier);
+        markNotCheckedOut();
+    }
+    public Book(String title, ISBN identifier) {//defaults to not checked out
+        setTitle(title);
+        setIdentifier(identifier);
+        markNotCheckedOut();
+    }
     public Book(String title, ISBN identifier, String checkoutStatus){
         setTitle(title);
         setIdentifier(identifier);
