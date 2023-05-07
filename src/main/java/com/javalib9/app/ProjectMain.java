@@ -88,7 +88,7 @@ public class ProjectMain extends Application{
 
             @Override
             public void handle(ActionEvent e){
-                mainMenuStage.setScene(StudentView.getStudentMainMenu(stage));
+                mainMenuStage.setScene(StudentView.getStudentLogInScreen(stage));
             }
         });
 

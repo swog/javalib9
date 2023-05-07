@@ -9,9 +9,11 @@ com/javalib9/app/views/TechnicianView$3.class
 com/javalib9/app/views/LibrarianView.class
 com/javalib9/app/views/LibrarianView$5.class
 com/javalib9/app/Collection/Collection.class
+com/javalib9/app/views/StudentView$3.class
 com/javalib9/app/Content/ISSNContent.class
 com/javalib9/app/views/ExternalView$1.class
 com/javalib9/app/Content/ISBNContent.class
+com/javalib9/app/views/TechnicianView$6.class
 com/javalib9/app/LibraryFileReader/LibraryFileReader.class
 com/javalib9/app/Person/Member.class
 com/javalib9/app/views/LibrarianView$1.class
