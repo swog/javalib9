@@ -38,7 +38,7 @@ public class DueCheck {
                 String memberEmail= getEmailByContent(ContentArray[i]);
                 System.out.printf("14 day reminder sent to ",memberEmail); //Subject to change, give me any feedback
             }
-            if(diffInDays <= 15 && diffInDays > 31)
+            if(diffInDays >= 15 && diffInDays < 31)
             {
                 AddFine(ContentArray[i]);
                 String memberEmail= getEmailByContent(ContentArray[i]);
