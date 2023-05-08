@@ -100,17 +100,17 @@ public class technician extends Employee {
 	public static boolean returnItem(String itemType,String identifier){  //returns true if the item is able to be returned and false if not
 		ISBN isbn = null;
 		ISSN issn = null;
-		if(itemType == "Book" || itemType == "DVD"){
-			if(identifier.length() != 10){
+		if(itemType == "Book" || itemType == "DVD"){ 
+			if(identifier.length() != 10){ //checks if the identifier entered is valid for the item type
 				return false;
 			}
 			isbn = new ISBN(identifier);
 		}else if(itemType == "Journal" || itemType == "NewsPaper"){
-			if(identifier.length() != 8){
+			if(identifier.length() != 8){ //checks if the identifier entered is valid for the item type
 				return false;
 			}
 			issn = new ISSN(identifier);
-		}else{
+		}else{ //if a valid itemType is not entered returns false
 			return false;
 		}
 
@@ -144,12 +144,12 @@ public class technician extends Employee {
 		ISBN isbn = null;
 		ISSN issn = null;
 		if(itemType == "Book" || itemType == "DVD"){
-			if(identifier.length() != 10){
+			if(identifier.length() != 10){	//checks if the identifier entered is valid for the item type
 				return false;
 			}
 			isbn = new ISBN(identifier);
 		}else if(itemType == "Journal" || itemType == "NewsPaper"){
-			if(identifier.length() != 8){
+			if(identifier.length() != 8){	//checks if the identifier entered is valid for the item type
 				return false;
 			}
 			issn = new ISSN(identifier);
