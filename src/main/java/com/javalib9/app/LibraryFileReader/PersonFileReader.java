@@ -11,6 +11,7 @@ import java.text.ParseException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 import com.javalib9.app.Identifier.SSN;
 import com.javalib9.app.Person.*;
@@ -31,7 +32,11 @@ public class PersonFileReader {
 	public static ArrayList<Person> readStudentFile(String fileName) {
 		ArrayList<Person> people = new ArrayList<>();
 		try {
-			Scanner fileReader = new Scanner(new File(fileName));
+
+			InputStream stream = ClassLoader.getSystemResourceAsStream(fileName);
+            if ( stream == null) throw new FileNotFoundException("File not found");
+
+			Scanner fileReader = new Scanner(stream);
 			String line;
 
 			// Skip first line! Formatting for github?
