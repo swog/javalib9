@@ -1,6 +1,13 @@
-package src.Person;
+package com.javalib9.app.Person;
+import com.javalib9.app.Content.Content;
+import com.javalib9.app.Content.Book;
+import com.javalib9.app.Content.DVD;
+import com.javalib9.app.Content.Newspaper;
+import com.javalib9.app.Content.Journal;
+import com.javalib9.app.Collection.Collection;
+import com.javalib9.app.LibraryFileReader.LibraryFileReader;
+import com.javalib9.app.Identifier.*;
 import java.util.Date;
-import src.Identifier.*;
 
 
 public class Librarian extends Employee {
