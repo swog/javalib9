@@ -28,9 +28,11 @@ public class Student extends Member {
 	public String toString() {
 		Professor prof = getProfessor();
 		String profName = "Couldn't find";
+	
 		if (prof != null) {
 			profName = prof.getName();
 		}
+
 		return String.format(
 			"Student:\n\tName: %s\n\tAddress: %s\n\tDate of Birth: %s\n\tEmail: %s\n\tSSN: %s\n\tMember Id: %d\n\tProfessor Id: %d (%s)", 
 			getName(), 
@@ -44,6 +46,22 @@ public class Student extends Member {
 		);
 	}
 
+	public void setProfessor(int profId) {
+		professorId = profId;
+		// Update by default
+		// Java doesn't have default parameters???
+		getProfessor();
+	}
+
+	public void setProfessor(Professor prof) {
+		professorId = prof.getId();
+		professor = prof;
+	}
+
+	public int getProfessorId() {
+		return professorId;
+	}
+
 	public Professor getProfessor() {
 		// Professor is valid & the professorId matches the current professor object
 		if (professor != null && professor.getId() == professorId) {
@@ -51,8 +69,13 @@ public class Student extends Member {
 		}
 
 		// Professor has changed or never set
-		professor = (Professor)PersonFileReader.findByMemberId(professorId);
+		try {
+			professor = (Professor)PersonFileReader.findByMemberId(professorId);
+		}
+		catch (Exception uninitializedException) {
+			professor = null;
+		}
 
-		return null;
+		return professor;
 	}
 }

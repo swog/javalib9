@@ -21,8 +21,26 @@ public class Professor extends Member {
 		super(Name, Address, DoB, Email, Social, Id,BalanceDue);
 	}
 
+	public boolean isMyStudent(Student student) { 
+		for (int i = 0; i < students.size(); i++) {
+			if (students.get(i).getProfessorId() == getId()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public void addStudent(Student student) {
+		if (isMyStudent(student)) {
+			return;
+		}
+
+		students.add(student);
+		student.setProfessor(this);
+	}
+
 	public static Professor login(int Id) {
-		
+		return (Professor)getMember(Id);
 	}
 
 	public ArrayList<Student> getStudents() {

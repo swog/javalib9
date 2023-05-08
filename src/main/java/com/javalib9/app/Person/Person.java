@@ -10,7 +10,7 @@ public abstract class Person {
 	protected Date dateOfBirth;
 	protected String email;
 	protected SSN ssn;
-	private static ArrayList<Person> people = null;
+	protected static ArrayList<Person> people = null;
 
 	public Person() {
 	}

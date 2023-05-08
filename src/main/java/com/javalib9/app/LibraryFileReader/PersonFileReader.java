@@ -91,13 +91,20 @@ public class PersonFileReader {
 		return null;
 	}
 
-	public static Member findByMemberId(int memberId) {
+	public static Member findByMemberId(int memberId) throws Exception {
+		ArrayList<Person> people = Person.getPeople();
+		if (people == null) {
+			throw new Exception("Unitialized people list in findByMemberId");
+		}
+		for (int i = 0; i < people.size(); i++) {
+			if (people.get(i).isMember() && ((Member)people.get(i)).getId() == memberId) {
+				return (Member)people.get(i);
+			}
+		}
 		return null;
 	}
 
 	public static void main(String[] args) {
-		Person.setPeople(PersonFileReader.readStudentFile("LibraryContentFiles/People.csv"));
-
 		ArrayList<Person> people = Person.getPeople();
 
 		for (int i = 0; i < people.size(); i++) {
