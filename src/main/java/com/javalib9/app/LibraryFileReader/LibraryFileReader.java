@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.io.InputStream;
+import java.io.FileInputStream;
 
 import java.util.Date;
 import java.text.SimpleDateFormat;
@@ -59,7 +61,11 @@ public final class LibraryFileReader {
         ArrayList<String> fileLines = new ArrayList<>();
 
         try {
-            Scanner myFileReader = new Scanner ( new File(fileName) );
+            InputStream stream = ClassLoader.getSystemResourceAsStream(fileName);
+            if ( stream == null) throw new FileNotFoundException("File not found");
+
+            Scanner myFileReader = new Scanner ( stream);
+
 
             while ( myFileReader.hasNextLine() ){
                 fileLines.add(myFileReader.nextLine());
