@@ -2,10 +2,7 @@ package com.javalib9.app.Collection;
 
 import java.util.ArrayList;
 import java.util.Date;
-
-//import com.javalib9.app.Collection.*;
 import com.javalib9.app.Content.*;
-import com.javalib9.app.Identifier.ISBN;
 import com.javalib9.app.Person.*;
 import com.javalib9.app.LibraryFileReader.*;
 
