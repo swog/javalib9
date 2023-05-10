@@ -18,7 +18,7 @@ public class DueCheck {
     {
 
     }
-    public  void newCheckOverdues(Collection library)
+    public ArrayList<String> newCheckOverdues(Collection library)
     {
         //Collection library = new Collection("CheckoutCollection");
         Collection CheckedOutCollection = library.getCheckedOutCollectionSubset("CheckedOutCollection");
@@ -31,28 +31,48 @@ public class DueCheck {
             if(diffInDays == 12)
             {
                 String memberEmail= getEmailByContent(ContentArray[i]);
-                System.out.printf("12 day reminder sent to ",memberEmail); //Subject to change, give me any feedback
+                ArrayList<String> output = new ArrayList<String>();
+                output.add(memberEmail);
+                output.add(Integer.toString(diffInDays));
+                output.add("Approaching Reaching Deadline");
+                output.add("No fine added");
+                return output;
             }
             if(diffInDays == 14)
             {
                 String memberEmail= getEmailByContent(ContentArray[i]);
-                System.out.printf("14 day reminder sent to ",memberEmail); //Subject to change, give me any feedback
+                ArrayList<String> output = new ArrayList<String>();
+                output.add(memberEmail);
+                output.add(Integer.toString(diffInDays));
+                output.add("Deadline Reached");
+                output.add("No fine added");
+                return output;
             }
             if(diffInDays >= 15 && diffInDays < 31)
             {
                 AddFine(ContentArray[i]);
                 String memberEmail= getEmailByContent(ContentArray[i]);
-                System.out.printf("Item is passed due! $1 has been fined to: ",memberEmail);
+                ArrayList<String> output = new ArrayList<String>();
+                output.add(memberEmail);
+                output.add(Integer.toString(diffInDays));
+                output.add("Item Is Passed Due!");
+                output.add("$1 fine has been added");
+                return output;
             }
             if(diffInDays == 31)
             {
                 ContentArray[i].markLost();
                 String memberEmail= getEmailByContent(ContentArray[i]);
-                String memberAddress = getAddressByContent(ContentArray[i]);
-                System.out.printf("Item has been lost. Full price of content charged to ",memberEmail);
-                System.out.printf("Letter sent to:  ",memberAddress);
+                //String memberAddress = getAddressByContent(ContentArray[i]);
+                ArrayList<String> output = new ArrayList<String>();
+                output.add(memberEmail);
+                output.add(Integer.toString(diffInDays));
+                output.add("Item Has Been Considered Lost");
+                output.add("Full price of content has been charged");
+                return output;
             }
-        }    
+        }   
+        return null;
     }
     public int getIDByContent (Content content)
     {
