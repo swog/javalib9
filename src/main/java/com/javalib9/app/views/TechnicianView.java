@@ -21,7 +21,7 @@ public class TechnicianView {
     public static Scene getTechnicianMainMenu(Stage stage){
         VBox mainMenuRoot = new VBox();
 
-        Button getBookLocation = new Button("Find book location");
+        Button getBookLocation = new Button("Find Content Location");
         getBookLocation.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override

@@ -56,6 +56,9 @@ public final class LibraryFileReader {
         throw new UnsupportedOperationException();
     }
 
+    public static Collection readAllContentFilesIntoCollection(String newCollectionName){
+        return null;
+    }
     public static Collection readFileIntoCollection(String fileName, String newCollectionName){
 
         ArrayList<String> fileLines = new ArrayList<>();
