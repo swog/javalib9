@@ -17,8 +17,7 @@ public class DueCheck {
     }
     public ArrayList<String> newCheckOverdues()
     {
-        Collection library = new Collection("CheckoutCollection");
-        //Collection library = LibraryFileReader.readAllContentFilesIntoCollection("CheckoutCollection");
+        Collection library = LibraryFileReader.readAllContentFilesIntoCollection("CheckoutCollection");
         Collection CheckedOutCollection = library.getCheckedOutCollectionSubset("CheckedOutCollection");
         Content [] ContentArray = CheckedOutCollection.getContentArray();
         for ( int i = 0 ; i < ContentArray.length ; i++ ){
