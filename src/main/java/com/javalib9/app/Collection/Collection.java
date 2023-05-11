@@ -34,6 +34,7 @@
  * */
 package com.javalib9.app.Collection;
 
+import java.util.Collections;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -105,6 +106,18 @@ public class Collection {
         else {
             throw new InvalidCollectionSortSettingException("Collection sort setting invalid");
         }
+    }
+
+    public Collection(ArrayList<Collection> allCollections , String collectionName){ // takes an arraylist of all collections and combines them into one collection
+
+        ArrayList<Content> newContentArray = new ArrayList<>();
+        for (Collection c : allCollections){
+            Collections.addAll(newContentArray, c.getContentArray());
+        }
+
+        this.setCollectionName(collectionName);
+        this.setContentArray(newContentArray);
+        this.setSortSetting("Identifier");
     }
 
 

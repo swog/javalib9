@@ -1,6 +1,7 @@
 package com.javalib9.app.views;
 
 import com.javalib9.app.ProjectMain;
+import com.javalib9.app.Collection.DueCheck;
 
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -16,6 +17,10 @@ import javafx.scene.layout.HBox;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler; 
 
+import java.util.ArrayList;
+
+import com.javalib9.app.Person.technician;
+
 public class TechnicianView {
     
     public static Scene getTechnicianMainMenu(Stage stage){
@@ -26,7 +31,8 @@ public class TechnicianView {
 
             @Override
             public void handle(ActionEvent e){
-
+                stage.setScene(getFindContentLocationScreen(stage));
+                stage.setTitle("Find Content Location");
 
             }
         }); 
@@ -36,6 +42,8 @@ public class TechnicianView {
             @Override
             public void handle(ActionEvent e){
 
+                stage.setScene(getBorrowItemScreen(stage));
+                stage.setTitle("Borrow Item");
 
             }
         });
@@ -45,16 +53,19 @@ public class TechnicianView {
             @Override
             public void handle(ActionEvent e){
 
-                getReturnItemScreen(stage);
+                stage.setScene(getReturnItemScreen(stage));
+                stage.setTitle("Return item");
 
             }
         });
-        Button checkOverduesButton = new Button("Check overdues");
+        Button checkOverduesButton = new Button("Check Dues");
         checkOverduesButton.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent e){
 
+                stage.setScene(getCheckDuesScreen(stage));
+                stage.setTitle("Check Dues");
 
             }
         });
@@ -77,7 +88,69 @@ public class TechnicianView {
         return mainMenuScene;
     }
 
-    public static void getReturnItemScreen(Stage stage){
+    public static Scene getFindContentLocationScreen(Stage stage){
+        Label contentTypeFinderLabel = new Label("Enter content type");
+        ToggleGroup contentTypeFinder = new ToggleGroup();
+        ArrayList<RadioButton> allButtons = View.getContentTypeButtons(contentTypeFinder);
+
+        Label identifierLabel = new Label("Enter Identifier");
+        TextField identifierFinder = new TextField();
+
+        Button submitButton = new Button("Submit");
+        submitButton.setOnAction(new EventHandler<ActionEvent>(){
+
+            public void handle(ActionEvent e){
+
+            }
+
+        });
+
+        Label submitButtonStatus = new Label("");
+
+        Button backButton = View.getBackButton(stage, getTechnicianMainMenu(stage));
+
+        VBox findContentLocationRoot = new VBox(contentTypeFinderLabel);
+        for ( RadioButton b : allButtons ){
+            findContentLocationRoot.getChildren().add(b);
+        }
+        findContentLocationRoot.getChildren().addAll(identifierLabel, identifierFinder, submitButton, submitButtonStatus, backButton);
+
+        return new Scene(findContentLocationRoot, 500, 500);
+
+    }
+
+    public static Scene getBorrowItemScreen(Stage stage){
+
+        Label contentTypeFinderLabel = new Label("Enter content type");
+        ToggleGroup contentTypeFinder = new ToggleGroup();
+        ArrayList<RadioButton> allButtons = View.getContentTypeButtons(contentTypeFinder);
+
+        Label identifierLabel = new Label("Enter Identifier");
+        TextField identifierFinder = new TextField();
+
+        Button submitButton = new Button("Submit");
+        submitButton.setOnAction(new EventHandler<ActionEvent>(){
+
+            public void handle(ActionEvent e){
+
+            }
+
+        });
+
+        Label submitButtonStatus = new Label("");
+
+        Button backButton = View.getBackButton(stage, getTechnicianMainMenu(stage));
+
+        VBox borrowItemRoot = new VBox(contentTypeFinderLabel);
+        for ( RadioButton b : allButtons ){
+            borrowItemRoot.getChildren().add(b);
+        }
+        borrowItemRoot.getChildren().addAll(identifierLabel, identifierFinder, submitButton, submitButtonStatus, backButton);
+
+
+        return new Scene(borrowItemRoot, 500, 500);
+    }
+    public static Scene getReturnItemScreen(Stage stage){
 
         VBox returnItemScreenRoot = new VBox();
 
@@ -98,10 +171,41 @@ public class TechnicianView {
         TextField identifierFinder = new TextField();
 
         Button submitButton = new Button("Submit");
-
         Label submitButtonStatus = new Label("");
+        submitButton.setOnAction( new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent e){
+                String selectedContentType = ((RadioButton)contentSelectorGroup.getSelectedToggle()).getText();
+                String writtenIdentifier = identifierFinder.getText(); 
 
 
+                if ( technician.returnItem(selectedContentType, writtenIdentifier) ) submitButtonStatus.setText("Success!");
+                else submitButtonStatus.setText("Failed to turn item in. Ensure your identifier is correct and try again.");
+
+            }
+        });
+
+
+        
+
+
+        Button backButton = View.getBackButton(stage, getTechnicianMainMenu(stage));
+
+        returnItemScreenRoot.getChildren().addAll(contentSelectorRoot, identifierFinderLabel, identifierFinder, submitButton, submitButtonStatus, backButton);
+
+        Scene getReturnItemScene = new Scene(returnItemScreenRoot, 1000, 1000);
+
+
+        return getReturnItemScene;
+    }
+    
+    public static Scene getCheckDuesScreen(Stage stage){
+
+        VBox checkDuesRoot = new VBox();
+        DueCheck dueCheck = new DueCheck();
+
+        ArrayList<String> dueInformation = dueCheck.newCheckOverdues();
 
         Button backButton = new Button("Back");
         backButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -113,13 +217,8 @@ public class TechnicianView {
             }
         });
 
-        returnItemScreenRoot.getChildren().addAll(contentSelectorRoot, identifierFinderLabel, identifierFinder, submitButton, submitButtonStatus, backButton);
+        checkDuesRoot.getChildren().addAll(backButton);
 
-        Scene getReturnItemScene = new Scene(returnItemScreenRoot, 1000, 1000);
-
-        stage.setScene(getReturnItemScene);
-        stage.setTitle("Return item");
-        stage.show();
-
+        return new Scene(checkDuesRoot, 500, 500);
     }
 }

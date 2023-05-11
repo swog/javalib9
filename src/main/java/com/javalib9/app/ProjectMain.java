@@ -60,6 +60,7 @@ public class ProjectMain extends Application{
             public void handle(ActionEvent e){
 
                 mainMenuStage.setScene(LibrarianView.getLibrarianMainMenu(stage));
+                mainMenuStage.setTitle("Librarian Main Menu");
 
             }
         });
@@ -70,6 +71,7 @@ public class ProjectMain extends Application{
             public void handle(ActionEvent e){
 
                 mainMenuStage.setScene(TechnicianView.getTechnicianMainMenu(stage));
+                mainMenuStage.setTitle("Technician Main Menu");
 
             }
         });
@@ -79,7 +81,8 @@ public class ProjectMain extends Application{
 
             @Override
             public void handle(ActionEvent e){
-                mainMenuStage.setScene(ProfessorView.getProfessorMainMenu(mainMenuStage));
+                mainMenuStage.setScene(ProfessorView.getProfessorLogInScreen(mainMenuStage));
+                mainMenuStage.setTitle("Professor Login");
             }
         });
 
@@ -89,6 +92,7 @@ public class ProjectMain extends Application{
             @Override
             public void handle(ActionEvent e){
                 mainMenuStage.setScene(StudentView.getStudentLogInScreen(stage));
+                mainMenuStage.setTitle("Student Login");
             }
         });
 

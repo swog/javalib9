@@ -57,7 +57,24 @@ public final class LibraryFileReader {
     }
 
     public static Collection readAllContentFilesIntoCollection(String newCollectionName){
-        return null;
+        // assumes all content are in the 4 files written below 
+        // to add other base files, just add the file name as a string like below 
+
+        ArrayList<String> fileNames = new ArrayList<>();
+        fileNames.add("LibraryContentFiles/BookList.csv");
+        fileNames.add("LibraryContentFiles/DVDList.csv");
+        fileNames.add("LibraryContentFiles/JournalList.csv");
+        fileNames.add("LibraryContentFiles/NewspaperList.csv");
+        
+        ArrayList<Collection> allCollections = new ArrayList<>();
+        for ( int i = 0 ; i < fileNames.size() ; i++){
+
+            Collection nextCollection = readFileIntoCollection(fileNames.get(i), newCollectionName);
+            allCollections.add(nextCollection);
+
+        }
+
+        return new Collection(allCollections, newCollectionName);
     }
     public static Collection readFileIntoCollection(String fileName, String newCollectionName){
 
