@@ -7,6 +7,7 @@ import com.javalib9.app.Content.Journal;
 import com.javalib9.app.Collection.Collection;
 import com.javalib9.app.LibraryFileReader.LibraryFileReader;
 import com.javalib9.app.Identifier.*;
+import com.javalib9.app.Identifier.InvalidIdentifierException;
 import java.util.Date;
 import com.javalib9.app.Identifier.ISBN;
 import com.javalib9.app.Identifier.ISSN;
@@ -140,17 +141,17 @@ public class technician extends Employee {
 		return true;
 	}
 	
-	public static boolean borrowItem(String itemType,String identifier,int memberID){ //returns true if item is able to be borrowed and false if not
+	public static boolean borrowItem(String itemType,String identifier,int memberID) throws InvalidIdentifierException{ //returns true if item is able to be borrowed and false if not
 		ISBN isbn = null;
 		ISSN issn = null;
 		if(itemType == "Book" || itemType == "DVD"){
 			if(identifier.length() != 10){	//checks if the identifier entered is valid for the item type
-				return false;
+				throw new InvalidIdentifierException("Invalid ISBN");
 			}
 			isbn = new ISBN(identifier);
-		}else if(itemType == "Journal" || itemType == "NewsPaper"){
+		}else if(itemType == "Journal" || itemType == "Newspaper"){
 			if(identifier.length() != 8){	//checks if the identifier entered is valid for the item type
-				return false;
+				throw new InvalidIdentifierException("Invalid ISSN");
 			}
 			issn = new ISSN(identifier);
 		}else{
@@ -173,7 +174,7 @@ public class technician extends Employee {
 					return true;
 				}
 				break;
-			case "NewsPaper":
+			case "Newspaper":
 				if(borrowNewspaper(issn, memberID)){
 					return true;
 				};
@@ -183,10 +184,14 @@ public class technician extends Employee {
 		return false;
 	}
 
-	public static boolean borrowBook(ISBN isbn,int memberID){
+	public static boolean borrowBook(ISBN isbn,int memberID) throws InvalidIdentifierException{
 		String File = "LibraryContentFiles/BookList.csv";
 		Collection bookCollection = LibraryFileReader.readFileIntoCollection(File,"books");
+
+		/* HANDLE WHAT HAPPENS IF BOOK IS NOT FOUND FOR ALL BELOW (feel free to copy paste like so and add the "throws")  */
 		int i = bookCollection.searchItemByIdentifierForIndex(isbn);
+		if ( i == -1) throw new InvalidIdentifierException("Item with that identifier not found. Check your value");
+
 		Content[] bookArray = bookCollection.getContentArray();
 		if(bookArray[i].getCheckoutStatus() == "Not Checked Out"){
 			Date now = new Date();

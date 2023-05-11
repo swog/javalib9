@@ -248,7 +248,7 @@ public final class LibraryFileReader {
                     Date contentDateBorrowed = contentArray[i].getCheckoutDate();
                     String dateLine = "";
                     if ( contentDateBorrowed == null ){
-                        dateLine = "NULL";
+                        dateLine = "null";
                     } else {
                         String tempDateString = contentDateBorrowed.toString();
                         String[] tokenizedTempDateString = tempDateString.split(" ");
@@ -277,6 +277,7 @@ public final class LibraryFileReader {
 
         ArrayList<Content> filledArrayList = new ArrayList<>();
         for ( int i = 1 ; i < fileLines.size() ; i++ ){
+
             String[] tokenizedLine = fileLines.get(i).split(",");
 
             String title = tokenizedLine[0];
@@ -297,7 +298,7 @@ public final class LibraryFileReader {
             try {
                 checkoutDate = parseCheckoutDateString(checkoutDateAsString);
             } catch ( InvalidContentFileException e ){
-                throw e;
+                if ( !checkoutDateAsString.equals("null") )throw e;
             }
 
             Book nextBook = new Book(title, identifier, checkoutStatus, checkoutMemberId, checkoutDate);
@@ -494,7 +495,7 @@ public final class LibraryFileReader {
     }
 
     private static Date parseCheckoutDateString(String checkoutDateAsString){
-        if ( checkoutDateAsString.equals("NULL") ) return null;
+        if ( checkoutDateAsString.equals("null") ) return null;
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
         Date checkoutDate = null;

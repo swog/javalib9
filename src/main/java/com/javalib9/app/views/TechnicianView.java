@@ -2,6 +2,7 @@ package com.javalib9.app.views;
 
 import com.javalib9.app.ProjectMain;
 import com.javalib9.app.Collection.DueCheck;
+import com.javalib9.app.Identifier.InvalidIdentifierException;
 
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -125,19 +126,42 @@ public class TechnicianView {
         ToggleGroup contentTypeFinder = new ToggleGroup();
         ArrayList<RadioButton> allButtons = View.getContentTypeButtons(contentTypeFinder);
 
+
         Label identifierLabel = new Label("Enter Identifier");
         TextField identifierFinder = new TextField();
 
+        Label memberLabel = new Label("Enter MemberID");
+        TextField memberFinder = new TextField();
+
         Button submitButton = new Button("Submit");
+        Label submitButtonStatus = new Label("");
         submitButton.setOnAction(new EventHandler<ActionEvent>(){
 
             public void handle(ActionEvent e){
+
+                String selectedContentType = ((RadioButton)contentTypeFinder.getSelectedToggle()).getText();
+                String enteredIdentifier = identifierFinder.getText();
+                String enteredMemberID = memberFinder.getText();
+
+                System.out.printf("%s | %s | %s\n", selectedContentType, enteredIdentifier, enteredMemberID);
+
+                try{
+
+                    technician.borrowItem(selectedContentType, enteredIdentifier, Integer.parseInt(enteredMemberID));
+                    submitButtonStatus.setText("Successfully borrowed item of identifier " + enteredIdentifier);
+                } catch (InvalidIdentifierException exception){
+                    submitButtonStatus.setText(exception.getMessage());
+
+                    return;
+                }
+
+
+
 
             }
 
         });
 
-        Label submitButtonStatus = new Label("");
 
         Button backButton = View.getBackButton(stage, getTechnicianMainMenu(stage));
 
@@ -145,7 +169,7 @@ public class TechnicianView {
         for ( RadioButton b : allButtons ){
             borrowItemRoot.getChildren().add(b);
         }
-        borrowItemRoot.getChildren().addAll(identifierLabel, identifierFinder, submitButton, submitButtonStatus, backButton);
+        borrowItemRoot.getChildren().addAll(identifierLabel, identifierFinder, memberLabel, memberFinder, submitButton, submitButtonStatus, backButton);
 
 
         return new Scene(borrowItemRoot, 500, 500);
@@ -203,9 +227,17 @@ public class TechnicianView {
     public static Scene getCheckDuesScreen(Stage stage){
 
         VBox checkDuesRoot = new VBox();
-        DueCheck dueCheck = new DueCheck();
 
-        ArrayList<String> dueInformation = dueCheck.newCheckOverdues();
+        DueCheck dueCheck = new DueCheck();
+        ArrayList<String[]> dueInformation = dueCheck.newCheckOverdues();
+
+        if ( dueInformation.size() == 0){
+            checkDuesRoot.getChildren().add(new Label("No items checked out"));
+        }
+
+        for ( String[] s : dueInformation){
+            checkDuesRoot.getChildren().add(new Label(s[0] + " | " + s[1] + " | " + s[2] + " | " + s[3] + " | "));
+        }
 
         Button backButton = new Button("Back");
         backButton.setOnAction(new EventHandler<ActionEvent>() {

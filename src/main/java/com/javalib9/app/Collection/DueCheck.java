@@ -23,6 +23,7 @@ public class DueCheck {
 
         ArrayList<String[]> returningArrayList = new ArrayList<>();
 
+
         for ( int i = 0 ; i < ContentArray.length ; i++ ){
             Date d1= new Date();
             Date d2 = ContentArray[i].getCheckoutDate();

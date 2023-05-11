@@ -1,19 +1,19 @@
 package com.javalib9.app.Identifier;
 
 public class InvalidIdentifierException extends RuntimeException{
-    InvalidIdentifierException(String errorMessage){
+    public InvalidIdentifierException(String errorMessage){
         super(errorMessage);
     }
 
-    InvalidIdentifierException(){
+    public InvalidIdentifierException(){
         super();
     }
 
-    InvalidIdentifierException(String errorMessage, Throwable throwableItem){
+    public InvalidIdentifierException(String errorMessage, Throwable throwableItem){
         super(errorMessage, throwableItem);
     }
 
-    InvalidIdentifierException(Throwable throwableItem){
+    public InvalidIdentifierException(Throwable throwableItem){
         super(throwableItem);
     }
 }
