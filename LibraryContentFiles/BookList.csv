@@ -1,6 +1,6 @@
 Book,ISBN,Status,Borrower Id,Date Borrowed
 One Hundred Years of Solitude,0060883286,Checked Out,1114,11-May-2023
-East of Eden,0140186390,Checked Out,1114,11-May-2023
+East of Eden,0140186390,Not Checked Out,-1,null
 Parable of the Sower,0446675505,Not Checked Out,-1,null
 The Living Is Easy,1558611474,Not Checked Out,-1,null
 Beloved,1580601200,Not Checked Out,-1,null

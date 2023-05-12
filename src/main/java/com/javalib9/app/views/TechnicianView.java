@@ -251,8 +251,13 @@ public class TechnicianView {
                 }
 
 
-                if ( technician.returnItem(selectedContentType, writtenIdentifier) ) submitButtonStatus.setText("Success!");
-                else submitButtonStatus.setText("Failed to turn item in. Ensure your identifier is correct and try again.");
+                try {
+                    if ( technician.returnItem(selectedContentType, writtenIdentifier) ) submitButtonStatus.setText("Success!");
+                    else submitButtonStatus.setText("Failed to turn item in. Ensure your identifier is correct and try again.");
+
+                } catch (InvalidIdentifierException iie){
+                    submitButtonStatus.setText(iie.getMessage() + ", check your identifier and try again");
+                }
 
             }
         });
