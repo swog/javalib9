@@ -189,7 +189,7 @@ public class technician extends Employee {
 		if ( i == -1) throw new InvalidIdentifierException("Item with that identifier not found. Check your value");
 
 		Content[] bookArray = bookCollection.getContentArray();
-		if(bookArray[i].getCheckoutStatus() == "Not Checked Out"){
+		if(bookArray[i].getCheckoutStatus().equals("Not Checked Out")){
 			Date now = new Date();
 			bookArray[i].markCheckedOut(memberID,now);
 			LibraryFileReader.writeBookCollectionIntoFile(bookCollection,File);
@@ -206,7 +206,7 @@ public class technician extends Employee {
 		if ( i == -1) throw new InvalidIdentifierException("Item with that identifier not found. Check your value");
 
 		Content[] dvdArray = dvdCollection.getContentArray();
-		if(dvdArray[i].getCheckoutStatus() == "Not Checked Out"){
+		if(dvdArray[i].getCheckoutStatus().equals("Not Checked Out")){
 			Date now = new Date();
 			dvdArray[i].markCheckedOut(memeberID,now);
 			LibraryFileReader.writeDVDCollectionIntoFile(dvdCollection,File);
@@ -223,7 +223,7 @@ public class technician extends Employee {
 		if ( i == -1) throw new InvalidIdentifierException("Item with that identifier not found. Check your value");
 
 		Content[] journalArray = journalCollection.getContentArray();
-		if(journalArray[i].getCheckoutStatus() == "Not Checked Out"){
+		if(journalArray[i].getCheckoutStatus().equals("Not Checked Out")){
 			Date now = new Date();
 			journalArray[i].markCheckedOut(memberID,now);
 			LibraryFileReader.writeJournalCollectionIntoFile(journalCollection,File);
@@ -240,7 +240,7 @@ public class technician extends Employee {
 		if ( i == -1) throw new InvalidIdentifierException("Item with that identifier not found. Check your value");
 
 		Content[] newspaperArray = newspaperCollection.getContentArray();
-		if(newspaperArray[i].getCheckoutStatus() == "Not Checked Out"){
+		if(newspaperArray[i].getCheckoutStatus().equals("Not Checked Out")){
 			Date now = new Date();
 			newspaperArray[i].markCheckedOut(memberID,now);
 			LibraryFileReader.writeNewspaperCollectionIntoFile(newspaperCollection,File);
