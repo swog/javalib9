@@ -230,29 +230,34 @@ public class Librarian extends Employee {
 			int professorId) {
 				
 		String File = "LibraryContentFiles/People.csv";
-		ArrayList<Person> people = PersonFileReader.readStudentFile(File);
+
+		ArrayList<Person> people = Person.getPeople();
 		Student student = new Student(name, address, dob, email, social, id, 0, professorId);
+		
 		System.out.println("About to print the created student");
 		System.out.println(student.toString());
-		people.add(student);
-		PersonFileReader.writeStudentFile(people, File);
+
+		Person.addPerson(student);
+		PersonFileReader.writePeopleFile(people, File);
 	}
 
 	// function to add professor to people.csv
 	public static void addProfessor(String name, String address, Date dob, String email, SSN social, int id) {
 		String File = "LibraryContentFiles/People.csv";
-		ArrayList<Person> people = PersonFileReader.readStudentFile(File);
+
+		ArrayList<Person> people = Person.getPeople();
 		Professor professor = new Professor(name, address, dob, email, social, id, 0);
-		people.add(professor);
-		PersonFileReader.writeProfessorFile(people, File);
+		Person.addPerson(professor);
+		PersonFileReader.writePeopleFile(people, File);
 	}
 
 	// function to remove person by id
 	public static void removeMember(int id) {
 		String File = "LibraryContentFiles/People.csv";
-		ArrayList<Person> people = PersonFileReader.readStudentFile(File);
+
+		ArrayList<Person> people = Person.getPeople();
 		PersonFileReader.removePersonById(people, id);
-		PersonFileReader.writeStudentFile(people, File);
+		PersonFileReader.writePeopleFile(people, File);
 	}
 
 }

@@ -34,6 +34,16 @@ public abstract class Person {
 	}
 
 	public static void addPerson(Person person) {
+		for (int i = 0; i < people.size(); i++) {
+			if (person instanceof Member && 
+				people.get(i) instanceof Member && 
+				((Member)people.get(i)).getId() == ((Member)person).getId()
+			) {
+				System.out.println("Removed person confliction during removal!");
+				people.remove(i);
+			}
+		}
+
 		people.add(person);
 	}
 

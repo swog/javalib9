@@ -21,12 +21,14 @@ public class External extends Member {
 	@Override
 	public String toString() {
 		return String.format(
-			"%s,%s,%s,%s,%s,External,%d,%d,%d", 
+			"%s,%s,%s,%s,%s,External,%d,%d", 
+			
 			getName(), 
 			getAddress(),
 			PersonFileReader.dateToString(getDateOfBirth()),
 			getEmail(),
 			getSSN().getId(),
+
 			getId(),
 			getBalance()
 		);

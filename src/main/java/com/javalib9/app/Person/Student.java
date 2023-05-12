@@ -32,11 +32,13 @@ public class Student extends Member {
 	public String toString() {
 		return String.format(
 			"%s,%s,%s,%s,%s,Student,%d,%d,%d", 
+
 			getName(), 
 			getAddress(),
 			PersonFileReader.dateToString(getDateOfBirth()),
 			getEmail(),
 			getSSN().getId(),
+			
 			getId(),
 			getBalance(),
 			professorId
@@ -85,7 +87,7 @@ public class Student extends Member {
 		}
 	}
 
-	public Professor getProfessor() throws RuntimeException{
+	public Professor getProfessor() throws RuntimeException {
 		// Professor is valid & the professorId matches the current professor object
 		if (professor != null && professor.getId() == professorId) {
 			return professor;
@@ -94,14 +96,13 @@ public class Student extends Member {
 		// Professor has changed or never set
 		try {
 			professor = (Professor)PersonFileReader.findByMemberId(professorId);
+			// Professor will handle duplicates.
+			professor.addStudent(this);
 		}
 		catch (Exception UninitializedException) {
 			professor = null;
 			throw(new RuntimeException("Professor not found"));
 		}
-
-		// Professor will handle duplicates.
-		professor.addStudent(this);
 
 		return professor;
 	}

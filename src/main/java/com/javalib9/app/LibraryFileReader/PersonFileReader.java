@@ -1,4 +1,5 @@
 
+
 package com.javalib9.app.LibraryFileReader;
 
 import java.nio.file.Paths;
@@ -23,8 +24,8 @@ import com.javalib9.app.Identifier.SSN;
 import com.javalib9.app.Person.*;
 
 // Date of birth follows dd/MM/yyyy
-// Name,Address,DoB,Email,SSN,Type
-// Name,Address,DoB,Email,SSN,Professor,Id
+// Name,Address,DoB,Email,SSN,Person
+// Name,Address,DoB,Email,SSN,Professor,Id,BalanceDue
 // Name,Address,DoB,Email,SSN,Student,Id,ProfessorId
 // Name,Address,DoB,Email,SSN,External,Id
 
@@ -65,7 +66,7 @@ public class PersonFileReader {
 	}
 
 	// write to file
-	public static void writeStudentFile(ArrayList<Person> people, String fileName) {
+	public static void writePeopleFile(ArrayList<Person> people, String fileName) {
 		try {
 			//Path path = Paths.get(fileName);
 			PrintWriter writer = new PrintWriter(fileName);
@@ -76,24 +77,6 @@ public class PersonFileReader {
 			}
 			writer.close();
 		} catch (InvalidPathException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	// write to file
-	public static void writeProfessorFile(ArrayList<Person> people, String fileName) {
-		try {
-			//File file = new File(fileName);
-			// file.createNewFile();
-			PrintWriter writer = new PrintWriter(fileName);
-			writer.println("Name,Address,DoB,Email,SSN,Type,Id");
-			for (int i = 0; i < people.size(); i++) {
-				writer.println(people.get(i));
-			}
-			writer.close();
-		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();

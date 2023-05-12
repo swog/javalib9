@@ -60,12 +60,14 @@ public class Professor extends Member {
 	@Override
 	public String toString() {
 		return String.format(
-			"%s,%s,%s,%s,%s,Professor,%d,%d,%d", 
+			"%s,%s,%s,%s,%s,Professor,%d,%d",
+			
 			getName(), 
 			getAddress(),
 			PersonFileReader.dateToString(getDateOfBirth()),
 			getEmail(),
 			getSSN().getId(),
+
 			getId(),
 			getBalance()
 		);
