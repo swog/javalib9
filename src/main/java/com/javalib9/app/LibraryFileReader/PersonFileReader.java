@@ -78,18 +78,18 @@ public class PersonFileReader {
 				case "Professor": {
 					int memberId = Integer.parseInt(values[6]);
 					int memberBalance = Integer.parseInt(values[7]);
-					return new Professor(name, address, dateOfBirth, email, ssn, memberId,memberBalance);
+					return new Professor(name, address, dateOfBirth, email, ssn, memberId, memberBalance);
 				}
 				case "Student": {
 					int memberId = Integer.parseInt(values[6]);
 					int professorId = Integer.parseInt(values[7]);
 					int memberBalance = Integer.parseInt(values[8]);
-					return new Student(name, address, dateOfBirth, email, ssn, memberId, professorId,memberBalance);
+					return new Student(name, address, dateOfBirth, email, ssn, memberId, memberBalance, professorId);
 				}
 				case "External": {
 					int memberId = Integer.parseInt(values[6]);
 					int memberBalance = Integer.parseInt(values[7]);
-					return new External(name, address, dateOfBirth, email, ssn, memberId,memberBalance);
+					return new External(name, address, dateOfBirth, email, ssn, memberId, memberBalance);
 				}
 				// Any other types
 			}

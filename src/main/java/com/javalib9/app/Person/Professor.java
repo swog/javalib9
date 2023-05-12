@@ -15,10 +15,11 @@ public class Professor extends Member {
 		Date DoB,
 		String Email,
 		SSN Social,
-		int BalanceDue,
-		int Id
+		int Id,
+		int BalanceDue
 	) {
-		super(Name, Address, DoB, Email, Social, Id,BalanceDue);
+		super(Name, Address, DoB, Email, Social, Id, BalanceDue);
+		students = new ArrayList<Student>();
 	}
 
 	public boolean isMyStudent(Student student) { 

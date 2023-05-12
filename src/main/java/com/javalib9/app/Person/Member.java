@@ -28,12 +28,16 @@ public abstract class Member extends Person {
 		Date DoB,
 		String Email,
 		SSN Social,
-		int BalanceDue,
-		int Id
+		int Id,
+		int BalanceDue
 	) {
 		super(Name, Address, DoB, Email, Social);
 		id = Id;
-		balanceDue=BalanceDue;
+		balanceDue = BalanceDue;
+	}
+
+	public int getBalance() {
+		return balanceDue;
 	}
 
 	public void IncBalance()
