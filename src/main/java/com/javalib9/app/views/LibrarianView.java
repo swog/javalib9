@@ -180,9 +180,13 @@ public class LibrarianView {
                 String identifier = identifierFinder.getText();
 
                 try {
-                    Librarian.removeItem(identifier);
+                    if ( Librarian.removeItem(identifier) ) 
+                    {
+                        submitButtonStatus.setText(identifier + " removed from collection");
+                    } else {
+                        submitButtonStatus.setText(identifier + " not found, check your identifier");
+                    }
 
-                    submitButtonStatus.setText(identifier + " removed from collection");
 
                 } catch (InvalidIdentifierException exception) {
                     submitButtonStatus.setText(exception.getMessage());
