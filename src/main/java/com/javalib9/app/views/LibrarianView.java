@@ -1,6 +1,7 @@
 package com.javalib9.app.views;
 
 import com.javalib9.app.ProjectMain;
+import com.javalib9.app.Person.Librarian;
 
 import java.util.ArrayList;
 
@@ -21,30 +22,29 @@ import javafx.event.EventHandler;
 import javafx.application.Application;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler; 
+import javafx.event.EventHandler;
 
 public class LibrarianView {
-    
-    public static Scene getLibrarianMainMenu(Stage stage){
+
+    public static Scene getLibrarianMainMenu(Stage stage) {
         VBox mainMenuRoot = new VBox();
 
         Button newCollectionButton = new Button("Add item to collection");
         newCollectionButton.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
-            public void handle(ActionEvent e){
+            public void handle(ActionEvent e) {
 
                 stage.setScene(getAddToCollectionScreen(stage));
                 stage.setTitle("Add To Collection");
-                
 
             }
         });
-        Button removeItemFromCollectionButton = new Button ("Remove item from collection");
+        Button removeItemFromCollectionButton = new Button("Remove item from collection");
         removeItemFromCollectionButton.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
-            public void handle(ActionEvent e){
+            public void handle(ActionEvent e) {
 
                 stage.setScene(getRemoveFromCollectionScreen(stage));
                 stage.setTitle("Remove Item From Collection");
@@ -55,7 +55,7 @@ public class LibrarianView {
         newMembershipButton.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
-            public void handle(ActionEvent e){
+            public void handle(ActionEvent e) {
 
                 stage.setScene(getAddMemberScreen(stage));
                 stage.setTitle("Add member");
@@ -66,7 +66,7 @@ public class LibrarianView {
         removeMembershipButton.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
-            public void handle(ActionEvent e){
+            public void handle(ActionEvent e) {
                 stage.setScene(getRemoveMemberScreen(stage));
                 stage.setTitle("Remove member");
 
@@ -76,21 +76,20 @@ public class LibrarianView {
         backButton.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
-            public void handle(ActionEvent e){
+            public void handle(ActionEvent e) {
                 ProjectMain.generateMainMenu(stage);
 
             }
         });
 
-
-
-        mainMenuRoot.getChildren().addAll(newCollectionButton, removeItemFromCollectionButton, newMembershipButton, removeMembershipButton, backButton);
+        mainMenuRoot.getChildren().addAll(newCollectionButton, removeItemFromCollectionButton, newMembershipButton,
+                removeMembershipButton, backButton);
         Scene mainMenuScene = new Scene(mainMenuRoot, 1000, 1000);
 
         return mainMenuScene;
     }
 
-    public static Scene getAddToCollectionScreen(Stage stage){
+    public static Scene getAddToCollectionScreen(Stage stage) {
 
         VBox addToCollectionRoot = new VBox();
 
@@ -105,30 +104,49 @@ public class LibrarianView {
         TextField identifierFinder = new TextField();
 
         Button submitButton = new Button("Submit");
-        submitButton.setOnAction(new EventHandler<ActionEvent>(){
 
-            public void handle(ActionEvent e){
+        Label submitButtonStatus = new Label("");
+        submitButton.setOnAction(new EventHandler<ActionEvent>() {
+            // Function to add content to collection
+            public void handle(ActionEvent e) {
 
+                // get selection input
+                String contentType = ((RadioButton) contentTypeFinder.getSelectedToggle()).getText();
+
+                System.out.printf("Content type: %s\n", contentType);
+
+                String identifier = identifierFinder.getText();
+
+                String title = titleFinder.getText();
+
+                try {
+                    Librarian.addItem( identifier, contentType, title);
+
+                    submitButtonStatus.setText("Item added to collection");
+
+                    System.out.printf("%s added to collection\n", identifier);
+                } catch (Exception ex) {
+                    System.out.printf("%s not added to collection\n", identifier);
+                }
             }
 
         });
 
-        Label submitButtonStatus = new Label("");
-
         Button backButton = View.getBackButton(stage, getLibrarianMainMenu(stage));
 
         addToCollectionRoot.getChildren().addAll(titleFinderLabel, titleFinder, contentTypeFinderLabel);
-        for (RadioButton rb : allButtons){
+        for (RadioButton rb : allButtons) {
             addToCollectionRoot.getChildren().add(rb);
         }
 
-        addToCollectionRoot.getChildren().addAll(identifierLabel, identifierFinder, submitButton, submitButtonStatus, backButton);
+        addToCollectionRoot.getChildren().addAll(identifierLabel, identifierFinder, submitButton, submitButtonStatus,
+                backButton);
 
         Scene addToCollectionScene = new Scene(addToCollectionRoot, 500, 500);
         return addToCollectionScene;
     }
 
-    public static Scene getRemoveFromCollectionScreen(Stage stage){
+    public static Scene getRemoveFromCollectionScreen(Stage stage) {
 
         VBox removeFromCollectionRoot = new VBox();
 
@@ -136,10 +154,18 @@ public class LibrarianView {
         TextField identifierFinder = new TextField();
 
         Button submitButton = new Button("Submit");
-        submitButton.setOnAction(new EventHandler<ActionEvent>(){
+        submitButton.setOnAction(new EventHandler<ActionEvent>() {
+            // Function to remove content from collection
+            public void handle(ActionEvent e) {
+                String identifier = identifierFinder.getText();
 
-            public void handle(ActionEvent e){
+                try {
+                    Librarian.removeItem(identifier);
 
+                    System.out.printf("%s removed from collection\n", identifier);
+                } catch (Exception ex) {
+                    System.out.printf("%s not removed from collection\n", identifier);
+                }
             }
 
         });
@@ -148,28 +174,29 @@ public class LibrarianView {
 
         Button backButton = View.getBackButton(stage, getLibrarianMainMenu(stage));
 
-        removeFromCollectionRoot.getChildren().addAll(identifierLabel, identifierFinder, submitButton, submitButtonStatus, backButton);
+        removeFromCollectionRoot.getChildren().addAll(identifierLabel, identifierFinder, submitButton,
+                submitButtonStatus, backButton);
         return new Scene(removeFromCollectionRoot, 500, 500);
     }
 
-    public static Scene getAddMemberScreen(Stage stage){
+    public static Scene getAddMemberScreen(Stage stage) {
 
         VBox addMemberScreenRoot = new VBox();
-        
-        Button addStudentButton = new Button("Add student");
-        addStudentButton.setOnAction(new EventHandler<ActionEvent>(){
 
-            public void handle(ActionEvent e){
+        Button addStudentButton = new Button("Add student");
+        addStudentButton.setOnAction(new EventHandler<ActionEvent>() {
+
+            public void handle(ActionEvent e) {
 
                 stage.setScene(getAddStudentScreen(stage));
                 stage.setTitle("Add Student");
             }
 
-        }); 
+        });
         Button addProfessorButton = new Button("Add professor");
-        addProfessorButton.setOnAction(new EventHandler<ActionEvent>(){
+        addProfessorButton.setOnAction(new EventHandler<ActionEvent>() {
 
-            public void handle(ActionEvent e){
+            public void handle(ActionEvent e) {
 
                 stage.setScene(getAddProfessorScreen(stage));
                 stage.setTitle("Add Professor");
@@ -179,11 +206,10 @@ public class LibrarianView {
 
         Button backButton = View.getBackButton(stage, getLibrarianMainMenu(stage));
         addMemberScreenRoot.getChildren().addAll(addStudentButton, addProfessorButton, backButton);
-        return new Scene(addMemberScreenRoot, 500, 500);   
+        return new Scene(addMemberScreenRoot, 500, 500);
     }
 
-
-    public static Scene getAddStudentScreen(Stage stage){
+    public static Scene getAddStudentScreen(Stage stage) {
 
         VBox addStudentScreenRoot = new VBox();
 
@@ -191,7 +217,7 @@ public class LibrarianView {
         TextField getNameField = new TextField();
 
         Label getAddressLabel = new Label("Enter Student Address");
-        TextField getAddressField= new TextField();
+        TextField getAddressField = new TextField();
 
         Label getBirthdayLabel = new Label("Enter Birthday");
         DatePicker getBirthdayField = new DatePicker();
@@ -199,7 +225,7 @@ public class LibrarianView {
         Label getEmailLabel = new Label("Enter Email");
         TextField getEmailField = new TextField();
 
-        Label getSSN = new Label ("Enter SSN");
+        Label getSSN = new Label("Enter SSN");
         TextField getSSNField = new TextField();
 
         Label getProfID = new Label("Enter Professor Identification");
@@ -209,10 +235,10 @@ public class LibrarianView {
         TextField getIDField = new TextField();
 
         Button submitButton = new Button("Submit");
-        submitButton.setOnAction(new EventHandler<ActionEvent>(){
-
+        submitButton.setOnAction(new EventHandler<ActionEvent>() {
+            // Function to add student to collection
             @Override
-            public void handle(ActionEvent e){
+            public void handle(ActionEvent e) {
 
             }
         });
@@ -221,13 +247,14 @@ public class LibrarianView {
 
         Button backButton = View.getBackButton(stage, getAddMemberScreen(stage));
 
-        addStudentScreenRoot.getChildren().addAll(getNameLabel, getNameField, getAddressLabel, getAddressField, getBirthdayLabel, getBirthdayField, getEmailLabel, getEmailField, getSSN, getSSNField, getProfID, getProfIDField, getID, getIDField, submitButton, submitButtonStatus, backButton);
-
+        addStudentScreenRoot.getChildren().addAll(getNameLabel, getNameField, getAddressLabel, getAddressField,
+                getBirthdayLabel, getBirthdayField, getEmailLabel, getEmailField, getSSN, getSSNField, getProfID,
+                getProfIDField, getID, getIDField, submitButton, submitButtonStatus, backButton);
 
         return new Scene(addStudentScreenRoot, 500, 500);
     }
 
-    public static Scene getAddProfessorScreen(Stage stage){
+    public static Scene getAddProfessorScreen(Stage stage) {
 
         VBox addProfessorScreenRoot = new VBox();
 
@@ -235,7 +262,7 @@ public class LibrarianView {
         TextField getNameField = new TextField();
 
         Label getAddressLabel = new Label("Enter Student Address");
-        TextField getAddressField= new TextField();
+        TextField getAddressField = new TextField();
 
         Label getBirthdayLabel = new Label("Enter Birthday");
         DatePicker getBirthdayField = new DatePicker();
@@ -243,17 +270,17 @@ public class LibrarianView {
         Label getEmailLabel = new Label("Enter Email");
         TextField getEmailField = new TextField();
 
-        Label getSSN = new Label ("Enter SSN");
+        Label getSSN = new Label("Enter SSN");
         TextField getSSNField = new TextField();
 
         Label getID = new Label("Enter Professor Identification");
         TextField getIDField = new TextField();
 
         Button submitButton = new Button("Submit");
-        submitButton.setOnAction(new EventHandler<ActionEvent>(){
-
+        submitButton.setOnAction(new EventHandler<ActionEvent>() {
+            // Function to add professor to collection
             @Override
-            public void handle(ActionEvent e){
+            public void handle(ActionEvent e) {
 
             }
         });
@@ -262,22 +289,24 @@ public class LibrarianView {
 
         Button backButton = View.getBackButton(stage, getAddMemberScreen(stage));
 
-        addProfessorScreenRoot.getChildren().addAll(getNameLabel, getNameField, getAddressLabel, getAddressField, getBirthdayLabel, getBirthdayField, getEmailLabel, getEmailField, getSSN, getSSNField, getID, getIDField, submitButton, submitButtonStatus, backButton);
+        addProfessorScreenRoot.getChildren().addAll(getNameLabel, getNameField, getAddressLabel, getAddressField,
+                getBirthdayLabel, getBirthdayField, getEmailLabel, getEmailField, getSSN, getSSNField, getID,
+                getIDField, submitButton, submitButtonStatus, backButton);
 
         return new Scene(addProfessorScreenRoot, 500, 500);
     }
 
-    public static Scene getRemoveMemberScreen(Stage stage){
+    public static Scene getRemoveMemberScreen(Stage stage) {
         VBox removeMemberRoot = new VBox();
 
         Label getIDLabel = new Label("Enter ID of Member to Remove");
         TextField getIDField = new TextField();
 
         Button submitButton = new Button("Submit");
-        submitButton.setOnAction(new EventHandler<ActionEvent>(){
-
+        submitButton.setOnAction(new EventHandler<ActionEvent>() {
+            // Function to remove member from collection
             @Override
-            public void handle(ActionEvent e){
+            public void handle(ActionEvent e) {
 
             }
         });
@@ -288,6 +317,6 @@ public class LibrarianView {
         removeMemberRoot.getChildren().addAll(getIDLabel, getIDField, submitButton, submitButtonStatus, backButton);
 
         return new Scene(removeMemberRoot, 500, 500);
-        
+
     }
 }
