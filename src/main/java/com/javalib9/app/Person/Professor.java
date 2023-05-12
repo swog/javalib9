@@ -24,7 +24,7 @@ public class Professor extends Member {
 
 	public boolean isMyStudent(Student student) { 
 		for (int i = 0; i < students.size(); i++) {
-			if (students.get(i).getProfessorId() == getId()) {
+			if (students.get(i) == student) {
 				return true;
 			}
 		}
@@ -33,6 +33,8 @@ public class Professor extends Member {
 
 	public void addStudent(Student student) {
 		if (isMyStudent(student)) {
+			System.out.println("addStudent called with student in the list");
+			System.out.println(student);
 			return;
 		}
 

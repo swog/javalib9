@@ -24,6 +24,7 @@ import com.javalib9.app.Identifier.SSN;
 import com.javalib9.app.Person.*;
 
 // Date of birth follows dd/MM/yyyy
+// Type comes before Id because a person doesn't necessarily have a member id.
 // Name,Address,DoB,Email,SSN,Person
 // Name,Address,DoB,Email,SSN,Professor,Id,BalanceDue
 // Name,Address,DoB,Email,SSN,Student,Id,ProfessorId
