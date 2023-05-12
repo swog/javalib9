@@ -16,6 +16,7 @@ import java.text.ParseException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.io.IOException;
 
 import com.javalib9.app.Identifier.SSN;
@@ -38,7 +39,6 @@ public class PersonFileReader {
 		ArrayList<Person> people = new ArrayList<>();
 		try {
 
-
 			Path path = Paths.get(fileName);
 
 			Scanner fileReader = new Scanner(path);
@@ -53,16 +53,62 @@ public class PersonFileReader {
 			}
 
 			fileReader.close();
-		}
-		catch ( InvalidPathException e) {
+		} catch (InvalidPathException e) {
 			e.printStackTrace();
 			return null;
-		} catch (IOException e){
+		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
 		}
 
 		return people;
+	}
+
+	// write to file
+	public static void writeStudentFile(ArrayList<Person> people, String fileName) {
+		try {
+			Path path = Paths.get(fileName);
+			PrintWriter writer = new PrintWriter(path.toString());
+
+			String nextLine = "Name,Address,DoB,Email,SSN,Type,Id,ProfessorId";
+			writer.println(nextLine);
+			for (int i = 0; i < people.size(); i++) {
+				writer.println(people.get(i).toString());
+			}
+			writer.close();
+		} catch (InvalidPathException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	// write to file
+	public static void writeProfessorFile(ArrayList<Person> people, String fileName) {
+		try {
+			File file = new File(fileName);
+			// file.createNewFile();
+			PrintWriter writer = new PrintWriter(file);
+			writer.println("Name,Address,DoB,Email,SSN,Type,Id");
+			for (int i = 0; i < people.size(); i++) {
+				writer.println(people.get(i).toString());
+			}
+			writer.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	// remove from people.csv by id
+	public static void removePersonById(ArrayList<Person> people, int id) {
+		for (int i = 0; i < people.size(); i++) {
+			if (people.get(i).isMember() && ((Member) people.get(i)).getId() == id) {
+				people.remove(i);
+				return;
+			}
+		}
 	}
 
 	private static Person readPersonFromLine(String line) {
@@ -78,18 +124,18 @@ public class PersonFileReader {
 				case "Professor": {
 					int memberId = Integer.parseInt(values[6]);
 					int memberBalance = Integer.parseInt(values[7]);
-					return new Professor(name, address, dateOfBirth, email, ssn, memberId,memberBalance);
+					return new Professor(name, address, dateOfBirth, email, ssn, memberId, memberBalance);
 				}
 				case "Student": {
 					int memberId = Integer.parseInt(values[6]);
 					int professorId = Integer.parseInt(values[7]);
 					int memberBalance = Integer.parseInt(values[8]);
-					return new Student(name, address, dateOfBirth, email, ssn, memberId, professorId,memberBalance);
+					return new Student(name, address, dateOfBirth, email, ssn, memberId, professorId, memberBalance);
 				}
 				case "External": {
 					int memberId = Integer.parseInt(values[6]);
 					int memberBalance = Integer.parseInt(values[7]);
-					return new External(name, address, dateOfBirth, email, ssn, memberId,memberBalance);
+					return new External(name, address, dateOfBirth, email, ssn, memberId, memberBalance);
 				}
 				// Any other types
 			}
@@ -111,8 +157,8 @@ public class PersonFileReader {
 			throw new Exception("Unitialized people list in findByMemberId");
 		}
 		for (int i = 0; i < people.size(); i++) {
-			if (people.get(i).isMember() && ((Member)people.get(i)).getId() == memberId) {
-				return (Member)people.get(i);
+			if (people.get(i).isMember() && ((Member) people.get(i)).getId() == memberId) {
+				return (Member) people.get(i);
 			}
 		}
 		return null;

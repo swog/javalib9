@@ -1,9 +1,15 @@
 package com.javalib9.app.views;
 
 import com.javalib9.app.ProjectMain;
+import com.javalib9.app.Identifier.InvalidIdentifierException;
+import com.javalib9.app.Identifier.SSN;
 import com.javalib9.app.Person.Librarian;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
+
+//import org.omg.CORBA.DynAnyPackage.Invalid;
 
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -120,13 +126,15 @@ public class LibrarianView {
                 String title = titleFinder.getText();
 
                 try {
-                    Librarian.addItem( identifier, contentType, title);
+                    Librarian.addItem(identifier, contentType, title);
 
                     submitButtonStatus.setText("Item added to collection");
 
                     System.out.printf("%s added to collection\n", identifier);
-                } catch (Exception ex) {
-                    System.out.printf("%s not added to collection\n", identifier);
+                } catch (InvalidIdentifierException exception) {
+                    submitButtonStatus.setText(exception.getMessage());
+
+                    return;
                 }
             }
 
@@ -154,6 +162,8 @@ public class LibrarianView {
         TextField identifierFinder = new TextField();
 
         Button submitButton = new Button("Submit");
+
+        Label submitButtonStatus = new Label("");
         submitButton.setOnAction(new EventHandler<ActionEvent>() {
             // Function to remove content from collection
             public void handle(ActionEvent e) {
@@ -162,15 +172,17 @@ public class LibrarianView {
                 try {
                     Librarian.removeItem(identifier);
 
+                    submitButtonStatus.setText("Item removed from collection");
+
                     System.out.printf("%s removed from collection\n", identifier);
-                } catch (Exception ex) {
-                    System.out.printf("%s not removed from collection\n", identifier);
+                } catch (InvalidIdentifierException exception) {
+                    submitButtonStatus.setText(exception.getMessage());
+
+                    return;
                 }
             }
 
         });
-
-        Label submitButtonStatus = new Label("");
 
         Button backButton = View.getBackButton(stage, getLibrarianMainMenu(stage));
 
@@ -239,7 +251,22 @@ public class LibrarianView {
             // Function to add student to collection
             @Override
             public void handle(ActionEvent e) {
+                String name = getNameField.getText();
+                String address = getAddressField.getText();
+                Date birthday = java.sql.Date.valueOf(getBirthdayField.getValue());
+                String email = getEmailField.getText();
+                SSN ssn = new SSN(getSSNField.getText());
+                int profID = Integer.parseInt(getProfIDField.getText());
+                int id = Integer.parseInt(getIDField.getText());
 
+                try {
+                    Librarian.addStudent(name, address, birthday, email, ssn, profID, id);
+
+                    System.out.printf("Student %s added to collection\n", name);
+                } catch (InvalidIdentifierException exception) {
+                    System.out.printf("Student %s not added to collection\n", name);
+                    exception.printStackTrace(System.out);
+                }
             }
         });
 
@@ -281,7 +308,21 @@ public class LibrarianView {
             // Function to add professor to collection
             @Override
             public void handle(ActionEvent e) {
+                String name = getNameField.getText();
+                String address = getAddressField.getText();
+                Date birthday = java.sql.Date.valueOf(getBirthdayField.getValue());
+                String email = getEmailField.getText();
+                SSN ssn = new SSN(getSSNField.getText());
+                int id = Integer.parseInt(getIDField.getText());
 
+                try {
+                    Librarian.addProfessor(name, address, birthday, email, ssn, id);
+
+                    System.out.printf("Professor %s added to collection\n", name);
+                } catch (InvalidIdentifierException exception) {
+                    System.out.printf("Professor %s not added to collection\n", name);
+                    exception.printStackTrace(System.out);
+                }
             }
         });
 
@@ -307,7 +348,16 @@ public class LibrarianView {
             // Function to remove member from collection
             @Override
             public void handle(ActionEvent e) {
+                int id = Integer.parseInt(getIDField.getText());
 
+                try {
+                    Librarian.removeMember(id);
+
+                    System.out.printf("Member %d removed from collection\n", id);
+                } catch (InvalidIdentifierException exception) {
+                    System.out.printf("Member %d not removed from collection\n", id);
+                    exception.printStackTrace(System.out);
+                }
             }
         });
         Label submitButtonStatus = new Label("");
