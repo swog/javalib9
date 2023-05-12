@@ -92,7 +92,7 @@ public class Student extends Member {
 		}
 	}
 
-	public Professor getProfessor() {
+	public Professor getProfessor() throws RuntimeException{
 		// Professor is valid & the professorId matches the current professor object
 		if (professor != null && professor.getId() == professorId) {
 			return professor;
@@ -102,8 +102,9 @@ public class Student extends Member {
 		try {
 			professor = (Professor)PersonFileReader.findByMemberId(professorId);
 		}
-		catch (Exception uninitializedException) {
+		catch (Exception UninitializedException) {
 			professor = null;
+			throw(new RuntimeException("Professor not found"));
 		}
 
 		// Professor will handle duplicates.

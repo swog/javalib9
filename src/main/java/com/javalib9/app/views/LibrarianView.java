@@ -269,7 +269,7 @@ public class LibrarianView {
                 int id = Integer.parseInt(getIDField.getText());
 
                 try {
-                    Librarian.addStudent(name, address, birthday, email, ssn, profID, id);
+                    Librarian.addStudent(name, address, birthday, email, ssn, id, profID);
 
                     System.out.printf("Student %s added to collection\n", name);
                 } catch (InvalidIdentifierException exception) {

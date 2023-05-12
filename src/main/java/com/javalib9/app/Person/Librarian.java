@@ -227,9 +227,12 @@ public class Librarian extends Employee {
 	// function to add student to people.csv
 	public static void addStudent(String name, String address, Date dob, String email, SSN social, int id,
 			int professorId) {
+				
 		String File = "LibraryContentFiles/People.csv";
 		ArrayList<Person> people = PersonFileReader.readStudentFile(File);
-		Student student = new Student(name, address, dob, email, social, 0, id, professorId);
+		Student student = new Student(name, address, dob, email, social, id, 0, professorId);
+		System.out.println("About to print the created student");
+		System.out.println(student.toString());
 		people.add(student);
 		PersonFileReader.writeStudentFile(people, File);
 	}
@@ -238,7 +241,7 @@ public class Librarian extends Employee {
 	public static void addProfessor(String name, String address, Date dob, String email, SSN social, int id) {
 		String File = "LibraryContentFiles/People.csv";
 		ArrayList<Person> people = PersonFileReader.readStudentFile(File);
-		Professor professor = new Professor(name, address, dob, email, social, 0, id);
+		Professor professor = new Professor(name, address, dob, email, social, id, 0);
 		people.add(professor);
 		PersonFileReader.writeProfessorFile(people, File);
 	}

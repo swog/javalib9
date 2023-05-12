@@ -67,8 +67,8 @@ public class PersonFileReader {
 	// write to file
 	public static void writeStudentFile(ArrayList<Person> people, String fileName) {
 		try {
-			Path path = Paths.get(fileName);
-			PrintWriter writer = new PrintWriter(path.toString());
+			//Path path = Paths.get(fileName);
+			PrintWriter writer = new PrintWriter(fileName);
 
 			String nextLine = "Name,Address,DoB,Email,SSN,Type,Id,ProfessorId";
 			writer.println(nextLine);
@@ -86,9 +86,9 @@ public class PersonFileReader {
 	// write to file
 	public static void writeProfessorFile(ArrayList<Person> people, String fileName) {
 		try {
-			File file = new File(fileName);
+			//File file = new File(fileName);
 			// file.createNewFile();
-			PrintWriter writer = new PrintWriter(file);
+			PrintWriter writer = new PrintWriter(fileName);
 			writer.println("Name,Address,DoB,Email,SSN,Type,Id");
 			for (int i = 0; i < people.size(); i++) {
 				writer.println(people.get(i).toString());
