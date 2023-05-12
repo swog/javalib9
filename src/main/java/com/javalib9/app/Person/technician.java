@@ -184,7 +184,6 @@ public class technician extends Employee {
 		String File = "LibraryContentFiles/BookList.csv";
 		Collection bookCollection = LibraryFileReader.readFileIntoCollection(File,"books");
 
-		/* HANDLE WHAT HAPPENS IF BOOK IS NOT FOUND FOR ALL BELOW (feel free to copy paste like so and add the "throws")  */
 		int i = bookCollection.searchItemByIdentifierForIndex(isbn);
 		if ( i == -1) throw new InvalidIdentifierException("Item with that identifier not found. Check your value");
 
