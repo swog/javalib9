@@ -43,20 +43,20 @@ public class DueCheck {
             }
             if(diffInDays == 14)
             {
-                output[2] = ("Deadline Reached");
-                output[3] = ("No fine added");
+                output[2] = "Deadline Reached";
+                output[3] = "No fine added";
             }
             if(diffInDays >= 15 && diffInDays < 31)
             {
                 AddFine(ContentArray[i]);
-                output[2] = ("Item Is Passed Due!");
-                output[3] = ("$1 fine has been added");
+                output[2] = "Item Is Passed Due!";
+                output[3] = "$1 fine has been added";
             }
             if(diffInDays == 31)
             {
                 ContentArray[i].markLost();
-                output[2] = ("Item Has Been Considered Lost");
-                output[3] = ("Full price of content has been charged");
+                output[2] = "Item Has Been Considered Lost";
+                output[3] = "Full price of content has been charged";
             }
             returningArrayList.add(output);
         }   

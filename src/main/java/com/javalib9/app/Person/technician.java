@@ -40,6 +40,8 @@ public class technician extends Employee {
 		Content[] bookArray = bookCollection.getContentArray();
 		if(bookArray[i].getCheckoutStatus() == "Lost" || bookArray[i].getCheckoutStatus() == "Checked Out"){
 			bookArray[i].markNotCheckedOut();
+			System.out.println("the following is about to be written:");
+			bookCollection.printCollectionContentsToConsole();
 			LibraryFileReader.writeBookCollectionIntoFile(bookCollection,File);
 			return true;
 		}
@@ -191,7 +193,6 @@ public class technician extends Employee {
 		if(bookArray[i].getCheckoutStatus().equals("Not Checked Out")){
 			Date now = new Date();
 			bookArray[i].markCheckedOut(memberID,now);
-			System.out.println(bookArray[i].toString());
 			LibraryFileReader.writeBookCollectionIntoFile(bookCollection,File);
 			return true;
 		}
