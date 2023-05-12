@@ -236,8 +236,19 @@ public class TechnicianView {
 
             @Override
             public void handle(ActionEvent e){
-                String selectedContentType = ((RadioButton)contentSelectorGroup.getSelectedToggle()).getText();
+                RadioButton selectedButton = ((RadioButton)contentSelectorGroup.getSelectedToggle());
+                if ( selectedButton == null){
+                    submitButtonStatus.setText("Please select content type.");
+                    return;
+                }
+                String selectedContentType = selectedButton.getText();
                 String writtenIdentifier = identifierFinder.getText(); 
+
+                if ( writtenIdentifier.equals("")){
+
+                    submitButtonStatus.setText("Please enter identifier above.");
+                    return;
+                }
 
 
                 if ( technician.returnItem(selectedContentType, writtenIdentifier) ) submitButtonStatus.setText("Success!");

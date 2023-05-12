@@ -120,43 +120,43 @@ public class Librarian extends Employee {
 	}
 
 	// function to remove a book from the library by identifier
-	public static void removeBookByIdentifier(ISBN identifier) {
+	public static boolean removeBookByIdentifier(ISBN identifier) {
 		String File = "LibraryContentFiles/BookList.csv";
 		Collection bookCollection = LibraryFileReader.readFileIntoCollection(File, "books");
-		bookCollection.removeItemByIdentifier(identifier);
+		if ( bookCollection.removeItemByIdentifier(identifier) == null ) return false;
 		LibraryFileReader.writeBookCollectionIntoFile(bookCollection, File);
-		return;
+		return true;
 	}
 
 	// function to remove a DVD from the library by identifier
-	public static void removeDVDByIdentifier(ISBN identifier) {
+	public static boolean removeDVDByIdentifier(ISBN identifier) {
 		String File = "LibraryContentFiles/DVDList.csv";
 		Collection dvdCollection = LibraryFileReader.readFileIntoCollection(File, "DVDs");
-		dvdCollection.removeItemByIdentifier(identifier);
+		if ( dvdCollection.removeItemByIdentifier(identifier) == null ) return false;
 		LibraryFileReader.writeDVDCollectionIntoFile(dvdCollection, File);
-		return;
+		return true;
 	}
 
 	// function to remove a newspaper from the library by identifier
-	public static void removeNewspaperByIdentifier(ISSN identifier) {
+	public static boolean removeNewspaperByIdentifier(ISSN identifier) {
 		String File = "LibraryContentFiles/NewspaperList.csv";
 		Collection newspaperCollection = LibraryFileReader.readFileIntoCollection(File, "newspaper");
-		newspaperCollection.removeItemByIdentifier(identifier);
+		if ( newspaperCollection.removeItemByIdentifier(identifier) == null) return false;
 		LibraryFileReader.writeNewspaperCollectionIntoFile(newspaperCollection, File);
-		return;
+		return true;
 	}
 
 	// function to remove a journal from the library by identifier
-	public static void removeJournalByIdentifier(ISSN identifier) {
+	public static boolean removeJournalByIdentifier(ISSN identifier) {
 		String File = "LibraryContentFiles/JournalList.csv";
 		Collection journalCollection = LibraryFileReader.readFileIntoCollection(File, "journal");
-		journalCollection.removeItemByIdentifier(identifier);
+		if ( journalCollection.removeItemByIdentifier(identifier) == null ) return false;
 		LibraryFileReader.writeJournalCollectionIntoFile(journalCollection, File);
-		return;
+		return true;
 	}
 
 	// function to remove item by identifier
-	public static void removeItem(String identifier) {
+	public static boolean removeItem(String identifier) {
 		ISBN isbn = null;
 		ISSN issn = null;
 		
@@ -164,8 +164,9 @@ public class Librarian extends Employee {
 			try {
 				isbn = new ISBN(identifier);
 
-				removeBookByIdentifier(isbn);
-				removeDVDByIdentifier(isbn);
+				if ( removeBookByIdentifier(isbn) ) return true;
+				if ( removeDVDByIdentifier(isbn) ) return true;
+				return false;
 
 			} catch (InvalidIdentifierException e) {
 				throw (e);
@@ -176,15 +177,15 @@ public class Librarian extends Employee {
 
 			try {
 				issn = new ISSN(identifier);
-				removeNewspaperByIdentifier(issn);
-				removeJournalByIdentifier(issn);
+				if ( removeNewspaperByIdentifier(issn) ) return true;
+				if ( removeJournalByIdentifier(issn) ) return true;
+				return false;
 			} catch (InvalidIdentifierException e) {
 				throw(e);
 			}
 		} else {
 			throw ( new InvalidIdentifierException("No identifier of that length is valid"));
 		}
-		return;
 
 	}
 

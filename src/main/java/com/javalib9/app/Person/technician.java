@@ -66,15 +66,15 @@ public class technician extends Employee {
 
 	public static boolean returnNewspaper(ISSN issn){
 		String File = "LibraryContentFiles/NewspaperList.csv";
-		Collection newspaperCollection = LibraryFileReader.readFileIntoCollection(File,"newspaper");
+		Collection NewspaperCollection = LibraryFileReader.readFileIntoCollection(File,"Newspaper");
 
-		int i = newspaperCollection.searchItemByIdentifierForIndex(issn);
+		int i = NewspaperCollection.searchItemByIdentifierForIndex(issn);
 		if ( i == -1) throw new InvalidIdentifierException("Item with that identifier not found. Check your value");
 
-		Content[] newspaperArray = newspaperCollection.getContentArray();
-		if(newspaperArray[i].getCheckoutStatus().equals("Lost") || newspaperArray[i].getCheckoutStatus().equals("Checked Out")){
-			newspaperArray[i].markNotCheckedOut();
-			LibraryFileReader.writeNewspaperCollectionIntoFile(newspaperCollection,File);
+		Content[] NewspaperArray = NewspaperCollection.getContentArray();
+		if(NewspaperArray[i].getCheckoutStatus().equals("Lost") || NewspaperArray[i].getCheckoutStatus().equals("Checked Out")){
+			NewspaperArray[i].markNotCheckedOut();
+			LibraryFileReader.writeNewspaperCollectionIntoFile(NewspaperCollection,File);
 			return true;
 		}
 		return false;
@@ -104,7 +104,7 @@ public class technician extends Employee {
 				throw new InvalidIdentifierException("Invalid ISBN");
 			}
 			isbn = new ISBN(identifier);
-		}else if(itemType.equals("Journal") || itemType.equals("NewsPaper")){
+		}else if(itemType.equals("Journal") || itemType.equals("Newspaper")){
 			if(identifier.length() != 8){ //checks if the identifier entered is valid for the item type
 				throw new InvalidIdentifierException("Invalid ISSN");
 			}
@@ -129,14 +129,14 @@ public class technician extends Employee {
 					return true;
 				}
 				break;
-			case "NewsPaper":
+			case "Newspaper":
 				if(returnNewspaper(issn)){
 					return true;
 				}
 				break;
 		}
 
-		return true;
+		return false;
 	}
 	
 	public static boolean borrowItem(String itemType,String identifier,int memberID) throws InvalidIdentifierException{ //returns true if item is able to be borrowed and false if not
@@ -235,16 +235,16 @@ public class technician extends Employee {
 
 	public static boolean borrowNewspaper(ISSN issn,int memberID){
 		String File = "LibraryContentFiles/NewspaperList.csv";
-		Collection newspaperCollection = LibraryFileReader.readFileIntoCollection(File,"newspaper");
+		Collection NewspaperCollection = LibraryFileReader.readFileIntoCollection(File,"Newspaper");
 
-		int i = newspaperCollection.searchItemByIdentifierForIndex(issn);
+		int i = NewspaperCollection.searchItemByIdentifierForIndex(issn);
 		if ( i == -1) throw new InvalidIdentifierException("Item with that identifier not found. Check your value");
 
-		Content[] newspaperArray = newspaperCollection.getContentArray();
-		if(newspaperArray[i].getCheckoutStatus().equals("Not Checked Out")){
+		Content[] NewspaperArray = NewspaperCollection.getContentArray();
+		if(NewspaperArray[i].getCheckoutStatus().equals("Not Checked Out")){
 			Date now = new Date();
-			newspaperArray[i].markCheckedOut(memberID,now);
-			LibraryFileReader.writeNewspaperCollectionIntoFile(newspaperCollection,File);
+			NewspaperArray[i].markCheckedOut(memberID,now);
+			LibraryFileReader.writeNewspaperCollectionIntoFile(NewspaperCollection,File);
 			return true;
 		}
 		return false;
@@ -325,10 +325,10 @@ public class technician extends Employee {
 
 	public static int getNewspaperindex(ISSN issn){
 		String File = "LibraryContentFiles/NewspaperList.csv";
-		Collection newspaperCollection = LibraryFileReader.readFileIntoCollection(File,"newspaper");
-		newspaperCollection.sortCollectionByIdentifier();
+		Collection NewspaperCollection = LibraryFileReader.readFileIntoCollection(File,"Newspaper");
+		NewspaperCollection.sortCollectionByIdentifier();
 
-		int i = newspaperCollection.searchItemByIdentifierForIndex(issn);
+		int i = NewspaperCollection.searchItemByIdentifierForIndex(issn);
 		if ( i == -1) throw new InvalidIdentifierException("Item with that identifier not found. Check your value");
 
 		return i;
@@ -377,12 +377,12 @@ public class technician extends Employee {
 
 	public static String getNewspaperTitle(ISSN issn){
 		String File = "LibraryContentFiles/NewspaperList.csv";
-		Collection newspaperCollection = LibraryFileReader.readFileIntoCollection(File,"newspaper");
+		Collection NewspaperCollection = LibraryFileReader.readFileIntoCollection(File,"Newspaper");
 
-		int i = newspaperCollection.searchItemByIdentifierForIndex(issn);
+		int i = NewspaperCollection.searchItemByIdentifierForIndex(issn);
 		if ( i == -1) throw new InvalidIdentifierException("Item with that identifier not found. Check your value");
 
-		Content array[] = newspaperCollection.getContentArray();
+		Content array[] = NewspaperCollection.getContentArray();
 		String title = array[i].getTitle();
 
 		return title;
