@@ -167,19 +167,28 @@ public class TechnicianView {
 
             public void handle(ActionEvent e){
 
-                String selectedContentType = ((RadioButton)contentTypeFinder.getSelectedToggle()).getText();
+                RadioButton buttonSelected = (RadioButton) contentTypeFinder.getSelectedToggle();
+                if ( buttonSelected == null) {
+                    submitButtonStatus.setText("Please Select Content Type");
+                    return;
+                }
+
+                String selectedContentType = buttonSelected.getText();
                 String enteredIdentifier = identifierFinder.getText();
                 String enteredMemberID = memberFinder.getText();
 
 
                 try{
 
-                    technician.borrowItem(selectedContentType, enteredIdentifier, Integer.parseInt(enteredMemberID));
+                    int idAsInt = Integer.parseInt(enteredMemberID);
+                    technician.borrowItem(selectedContentType, enteredIdentifier, idAsInt);
                     submitButtonStatus.setText("Successfully borrowed item of identifier " + enteredIdentifier);
                 } catch (InvalidIdentifierException exception){
                     submitButtonStatus.setText(exception.getMessage());
 
                     return;
+                } catch ( NumberFormatException nfe){
+                    submitButtonStatus.setText("Invalid Member ID");
                 }
 
 

@@ -36,27 +36,31 @@ public class DueCheck {
 
             output[0] = memberEmail;
             output[1] = Integer.toString(diffInDays);
+            if ( diffInDays < 12 ){
+                output[2] = "Far From Due Date";
+                output[3] = "No Fine Added";
+            }
             if(diffInDays == 12)
             {
-                output[2] = "Approaching Deadline";
-                output[3] = "No fine added";
+                output[2] = new String("Approaching Deadline");
+                output[3] = new String("No fine added");
             }
-            if(diffInDays == 14)
+            if(diffInDays == 14 || diffInDays == 13)
             {
-                output[2] = ("Deadline Reached");
-                output[3] = ("No fine added");
+                output[2] = new String("Deadline Reached");
+                output[3] = new String ("No fine added");
             }
             if(diffInDays >= 15 && diffInDays < 31)
             {
                 AddFine(ContentArray[i]);
-                output[2] = ("Item Is Passed Due!");
-                output[3] = ("$1 fine has been added");
+                output[2] = new String("Item Is Passed Due!");
+                output[3] = new String ("$1 fine has been added");
             }
             if(diffInDays == 31)
             {
                 ContentArray[i].markLost();
-                output[2] = ("Item Has Been Considered Lost");
-                output[3] = ("Full price of content has been charged");
+                output[2] = new String("Item Has Been Considered Lost");
+                output[3] = new String("Full price of content has been charged");
             }
             returningArrayList.add(output);
         }   

@@ -38,8 +38,10 @@ public class technician extends Employee {
 		if ( i == -1) throw new InvalidIdentifierException("Item with that identifier not found. Check your value");
 
 		Content[] bookArray = bookCollection.getContentArray();
-		if(bookArray[i].getCheckoutStatus() == "Lost" || bookArray[i].getCheckoutStatus() == "Checked Out"){
+		if(bookArray[i].getCheckoutStatus().equals("Lost") || bookArray[i].getCheckoutStatus().equals("Checked Out")){
 			bookArray[i].markNotCheckedOut();
+			System.out.println("the following is about to be written:");
+			bookCollection.printCollectionContentsToConsole();
 			LibraryFileReader.writeBookCollectionIntoFile(bookCollection,File);
 			return true;
 		}
@@ -54,7 +56,7 @@ public class technician extends Employee {
 		if ( i == -1) throw new InvalidIdentifierException("Item with that identifier not found. Check your value");
 
 		Content[] dvdArray = dvdCollection.getContentArray();
-		if(dvdArray[i].getCheckoutStatus() == "Lost" || dvdArray[i].getCheckoutStatus() == "Checked Out"){
+		if(dvdArray[i].getCheckoutStatus().equals("Lost") || dvdArray[i].getCheckoutStatus().equals("Checked Out")){
 			dvdArray[i].markNotCheckedOut();
 			LibraryFileReader.writeDVDCollectionIntoFile(dvdCollection,File);
 			return true;
@@ -70,7 +72,7 @@ public class technician extends Employee {
 		if ( i == -1) throw new InvalidIdentifierException("Item with that identifier not found. Check your value");
 
 		Content[] newspaperArray = newspaperCollection.getContentArray();
-		if(newspaperArray[i].getCheckoutStatus() == "Lost" || newspaperArray[i].getCheckoutStatus() == "Checked Out"){
+		if(newspaperArray[i].getCheckoutStatus().equals("Lost") || newspaperArray[i].getCheckoutStatus().equals("Checked Out")){
 			newspaperArray[i].markNotCheckedOut();
 			LibraryFileReader.writeNewspaperCollectionIntoFile(newspaperCollection,File);
 			return true;
@@ -86,7 +88,7 @@ public class technician extends Employee {
 		if ( i == -1) throw new InvalidIdentifierException("Item with that identifier not found. Check your value");
 
 		Content[] journalArray = journalCollection.getContentArray();
-		if(journalArray[i].getCheckoutStatus() == "Lost" || journalArray[i].getCheckoutStatus() == "Checked Out"){
+		if(journalArray[i].getCheckoutStatus().equals("Lost") || journalArray[i].getCheckoutStatus().equals("Checked Out")){
 			journalArray[i].markNotCheckedOut();
 			LibraryFileReader.writeJournalCollectionIntoFile(journalCollection,File);
 			return true;
@@ -97,12 +99,12 @@ public class technician extends Employee {
 	public static boolean returnItem(String itemType,String identifier){  //returns true if the item is able to be returned and false if not
 		ISBN isbn = null;
 		ISSN issn = null;
-		if(itemType == "Book" || itemType == "DVD"){ 
+		if(itemType.equals("Book") || itemType.equals("DVD")){ 
 			if(identifier.length() != 10){ //checks if the identifier entered is valid for the item type
 				throw new InvalidIdentifierException("Invalid ISBN");
 			}
 			isbn = new ISBN(identifier);
-		}else if(itemType == "Journal" || itemType == "NewsPaper"){
+		}else if(itemType.equals("Journal") || itemType.equals("NewsPaper")){
 			if(identifier.length() != 8){ //checks if the identifier entered is valid for the item type
 				throw new InvalidIdentifierException("Invalid ISSN");
 			}
@@ -140,12 +142,12 @@ public class technician extends Employee {
 	public static boolean borrowItem(String itemType,String identifier,int memberID) throws InvalidIdentifierException{ //returns true if item is able to be borrowed and false if not
 		ISBN isbn = null;
 		ISSN issn = null;
-		if(itemType == "Book" || itemType == "DVD"){
+		if(itemType.equals("Book") || itemType.equals("DVD")){
 			if(identifier.length() != 10){	//checks if the identifier entered is valid for the item type
 				throw new InvalidIdentifierException("Invalid ISBN");
 			}
 			isbn = new ISBN(identifier);
-		}else if(itemType == "Journal" || itemType == "Newspaper"){
+		}else if(itemType.equals("Journal") || itemType.equals("Newspaper")){
 			if(identifier.length() != 8){	//checks if the identifier entered is valid for the item type
 				throw new InvalidIdentifierException("Invalid ISSN");
 			}
@@ -191,7 +193,6 @@ public class technician extends Employee {
 		if(bookArray[i].getCheckoutStatus().equals("Not Checked Out")){
 			Date now = new Date();
 			bookArray[i].markCheckedOut(memberID,now);
-			System.out.println(bookArray[i].toString());
 			LibraryFileReader.writeBookCollectionIntoFile(bookCollection,File);
 			return true;
 		}
@@ -252,12 +253,12 @@ public class technician extends Employee {
 	public static String findLocation(String itemType,String identifier){
 		ISBN isbn = null;
 		ISSN issn = null;
-		if(itemType == "Book" || itemType == "DVD"){
+		if(itemType.equals("Book") || itemType.equals("DVD")){
 			if(identifier.length() != 10){	//checks if the identifier entered is valid for the item type
 				throw new InvalidIdentifierException("Invalid ISBN");
 			}
 			isbn = new ISBN(identifier);
-		}else if(itemType == "Journal" || itemType == "Newspaper"){
+		}else if(itemType.equals("Journal") || itemType.equals("Newspaper")){
 			if(identifier.length() != 8){	//checks if the identifier entered is valid for the item type
 				throw new InvalidIdentifierException("Invalid ISSN");
 			}
