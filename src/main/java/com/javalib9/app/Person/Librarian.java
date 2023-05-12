@@ -7,7 +7,10 @@ import com.javalib9.app.Content.Newspaper;
 import com.javalib9.app.Content.Journal;
 import com.javalib9.app.Collection.Collection;
 import com.javalib9.app.LibraryFileReader.LibraryFileReader;
+import com.javalib9.app.LibraryFileReader.PersonFileReader;
 import com.javalib9.app.Identifier.*;
+
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Librarian extends Employee {
@@ -154,60 +157,32 @@ public class Librarian extends Employee {
 		return;
 	}
 
-	// function to remove any item using switch case
+	// function to remove item by identifier
 	public static void removeItem(String identifier) {
-
 		ISBN isbn = null;
 		ISSN issn = null;
 
 		try {
 			isbn = new ISBN(identifier);
+
+			removeBookByIdentifier(isbn);
+			removeDVDByIdentifier(isbn);
+
 		} catch (InvalidIdentifierException e) {
-			System.out.println("Invalid ISBN");
+			System.out.println("Invalid identifier");
 			return;
 		}
 
 		try {
 			issn = new ISSN(identifier);
-		} catch (InvalidIdentifierException e) {
-			System.out.println("Invalid ISSN");
-			return;
-		}
-
-		String File = "LibraryContentFiles/BookList.csv";
-		Collection bookCollection = LibraryFileReader.readFileIntoCollection(File, "books");
-		int i = bookCollection.searchItemByIdentifierForIndex(isbn);
-		if (i != -1) {
-			removeBookByIdentifier(isbn);
-			return;
-		}
-
-		File = "LibraryContentFiles/DVDList.csv";
-		Collection dvdCollection = LibraryFileReader.readFileIntoCollection(File, "DVDs");
-		i = dvdCollection.searchItemByIdentifierForIndex(isbn);
-		if (i != -1) {
-			removeDVDByIdentifier(isbn);
-			return;
-		}
-
-		File = "LibraryContentFiles/NewspaperList.csv";
-		Collection newspaperCollection = LibraryFileReader.readFileIntoCollection(File, "newspaper");
-		i = newspaperCollection.searchItemByIdentifierForIndex(issn);
-		if (i != -1) {
 			removeNewspaperByIdentifier(issn);
-			return;
-		}
-
-		File = "LibraryContentFiles/JournalList.csv";
-		Collection journalCollection = LibraryFileReader.readFileIntoCollection(File, "journal");
-		i = journalCollection.searchItemByIdentifierForIndex(issn);
-		if (i != -1) {
 			removeJournalByIdentifier(issn);
+		} catch (InvalidIdentifierException e) {
+			System.out.println("Invalid identifier");
 			return;
 		}
-
-		System.out.println("Item not found");
 		return;
+
 	}
 
 	// Help customers with resources
@@ -247,5 +222,30 @@ public class Librarian extends Employee {
 	// Manage Memberships
 
 	// function to add student to people.csv
+	public static void addStudent(String name, String address, Date dob, String email, SSN social, int id,
+			int professorId) {
+		String File = "LibraryContentFiles/People.csv";
+		ArrayList<Person> people = PersonFileReader.readStudentFile(File);
+		Student student = new Student(name, address, dob, email, social, 0, id, professorId);
+		people.add(student);
+		PersonFileReader.writeStudentFile(people, File);
+	}
+
+	// function to add professor to people.csv
+	public static void addProfessor(String name, String address, Date dob, String email, SSN social, int id) {
+		String File = "LibraryContentFiles/People.csv";
+		ArrayList<Person> people = PersonFileReader.readStudentFile(File);
+		Professor professor = new Professor(name, address, dob, email, social, 0, id);
+		people.add(professor);
+		PersonFileReader.writeProfessorFile(people, File);
+	}
+
+	// function to remove person by id
+	public static void removeMember(int id) {
+		String File = "LibraryContentFiles/People.csv";
+		ArrayList<Person> people = PersonFileReader.readStudentFile(File);
+		PersonFileReader.removePersonById(people, id);
+		PersonFileReader.writeStudentFile(people, File);
+	}
 
 }
