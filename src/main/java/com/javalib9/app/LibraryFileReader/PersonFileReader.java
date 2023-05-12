@@ -70,8 +70,7 @@ public class PersonFileReader {
 			//Path path = Paths.get(fileName);
 			PrintWriter writer = new PrintWriter(fileName);
 
-			String nextLine = "Name,Address,DoB,Email,SSN,Type,Id,ProfessorId";
-			writer.println(nextLine);
+			writer.println("Name,Address,DoB,Email,SSN,Type,Id,ProfessorId");
 			for (int i = 0; i < people.size(); i++) {
 				writer.println(people.get(i).toString());
 			}
@@ -91,7 +90,7 @@ public class PersonFileReader {
 			PrintWriter writer = new PrintWriter(fileName);
 			writer.println("Name,Address,DoB,Email,SSN,Type,Id");
 			for (int i = 0; i < people.size(); i++) {
-				writer.println(people.get(i).toString());
+				writer.println(people.get(i));
 			}
 			writer.close();
 		} catch (FileNotFoundException e) {
@@ -128,8 +127,8 @@ public class PersonFileReader {
 				}
 				case "Student": {
 					int memberId = Integer.parseInt(values[6]);
-					int professorId = Integer.parseInt(values[7]);
-					int memberBalance = Integer.parseInt(values[8]);
+					int memberBalance = Integer.parseInt(values[7]);
+					int professorId = Integer.parseInt(values[8]);
 					return new Student(name, address, dateOfBirth, email, ssn, memberId, memberBalance, professorId);
 				}
 				case "External": {

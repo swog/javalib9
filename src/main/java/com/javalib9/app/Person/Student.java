@@ -28,16 +28,10 @@ public class Student extends Member {
 		professor = null;
 	}
 
+	@Override
 	public String toString() {
-		Professor prof = getProfessor();
-		String profName = "Couldn't find";
-	
-		if (prof != null) {
-			profName = prof.getName();
-		}
-
 		return String.format(
-			"Student:\n\tName: %s\n\tAddress: %s\n\tDate of Birth: %s\n\tEmail: %s\n\tSSN: %s\n\tMember Id: %d\n\tBalance Due: %d\n\tProfessor Id: %d (%s)", 
+			"%s,%s,%s,%s,%s,Student,%d,%d,%d", 
 			getName(), 
 			getAddress(),
 			PersonFileReader.dateToString(getDateOfBirth()),
@@ -45,8 +39,7 @@ public class Student extends Member {
 			getSSN().getId(),
 			getId(),
 			getBalance(),
-			professorId,
-			profName
+			professorId
 		);
 	}
 

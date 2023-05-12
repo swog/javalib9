@@ -57,15 +57,17 @@ public class Professor extends Member {
 		return students;
 	}
 
+	@Override
 	public String toString() {
 		return String.format(
-			"Student:\n\tName: %s\n\tAddress: %s\n\tDate of Birth: %s\n\tEmail: %s\n\tSSN: %s\n\tMember Id: %d\n", 
+			"%s,%s,%s,%s,%s,Professor,%d,%d,%d", 
 			getName(), 
 			getAddress(),
 			PersonFileReader.dateToString(getDateOfBirth()),
 			getEmail(),
 			getSSN().getId(),
-			getId()
+			getId(),
+			getBalance()
 		);
 	}
 

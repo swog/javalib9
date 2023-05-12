@@ -1,4 +1,4 @@
-Name,Address,Date of Birth,Email,SSN,Type,Member Id,Professor Id,Balance Due
+Name,Address,Date of Birth,Email,SSN,Type,Member Id,Balance Due,Professor Id
 Eyon Schaefer,University of Missouri-Columbia,15/12/2002,eas3f2@umsystem.edu,123-12-1234,Student,123,321,0
 Trey Williams,University of Missouri-Columbia,14/11/2002,jlwgn6@umsystem.edu,555-55-5555,Student,1114,321,0
 Micheal Arowolo,University of Missouri-Columbia,15/04/2023,moacvf@missouri.edu,123-12-1234,Professor,321,0

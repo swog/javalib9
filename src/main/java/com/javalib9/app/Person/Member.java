@@ -44,6 +44,7 @@ public abstract class Member extends Person {
 	{
 		balanceDue++;
 	}
+
 	public void setId(int Id) {
 		id = Id;
 	}
