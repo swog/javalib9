@@ -27,14 +27,16 @@ public class StudentView{
         TextField memberIdFinder = new TextField();
 
         Button submitButton = new Button("Submit");
+        Label submitStatus = new Label("");
         submitButton.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent e){
 
-                boolean isFound = true;
+                String enteredID = memberIdFinder.getText();
 
-                if ( isFound == true ) stage.setScene(getStudentInformationScreen(stage)); 
+                if ( true ) stage.setScene(getStudentInformationScreen(stage)); 
+                else submitStatus.setText("Invalid login, try again");
             }
         });
 
@@ -49,7 +51,7 @@ public class StudentView{
         });
 
 
-        mainMenuRoot.getChildren().addAll(memberIdFinderLabel, memberIdFinder, submitButton, backButton);
+        mainMenuRoot.getChildren().addAll(memberIdFinderLabel, memberIdFinder, submitButton, submitStatus, backButton);
         Scene mainMenuScene = new Scene(mainMenuRoot, 1000, 1000);
 
         return mainMenuScene; 

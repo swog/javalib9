@@ -40,7 +40,16 @@ public class Professor extends Member {
 	}
 
 	public static Professor login(int Id) {
-		return (Professor)getMember(Id);
+		Member member = getMember(Id);
+		if (member == null) {
+			return null;
+		}
+
+		if (!member.isProfessor()) {
+			return null;
+		}
+
+		return (Professor)member;
 	}
 
 	public ArrayList<Student> getStudents() {
