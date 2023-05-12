@@ -191,6 +191,7 @@ public class technician extends Employee {
 		if(bookArray[i].getCheckoutStatus().equals("Not Checked Out")){
 			Date now = new Date();
 			bookArray[i].markCheckedOut(memberID,now);
+			System.out.println(bookArray[i].toString());
 			LibraryFileReader.writeBookCollectionIntoFile(bookCollection,File);
 			return true;
 		}

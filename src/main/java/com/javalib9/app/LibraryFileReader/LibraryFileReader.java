@@ -214,7 +214,7 @@ public final class LibraryFileReader {
                     Date contentDateBorrowed = contentArray[i].getCheckoutDate();
                     String dateLine = "";
                     if ( contentDateBorrowed == null ){
-                        dateLine = "NULL";
+                        dateLine = "null";
                     } else {
                         String tempDateString = contentDateBorrowed.toString();
                         String[] tokenizedTempDateString = tempDateString.split(" ");
@@ -223,9 +223,9 @@ public final class LibraryFileReader {
                         String month = tokenizedTempDateString[1];
                         String year = tokenizedTempDateString[5];
 
-                        dateLine.concat(dayOfMonth).concat("-").concat(month).concat("-").concat(year);
+                        dateLine = dateLine.concat(dayOfMonth).concat("-").concat(month).concat("-").concat(year);
                     }
-                    newLine.concat(dateLine);
+                    newLine = newLine.concat(dateLine);
 
                     writer.println(newLine);
                 }
@@ -248,10 +248,10 @@ public final class LibraryFileReader {
                 Content[] contentArray = collectionToWriteToFile.getContentArray();
                 for (int i = 0; i < contentArray.length; i++) {
 
-                    String newLine = contentArray[i].getTitle().concat(",")
-                            .concat(contentArray[i].getIdentifier().toString()).concat(",")
-                            .concat(contentArray[i].getCheckoutStatus()).concat(",")
-                            .concat(String.valueOf(contentArray[i].getCheckoutMemberId())).concat(",");
+                    String newLine = contentArray[i].getTitle().concat(",") //title
+                            .concat(contentArray[i].getIdentifier().toString()).concat(",") //identifier
+                            .concat(contentArray[i].getCheckoutStatus()).concat(",") //checkout status
+                            .concat(String.valueOf(contentArray[i].getCheckoutMemberId())).concat(","); //identification of user
 
                     Date contentDateBorrowed = contentArray[i].getCheckoutDate();
                     String dateLine = "";
@@ -265,9 +265,9 @@ public final class LibraryFileReader {
                         String month = tokenizedTempDateString[1];
                         String year = tokenizedTempDateString[5];
 
-                        dateLine.concat(dayOfMonth).concat("-").concat(month).concat("-").concat(year);
+                        dateLine = dateLine.concat(dayOfMonth).concat("-").concat(month).concat("-").concat(year);
                     }
-                    newLine.concat(dateLine);
+                    newLine = newLine.concat(dateLine);
 
                     writer.println(newLine);
                 }
