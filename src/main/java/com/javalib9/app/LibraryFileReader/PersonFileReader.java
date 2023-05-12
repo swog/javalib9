@@ -1,6 +1,10 @@
 
 package com.javalib9.app.LibraryFileReader;
 
+import java.nio.file.Paths;
+import java.nio.file.Path;
+import java.nio.file.InvalidPathException;
+
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,6 +16,7 @@ import java.text.ParseException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.io.IOException;
 
 import com.javalib9.app.Identifier.SSN;
 import com.javalib9.app.Person.*;
@@ -33,10 +38,10 @@ public class PersonFileReader {
 		ArrayList<Person> people = new ArrayList<>();
 		try {
 
-			InputStream stream = ClassLoader.getSystemResourceAsStream(fileName);
-            if ( stream == null) throw new FileNotFoundException("File not found");
 
-			Scanner fileReader = new Scanner(stream);
+			Path path = Paths.get(fileName);
+
+			Scanner fileReader = new Scanner(path);
 			String line;
 
 			// Skip first line! Formatting for github?
@@ -49,10 +54,14 @@ public class PersonFileReader {
 
 			fileReader.close();
 		}
-		catch (FileNotFoundException e) {
+		catch ( InvalidPathException e) {
+			e.printStackTrace();
+			return null;
+		} catch (IOException e){
 			e.printStackTrace();
 			return null;
 		}
+
 		return people;
 	}
 

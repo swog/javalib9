@@ -5,12 +5,21 @@ import java.util.ArrayList;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.InputStream;
 import java.io.FileInputStream;
 
+import java.util.HashSet;
 import java.util.Date;
+import java.util.stream.Collectors;
 import java.text.SimpleDateFormat;
+import java.util.stream.Stream;
+import java.nio.file.Paths;
+import java.nio.file.InvalidPathException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 
 import com.javalib9.app.Collection.Collection;
 import com.javalib9.app.Content.Content;
@@ -81,10 +90,9 @@ public final class LibraryFileReader {
         ArrayList<String> fileLines = new ArrayList<>();
 
         try {
-            InputStream stream = ClassLoader.getSystemResourceAsStream(fileName);
-            if ( stream == null) throw new FileNotFoundException("File not found");
 
-            Scanner myFileReader = new Scanner ( stream);
+            Path fileLocation = Paths.get(fileName);
+            Scanner myFileReader = new Scanner ( fileLocation);
 
 
             while ( myFileReader.hasNextLine() ){
@@ -94,7 +102,7 @@ public final class LibraryFileReader {
 
             myFileReader.close();
 
-        } catch (FileNotFoundException e){
+        } catch ( InvalidPathException|IOException e ){
 
             e.printStackTrace();
             return null;
@@ -511,13 +519,22 @@ public final class LibraryFileReader {
     }
 
     public static void main ( String[] args ){
-        Collection myCollection = LibraryFileReader.readFileIntoCollection("LibraryContentFiles/BookList.csv", "Book Collection");
 
-        Content[] contentArray = myCollection.getContentArray();
+        try (Stream<Path> stream = Files.list(Paths.get("LibraryContentFiles/"))) {
+            HashSet<String> allFiles = new HashSet<>();
 
-        myCollection.removeItemByIdentifier(contentArray[0].getIdentifier());
+            allFiles = (HashSet<String>)stream.filter(file -> !Files.isDirectory(file))
+            .map(Path::getFileName)
+            .map(Path::toString)
+            .collect(Collectors.toSet());
 
-        LibraryFileReader.writeCollectionIntoFile(myCollection, "LibraryContentFiles/BookList2.csv", "Book", "ISBN");
+            System.out.println(allFiles.size());
+            for ( String s : allFiles ){
+                System.out.println(s);
+            }
+        } catch (IOException e){
+            e.printStackTrace(System.out);
+        }
 
     }
 
