@@ -86,33 +86,20 @@ public final class LibraryFileReader {
         return new Collection(allCollections, newCollectionName);
     }
     public static Collection readFileIntoCollection(String fileName, String newCollectionName){
-
         ArrayList<String> fileLines = new ArrayList<>();
-
         try {
-
             Path fileLocation = Paths.get(fileName);
             Scanner myFileReader = new Scanner ( fileLocation);
-
-
             while ( myFileReader.hasNextLine() ){
                 fileLines.add(myFileReader.nextLine());
             }
-
-
             myFileReader.close();
-
         } catch ( InvalidPathException|IOException e ){
-
             e.printStackTrace();
             return null;
-
         }
-
         String[] tokenizedFirstLine = fileLines.get(0).split(",");
-
         ArrayList<Content> contentForNewCollection = null;
-
         try {
             if (tokenizedFirstLine[0].equals("Book")) {
                 contentForNewCollection = parseBookFile(fileLines);
@@ -130,7 +117,6 @@ public final class LibraryFileReader {
         } catch ( InvalidContentFileException e ){
             throw e;
         }
-
         return new Collection(newCollectionName, contentForNewCollection, "Identifier");
     }
 
