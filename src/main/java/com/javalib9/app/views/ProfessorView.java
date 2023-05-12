@@ -1,6 +1,10 @@
 package com.javalib9.app.views;
 
+import java.util.ArrayList;
+
 import com.javalib9.app.ProjectMain;
+import com.javalib9.app.Person.Professor;
+import com.javalib9.app.Person.Student;
 
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -24,11 +28,37 @@ public class ProfessorView {
         TextField memberIdFinder = new TextField();
 
         Button submitButton = new Button("Submit");
+        Label submitStatus = new Label("");
         submitButton.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent e){
 
+                String enteredID = memberIdFinder.getText();
+
+                
+                if ( enteredID.equals("")){
+                    submitStatus.setText("Please enter ID above.");
+                }
+                else {
+
+                    int loginAsInteger = 0;
+                    try {
+                        loginAsInteger = Integer.valueOf(enteredID);
+                    } catch ( NumberFormatException numException){
+                        submitStatus.setText("Invalid login, try again");
+                        return;
+                    }
+
+                    Professor loggedInUser = Professor.login(loginAsInteger);
+                    if ( loggedInUser != null ){
+                     stage.setScene(getProfessorMainMenu(stage, loggedInUser));
+                    } else {
+                     submitStatus.setText("Invalid login, try again.");
+                    }
+
+
+                }
             }
         });
 
@@ -43,13 +73,13 @@ public class ProfessorView {
         });
 
 
-        mainMenuRoot.getChildren().addAll(memberIdFinderLabel, memberIdFinder, submitButton, backButton);
+        mainMenuRoot.getChildren().addAll(memberIdFinderLabel, memberIdFinder, submitButton, submitStatus, backButton);
         Scene mainMenuScene = new Scene(mainMenuRoot, 1000, 1000);
 
         return mainMenuScene; 
     } 
 
-    public static Scene getProfessorMainMenu(Stage stage){
+    public static Scene getProfessorMainMenu(Stage stage, Professor prof){
         VBox mainMenuRoot = new VBox();
 
         
@@ -59,7 +89,8 @@ public class ProfessorView {
             @Override
             public void handle(ActionEvent e){
 
-
+                stage.setScene(getStudentListScreen(stage, prof));
+                stage.setTitle("Student list");
             }
         });
 
@@ -80,4 +111,27 @@ public class ProfessorView {
 
         return mainMenuScene;
     }
+
+    public static Scene getStudentListScreen(Stage stage, Professor prof){
+
+        VBox studentListScreenRoot = new VBox();
+
+        ArrayList<Student> studentList = prof.getStudents();
+
+        if ( studentList == null ) {
+            studentListScreenRoot.getChildren().add(new Label("No students"));
+        }
+        else {
+            for ( Student s : studentList ){
+             studentListScreenRoot.getChildren().add(new Label(s.toString()));
+            }
+
+        }
+
+        Button backButton = View.getBackButton(stage, getProfessorMainMenu(stage, prof));
+        studentListScreenRoot.getChildren().add(backButton);
+
+        return new Scene(studentListScreenRoot, 500, 500);
+    }
+
 }

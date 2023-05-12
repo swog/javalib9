@@ -24,6 +24,8 @@ com/javalib9/app/views/ProfessorView$3.class
 com/javalib9/app/views/LibrarianView$1.class
 com/javalib9/app/Collection/InvalidCollectionSortSettingException.class
 com/javalib9/app/views/LibrarianView$12.class
+com/javalib9/app/Collection/Collection$3.class
+com/javalib9/app/views/ExternalView.class
 com/javalib9/app/views/LibrarianView$7.class
 com/javalib9/app/ProjectMain$5.class
 com/javalib9/app/Content/DVD.class
@@ -45,6 +47,9 @@ com/javalib9/app/views/TechnicianView$9.class
 com/javalib9/app/ProjectMain.class
 com/javalib9/app/LibraryFileReader/InvalidCollectionException.class
 com/javalib9/app/Identifier/InvalidIdentifierException.class
+com/javalib9/app/Collection/Collection$1.class
+com/javalib9/app/ProjectMain$1.class
+com/javalib9/app/views/TechnicianView.class
 com/javalib9/app/Content/Newspaper.class
 com/javalib9/app/views/LibrarianView$8.class
 com/javalib9/app/Person/Professor.class
@@ -62,6 +67,8 @@ com/javalib9/app/Content/Content.class
 com/javalib9/app/views/LibrarianView$11.class
 com/javalib9/app/Person/Student.class
 com/javalib9/app/Identifier/SSN.class
+com/javalib9/app/views/ProfessorView$4.class
+com/javalib9/app/Collection/Collection$2.class
 com/javalib9/app/Person/External.class
 com/javalib9/app/Person/technician.class
 com/javalib9/app/views/View.class

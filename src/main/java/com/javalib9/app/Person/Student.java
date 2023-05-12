@@ -62,6 +62,19 @@ public class Student extends Member {
 		return professorId;
 	}
 
+	public static Member login(int Id) {
+		Member member = getMember(Id);
+		if (member == null) {
+			return null;
+		}
+
+		if (member instanceof Student) {
+			return member;
+		}
+
+		return null;
+	}
+
 	public Professor getProfessor() {
 		// Professor is valid & the professorId matches the current professor object
 		if (professor != null && professor.getId() == professorId) {
