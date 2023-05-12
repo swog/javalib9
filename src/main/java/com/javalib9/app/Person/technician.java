@@ -248,7 +248,7 @@ public class technician extends Employee {
 		return false;
 	}
 
-	public static String FindLocation(String itemType,String identifier){
+	public static String findLocation(String itemType,String identifier){
 		ISBN isbn = null;
 		ISSN issn = null;
 		if(itemType == "Book" || itemType == "DVD"){
