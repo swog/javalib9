@@ -51,11 +51,9 @@ import com.javalib9.app.Content.Newspaper;
 
 public class Collection {
 
-    private String collectionName; // books, newspapers, DVDs, or journals
-
+    private String collectionName; // Book, Newspaper, DVD, or Journal (Or Catch-All) 
     private Content[] item; // an array containing all items of the collection type
-
-    private String sortedBy;
+    private String sortedBy; // describes how the data is sorted, be it Identifier or Title or something else
 
     public Collection( String collectionName ){ //for creating a collection with no items
 

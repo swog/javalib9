@@ -3,6 +3,8 @@ package com.javalib9.app.views;
 import com.javalib9.app.ProjectMain;
 import com.javalib9.app.LibraryFileReader.PersonFileReader;
 import com.javalib9.app.Person.Person;
+import com.javalib9.app.Person.Student;
+import com.javalib9.app.Person.Professor;
 
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -35,8 +37,25 @@ public class StudentView{
 
                 String enteredID = memberIdFinder.getText();
 
-                if ( true ) stage.setScene(getStudentInformationScreen(stage)); 
+                if ( enteredID.equals("")){
+                    submitStatus.setText("Please enter your ID above");
+                } else {
+
+                int loginAsInteger = 0;
+                try {
+                    loginAsInteger = Integer.valueOf(enteredID);
+                } catch ( NumberFormatException numException){
+                    submitStatus.setText("Invalid login, try again");
+                    return;
+                }
+
+                Student loggedInStudent = (Student)Student.login(loginAsInteger);
+
+                if ( loggedInStudent != null ) stage.setScene(getStudentInformationScreen(stage, loggedInStudent)); 
                 else submitStatus.setText("Invalid login, try again");
+
+                }
+
             }
         });
 
@@ -57,12 +76,21 @@ public class StudentView{
         return mainMenuScene; 
     }
 
-    public static Scene getStudentInformationScreen(Stage stage){
+    public static Scene getStudentInformationScreen(Stage stage, Student student){
 
 
         VBox studentInfoRoot = new VBox();
         Label professorInformationTitle = new Label("Professor Info:");
         Label professorInformation = new Label("");
+        Professor studentProfessor = student.getProfessor();
+
+        System.out.println(student.toString());
+        if ( studentProfessor == null )  
+        {
+            professorInformation.setText("No professor listed");
+        } else {
+            professorInformation.setText(studentProfessor.toString());
+        }
 
         Button backButton = new Button("Back");
         backButton.setOnAction(new EventHandler<ActionEvent>() {

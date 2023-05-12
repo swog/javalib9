@@ -62,7 +62,7 @@ public class Student extends Member {
 		return professorId;
 	}
 
-	public static Student login(int Id) {
+	public static Member login(int Id) {
 		Member member = getMember(Id);
 		if (member == null) {
 			return null;

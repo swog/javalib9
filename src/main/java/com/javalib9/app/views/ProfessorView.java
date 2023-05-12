@@ -37,13 +37,28 @@ public class ProfessorView {
                 String enteredID = memberIdFinder.getText();
 
                 
-                Professor loggedInUser = Professor.login(Integer.valueOf(enteredID));
-                if ( loggedInUser != null ){
-                    stage.setScene(getProfessorMainMenu(stage, loggedInUser));
-                } else {
-                    submitStatus.setText("Invalid login, try again.");
+                if ( enteredID.equals("")){
+                    submitStatus.setText("Please enter ID above.");
                 }
+                else {
 
+                    int loginAsInteger = 0;
+                    try {
+                        loginAsInteger = Integer.valueOf(enteredID);
+                    } catch ( NumberFormatException numException){
+                        submitStatus.setText("Invalid login, try again");
+                        return;
+                    }
+
+                    Professor loggedInUser = Professor.login(loginAsInteger);
+                    if ( loggedInUser != null ){
+                     stage.setScene(getProfessorMainMenu(stage, loggedInUser));
+                    } else {
+                     submitStatus.setText("Invalid login, try again.");
+                    }
+
+
+                }
             }
         });
 
