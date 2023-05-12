@@ -71,7 +71,7 @@ public class PersonFileReader {
 			//Path path = Paths.get(fileName);
 			PrintWriter writer = new PrintWriter(fileName);
 
-			writer.println("Name,Address,DoB,Email,SSN,Type,Id,ProfessorId");
+			writer.println("Name,Address,DoB,Email,SSN,Type,Id,BalanceDue,ProfessorId");
 			for (int i = 0; i < people.size(); i++) {
 				writer.println(people.get(i).toString());
 			}
