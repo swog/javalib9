@@ -100,6 +100,8 @@ public class Student extends Member {
 			throw(new RuntimeException("Professor not found"));
 		}
 
+		/* ERROR HERE: NOT CHECKING IF PROFESSOR IS NULL */
+
 		// Professor will handle duplicates.
 		professor.addStudent(this);
 
