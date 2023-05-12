@@ -117,13 +117,23 @@ public class LibrarianView {
             public void handle(ActionEvent e) {
 
                 // get selection input
-                String contentType = ((RadioButton) contentTypeFinder.getSelectedToggle()).getText();
+                RadioButton selectedContentTypeButton = ((RadioButton)contentTypeFinder.getSelectedToggle());
+                if ( selectedContentTypeButton == null ){
+                    submitButtonStatus.setText("Select content type.");
+                    return;
+                }
 
-                System.out.printf("Content type: %s\n", contentType);
+                String contentType = selectedContentTypeButton.getText();
 
                 String identifier = identifierFinder.getText();
+                if ( identifier.equals("")){
+                    submitButtonStatus.setText("Enter Identifier.");
+                }
 
                 String title = titleFinder.getText();
+                if ( identifier.equals("")){
+                    submitButtonStatus.setText("Enter Title.");
+                }
 
                 try {
                     Librarian.addItem(identifier, contentType, title);
@@ -172,9 +182,8 @@ public class LibrarianView {
                 try {
                     Librarian.removeItem(identifier);
 
-                    submitButtonStatus.setText("Item removed from collection");
+                    submitButtonStatus.setText(identifier + " removed from collection");
 
-                    System.out.printf("%s removed from collection\n", identifier);
                 } catch (InvalidIdentifierException exception) {
                     submitButtonStatus.setText(exception.getMessage());
 

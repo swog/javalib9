@@ -78,7 +78,7 @@ public class Librarian extends Employee {
 	}
 
 	// function to add any item using switch case
-	public static void addItem(String identifier, String ContentType, String title) {
+	public static void addItem(String identifier, String ContentType, String title) throws InvalidIdentifierException{
 
 		ISBN isbn = null;
 		ISSN issn = null;
@@ -87,15 +87,13 @@ public class Librarian extends Employee {
 			try {
 				isbn = new ISBN(identifier);
 			} catch (InvalidIdentifierException e) {
-				System.out.println("Invalid ISBN");
-				return;
+				throw (e);
 			}
 		} else if (ContentType == "Newspaper" || ContentType == "Journal") {
 			try {
 				issn = new ISSN(identifier);
 			} catch (InvalidIdentifierException e) {
-				System.out.println("Invalid ISSN");
-				return;
+				throw (e);
 			}
 		} else {
 			System.out.println("Invalid type");
@@ -161,25 +159,30 @@ public class Librarian extends Employee {
 	public static void removeItem(String identifier) {
 		ISBN isbn = null;
 		ISSN issn = null;
+		
+		if ( identifier.length() == 10){
+			try {
+				isbn = new ISBN(identifier);
 
-		try {
-			isbn = new ISBN(identifier);
+				removeBookByIdentifier(isbn);
+				removeDVDByIdentifier(isbn);
 
-			removeBookByIdentifier(isbn);
-			removeDVDByIdentifier(isbn);
-
-		} catch (InvalidIdentifierException e) {
-			System.out.println("Invalid identifier");
-			return;
+			} catch (InvalidIdentifierException e) {
+				throw (e);
+			}
 		}
 
-		try {
-			issn = new ISSN(identifier);
-			removeNewspaperByIdentifier(issn);
-			removeJournalByIdentifier(issn);
-		} catch (InvalidIdentifierException e) {
-			System.out.println("Invalid identifier");
-			return;
+		else if ( identifier.length() == 8){
+
+			try {
+				issn = new ISSN(identifier);
+				removeNewspaperByIdentifier(issn);
+				removeJournalByIdentifier(issn);
+			} catch (InvalidIdentifierException e) {
+				throw(e);
+			}
+		} else {
+			throw ( new InvalidIdentifierException("No identifier of that length is valid"));
 		}
 		return;
 
