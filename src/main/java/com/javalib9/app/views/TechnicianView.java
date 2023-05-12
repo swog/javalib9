@@ -171,7 +171,6 @@ public class TechnicianView {
                 String enteredIdentifier = identifierFinder.getText();
                 String enteredMemberID = memberFinder.getText();
 
-                System.out.printf("%s | %s | %s\n", selectedContentType, enteredIdentifier, enteredMemberID);
 
                 try{
 
