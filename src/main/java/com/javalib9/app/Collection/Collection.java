@@ -178,23 +178,13 @@ public class Collection {
        // returns index on found and -1 on not found
         Content[] contentArray = this.getContentArray();
 
-        int maxIndex = contentArray.length;
-        int minIndex = 0;
-        int currentIndex = (maxIndex + minIndex)/2;
+        for ( int i = 0 ; i < contentArray.length ; i++){
 
-        int oldCurrentIndex = -1;
-        while ( oldCurrentIndex != currentIndex ){
-            Identifier potentiallyCorrectIdentifier = contentArray[currentIndex].getIdentifier();
-            oldCurrentIndex = currentIndex;
-            if ( potentiallyCorrectIdentifier.compareTo(identifier) == 0 ){
-                return currentIndex;
-            } else if ( potentiallyCorrectIdentifier.compareTo(identifier) > 0 ){ //if it's too low
-                minIndex = currentIndex;
-                currentIndex = ( maxIndex+minIndex )/2;
-            } else if ( potentiallyCorrectIdentifier.compareTo(identifier) < 0 ){ //if it's too high
-                maxIndex = currentIndex;
-                currentIndex = ( maxIndex+minIndex )/2;
+            Content c = contentArray[i];
+            if ( c.getIdentifier().compareTo(identifier) == 0){
+                return i;
             }
+
         }
 
         return -1;
@@ -202,28 +192,11 @@ public class Collection {
     }
 
     public Content searchItemByIdentifierForContent (Identifier identifier){
+        int itemIndex = searchItemByIdentifierForIndex(identifier);
 
-        Content[] contentArray = this.getContentArray();
+        if ( itemIndex == -1) return null;
+        else return getContentArray()[itemIndex];
 
-        int maxIndex = contentArray.length;
-        int minIndex = 0;
-        int currentIndex = (maxIndex + minIndex)/2;
-
-
-        while ( minIndex != currentIndex && maxIndex != currentIndex){
-            Identifier potentiallyCorrectIdentifier = contentArray[currentIndex].getIdentifier();
-            if ( potentiallyCorrectIdentifier.compareTo(identifier) == 0 ){
-                return contentArray[currentIndex];
-            } else if ( potentiallyCorrectIdentifier.compareTo(identifier) < 0 ){ //if it's too low
-                minIndex = currentIndex;
-                currentIndex = ( maxIndex+minIndex )/2;
-            } else if ( potentiallyCorrectIdentifier.compareTo(identifier) > 0 ){ //if it's too high
-                maxIndex = currentIndex;
-                currentIndex = ( maxIndex+minIndex )/2;
-            }
-        }
-
-        return null;
 
     }
     public Content getItemByIdentifier(Identifier identifier){
@@ -436,7 +409,7 @@ public class Collection {
         ArrayList<Content> contentArrayList = new ArrayList<>();
         contentArrayList.addAll(Arrays.asList(currentContentArray));
 
-        contentArrayList = sortArrayList(contentArrayList,"Title");
+        contentArrayList = sortArrayList(contentArrayList,"Identifier");
 
         this.setContentArray(contentArrayList);
         this.setSortSetting("Identifier");
@@ -448,33 +421,23 @@ public class Collection {
         ArrayList<Content> contentArrayList = new ArrayList<>();
         contentArrayList.addAll(Arrays.asList(currentContentArray));
 
-        contentArrayList = sortArrayList(contentArrayList,"Title");
+        contentArrayList = sortArrayList(contentArrayList,"Checkout Status");
 
         this.setContentArray(contentArrayList);
         this.setSortSetting("Checkout Status");
     }
 
     private static ArrayList<Content> sortArrayList(ArrayList<Content> myArrayList, String sortSetting){ // DO NOT USE THE PASSED ARRAY LIST AS INCONSISTENT THINGS HAPPEN, USE THE RETURNED ARRAY LIST
+
+        if ( myArrayList.size() == 0 ) return myArrayList;
         // NOTE: kinda inefficient whoops
         if ( sortSetting.equals("Title") ){
 
-            /* insertion sort i think*/
-            for ( int i = 0 ; i < myArrayList.size() ; i++ ){
-                for ( int j = i-1 ; j >= 0 ; j-- ){
-                    if ( myArrayList.get(j+1).getTitle().compareTo(myArrayList.get(j).getTitle()) < 0 ){ // if item[i] smaller than item[i-1]
-
-                        //swapping
-                        Content temp = myArrayList.get(j+1);
-                        myArrayList.set(j+1, myArrayList.get(j));
-                        myArrayList.set(j, temp);
-
-                    }
-                    else {
-                        // we sorted up to i, we can move on
-                        break;
-                    }
+            Collections.sort(myArrayList, new Comparator<Content>(){
+                public int compare(Content a, Content b){
+                    return a.getTitle().compareTo(b.getTitle());
                 }
-            }
+            });
 
             return myArrayList;
 
@@ -491,8 +454,18 @@ public class Collection {
                 }
             }
 
-            ISBNContentArrayList.sort(Comparator.naturalOrder());
-            ISSNContentArrayList.sort(Comparator.naturalOrder());
+
+            Collections.sort(ISBNContentArrayList, new Comparator<ISBNContent>(){
+                public int compare(ISBNContent a, ISBNContent b){
+                    return a.getISBN().compareTo(b.getISBN());
+                }
+            });
+
+            Collections.sort(ISSNContentArrayList, new Comparator<ISSNContent>(){
+                public int compare(ISSNContent a, ISSNContent b){
+                    return a.getISSN().compareTo(b.getISSN());
+                }
+            });
 
             ArrayList<Content> newSortedArrayList = new ArrayList<>();
             newSortedArrayList.addAll(ISBNContentArrayList);
@@ -535,6 +508,15 @@ public class Collection {
         }
 
         return true;
+    }
+
+    public void printCollectionContentsToConsole(){
+        System.out.printf("Name: %s | Sorted By: %s\n", this.collectionName, this.sortedBy);
+
+        Content[] thisContentArray = getContentArray();
+        for ( Content c : thisContentArray ){
+            System.out.println(c.toString());
+        }
     }
 
 }

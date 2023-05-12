@@ -98,15 +98,43 @@ public class TechnicianView {
         TextField identifierFinder = new TextField();
 
         Button submitButton = new Button("Submit");
+        Label submitButtonStatus = new Label("");
+
         submitButton.setOnAction(new EventHandler<ActionEvent>(){
 
             public void handle(ActionEvent e){
 
+                String contentEntered = ((RadioButton)contentTypeFinder.getSelectedToggle()).getText();
+                String identifierEntered = identifierFinder.getText();
+
+                if ( identifierEntered.equals("")){
+                    submitButtonStatus.setText("Please enter identifier before proceeding");
+
+                    return;
+                }
+
+                String foundLocationAsString = null;
+                try{
+
+                    foundLocationAsString = technician.findLocation(contentEntered, identifierEntered);
+                } catch (InvalidIdentifierException iie){
+                    submitButtonStatus.setText("Invalid identifier, try again");
+                    iie.printStackTrace(System.out);
+                    return;
+                }
+                Stage placementStage = new Stage();
+
+                VBox placementRoot = new VBox( new Label(foundLocationAsString));
+
+                Scene placementScene = new Scene(placementRoot, 300, 50);
+
+                placementStage.setScene(placementScene);
+                placementStage.setTitle("Here's your placement!");
+                placementStage.show();
             }
 
         });
 
-        Label submitButtonStatus = new Label("");
 
         Button backButton = View.getBackButton(stage, getTechnicianMainMenu(stage));
 
